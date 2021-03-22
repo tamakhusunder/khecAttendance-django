@@ -1,0 +1,38 @@
+{% extends "faceapp/base_layout.html" %}
+
+{%block title%}Khec Attendance | Edit{% endblock %}
+
+{% block content %}
+{% load static %}
+
+ 				<main>
+ 					{% if msg %}
+                    <div class="row">
+                        <div class="col-sm-8 offset-2">
+                           <h5 class="alert alert-info"><center>{{msg}}</center></h5>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-6">
+                                    <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Update Staff Information</h3></div>
+                                        <div class="card-body">
+                                                <form action="" method="POST" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    {{form.as_p}}                                             
+                                                    <div class="form-group mt-4 mb-0">
+                                                        <button type="submit" class='btn btn-primary btn-block'>Update</button>
+                                                    </div>
+                                                </form>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                </main>
+
+{% endblock %}
