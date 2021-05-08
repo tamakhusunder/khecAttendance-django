@@ -3,24 +3,27 @@
 <!DOCTYPE html>
 <html lang="en">
     
-<!-- Mirrored from coderthemes.com/adminto/layouts/vertical/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Mar 2021 14:42:26 GMT -->
+
 <head>
         <meta charset="utf-8" />
         <title>{% block title %}KhEC Attendance | Admin{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A fully featured admin theme for KhEC Attandance system." name="description" />
+        <meta content="A fully featured admin theme for KhEC Attendance system." name="description" />
         <meta content="CODEBREATHERS" name="hukka" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="{% static 'faceapp/images/icons/khec.png' %}">
 
-        <!-- Bootstrap Css -->
+        <!-- Bootstrap-5 Css -->
         <link href="{% static 'faceapp/assets/css/bootstrap.min.css' %}" id="bootstrap-stylesheet" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
         <link href="{% static 'faceapp/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <!-- DataTable Css -->
+        <!-- <link rel="stylesheet" type="text/css" href="{% static 'faceapp/assets/css/datatable/dataTables.bootstrap5.min.css' %}"> -->
         <!-- App Css-->
         <link href="{% static 'faceapp/assets/css/app.min.css' %}" id="app-stylesheet" rel="stylesheet" type="text/css" />
-        {% block style %}{% endblock%}
+        {% block style %}
+        {% endblock%}
 
     </head>
 
@@ -71,7 +74,7 @@
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item active">
                                     <div class="notify-icon">
-                                        <img src="{% static 'faceapp/assets/images/users/user-1.jpg' %}" class="img-fluid rounded-circle" alt="" /> </div>
+                                        <img src="" class="img-fluid rounded-circle" alt="" /> </div>
                                     <p class="notify-details">Cristina Pride</p>
                                     <p class="text-muted mb-0 user-msg">
                                         <small>Hi, How are you? What about our next meeting</small>
@@ -116,7 +119,7 @@
                             <div class="dropdown-divider"></div>
 
                             <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <a href="{% url 'logout' %}" class="dropdown-item notify-item">
                                 <i class="fe-log-out"></i>
                                 <span>Logout</span>
                             </a>
@@ -128,9 +131,9 @@
 
                 <!-- LOGO -->
                 <div class="logo-box">
-                    <a href="{% url 'index' %}" class="logo logo-dark text-center">
+                    <a href="{% url 'home' %}" class="logo logo-dark text-center">
                         <span class="logo-lg">
-                            <img src="{% static 'faceapp/images/icons/khec_logo.png' %}" alt="" height="60"><h3 style="color:black;">  KhEC attandance</h4>
+                            <img src="{% static 'faceapp/images/icons/khec.png' %}" alt="" height="60"><h3 style="color:black;">  KhEC Attendance</h3>
                         </span>
                         <span class="logo-sm">
                             <img src="{% static 'faceapp/images/icons/khec_logo.png' %}" alt="" height="50">
@@ -210,9 +213,15 @@
                             <li class="menu-title">Navigation</li>
 
                             <li>
-                                <a href="{% url 'index' %}">
+                                <a href="{% url 'home' %}">
                                     <i class="mdi mdi-view-dashboard"></i>
                                     <span> Dashboard </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'attendance' %}">
+                                    <i class="fas fa-desktop"></i>
+                                    <span> Attendance </span>
                                 </a>
                             </li>
 
@@ -221,15 +230,17 @@
                             <li class="menu-title">Apps</li>
 
                             <li>
-                                <a href="javascript: void(0);">
+                                <a href="{% url 'addnewstaff' %}">
                                     <i class="fas fa-user-plus"></i>
-                                    <span> Registration </span>
-                                    <span class="menu-arrow"></span>
+                                    <span> Add New Staff </span>
                                 </a>
-                                <ul class="nav-second-level" aria-expanded="false">
-                                    <li><a href="{% url 'addnewstaff' %}">Add New Staff</a></li>
-                                    <li><a href="{% url 'register'%}">Admin</a></li>
-                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'table' %}">
+                                    <i class="fas fa-edit"></i>
+                                    <span> Edit Staffs </span>
+                                </a>
                             </li>
 
                             <li>
@@ -283,6 +294,7 @@
             <!-- ============================================================== -->
 
                 <!-- following content represent dashboard,chart,applicaiton -->
+                <!-- go to home.html -->
                 {% block content %}
                 {% endblock %}
 
@@ -332,8 +344,41 @@
 
         <!-- App js -->
         <script src="{% static 'faceapp/assets/js/app.min.js' %}"></script>
+
+         
+
+         <!-- Option 2: Separate Popper and Bootstrap(5) JS  -->
+        <!-- <script src="{% static 'faceapp/assets/js/popper.min.js' %}"></script> -->
+        <!-- <script src="{% static 'faceapp/assets/js/bootstrap.min.js' %}"></script> -->
+
+        <!-- datatable js written by sunder -->
+        <!-- <script src="{% static 'faceapp/assets/js/datatable/dataTables.bootstrap5.min.js' %}"></script>
+        <script src="{% static 'faceapp/assets/js/datatable/jquery.dataTables.min.js' %}"></script>
+        <script> $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+        </script> -->
+
+        <!-- third party js -->
+        <!-- <script src="{% static 'faceapp/assets/libs/datatables/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'faceapp/assets/libs/datatables/dataTables.bootstrap4.js' %}"></script>
+        <script src="{% static 'faceapp/assets/libs/datatables/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'faceapp/assets/libs/datatables/responsive.bootstrap4.min.js' %}"></script>
+        <script src="{% static 'faceapp/assets/libs/datatables/dataTables.buttons.min.js' %}"></script>
+        <script src="{% static 'faceapp/assets/libs/datatables/buttons.bootstrap4.min.js' %}"></script>
+        <script src="{% static 'faceapp/assets/libs/datatables/buttons.html5.min.js' %}"></script>
+        <script src="{% static 'faceapp/assets/libs/datatables/buttons.flash.min.js' %}"></script>
+        <script src="{% static 'faceapp/assets/libs/datatables/buttons.print.min.js' %}"></script>
+        <script src="{% static 'faceapp/assets/libs/datatables/dataTables.keyTable.min.js' %}"></script>
+        <script src="{% static 'faceapp/assets/libs/datatables/dataTables.select.min.js' %}"></script>
+        <script src="{% static 'faceapp/assets/libs/pdfmake/pdfmake.min.js' %}"></script>
+        <script src="{% static 'faceapp/assets/libs/pdfmake/vfs_fonts.js' %}"></script> -->
+        <!-- third party js ends -->
+
+        <!-- Datatables init -->
+        <!-- <script src="{% static 'faceapp/assets/js/pages/datatables.init.js' %}"></script> -->
+  </body>
         
     </body>
 
-<!-- Mirrored from coderthemes.com/adminto/layouts/vertical/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Mar 2021 14:42:45 GMT -->
 </html>

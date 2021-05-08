@@ -1,6 +1,14 @@
 # from django.core import valiators
+from django.contrib.auth.forms import AuthenticationForm,UsernameField
+from django.utils.translation import gettext, gettext_lazy as _
+
 from django import forms
 from .models import StaffInfo
+
+''' django login authentication form and we used here for adding bootstrap'''
+class LoginForm(AuthenticationForm):
+	username=UsernameField(widget=forms.TextInput(attrs={'autofocus':True, 'class':'form-control', 'placeholder':"Enter Username",}))
+	password=forms.CharField(label=_("Password"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'current-password', 'class':'form-control', 'placeholder':"Enter Password",}))
 
 
 class StaffInfoForm(forms.ModelForm):
@@ -37,3 +45,4 @@ class StaffInfoForm(forms.ModelForm):
 											'placeholder':"Enter Address",
                                            	'name': 'inputAddress'})
 	}
+

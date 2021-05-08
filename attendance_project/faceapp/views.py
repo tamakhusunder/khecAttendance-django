@@ -1,12 +1,22 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from .forms import LoginForm
+from django.contrib.auth import authenticate,login,logout
+from django.contrib import messages
+
+from django.shortcuts import get_object_or_404
+
+
 from .models import StaffInfo,AttendanceTb
+
 
 from django.db import connection
 from datetime import date
 
 from .forms import StaffInfoForm
-from .models import StaffInfo 	#to dave form data in dataset
+from .models import StaffInfo 	#to save form data in dataset
 
 
 import numpy as np
@@ -63,55 +73,103 @@ def database_collection():
 
 ########################################################	
 
+
+def loginUser(request):
+	if not request.user.is_authenticated:
+		if request.method == "POST":
+			form=LoginForm(request=request,data=request.POST)
+			if form.is_valid():
+				uname=form.cleaned_data['username']
+				upassword=form.cleaned_data['password']
+				user = authenticate(username=uname,password=upassword)
+				if user is not None:
+					login(request,user)
+					messages.success(request,'Logged in Successfully !!')
+					return HttpResponseRedirect('/dashboard/')
+		else:
+			form=LoginForm()
+		return render(request,'faceapp/login.html',{'form':form})
+	else:
+		return HttpResponseRedirect('/dashboard/')
+
+def logoutUser(request):
+	logout(request)
+	return HttpResponseRedirect('/login/')
+
+
 def index(request):
-	StaffInfos,sql_totstaff,sql_present,sql_absent,presentDetail,absentDetail,dateintable=database_collection()
-	# return render(request,'faceapp/index.html',{'StaffInfos':StaffInfos,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent})
-	return render(request,'faceapp/index.html',{'StaffInfos':StaffInfos,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
+	return render(request,'faceapp/index.html')
+
+# admin dashboard
+def home(request):
+	if request.user.is_authenticated:
+		if request.user.is_superuser:
+			StaffInfos,sql_totstaff,sql_present,sql_absent,presentDetail,absentDetail,dateintable=database_collection()
+	# return render(request,'faceapp/home.html',{'StaffInfos':StaffInfos,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent})
+			return render(request,'faceapp/home.html',{'StaffInfos':StaffInfos,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
+		else:
+			return render(request,'faceapp/pages-401.html',{})
+	else:
+		return HttpResponseRedirect('/login/')
 
 def register(request):
 	return render(request,'faceapp/register.html',{})
 
-#form to save in database of newstaff
+
+#form to signin new staff 
 def addstaff(request):
-	msg=''
-	if request.method == 'POST':
-		form=StaffInfoForm(request.POST,request.FILES)
-		print(form.is_valid())
-		if form.is_valid():
-			name=form.cleaned_data['name']
-			image=form.cleaned_data['image']
-			code=form.cleaned_data['code']
-			desgination=form.cleaned_data['desgination']
-			department=form.cleaned_data['department']
-			specialization=form.cleaned_data['specialization']
-			email=form.cleaned_data['email']
-			contact=form.cleaned_data['contact']
-			address=form.cleaned_data['address']
-			register=StaffInfo(name=name,image=image,code=code,desgination=desgination,department=department,specialization=specialization,email=email,contact=contact,address=address)
-			print(register)
-			register.save()
-			# form.save()
-			form=StaffInfoForm()
-			msg='New Staff added.'
-		else:
-			msg="Invalid"
+	if request.user.is_authenticated:
+		if request.user.is_superuser:
+			if request.method == 'POST':
+				form=StaffInfoForm(request.POST,request.FILES)
+				print(form.is_valid())
+				if form.is_valid():
+					name=form.cleaned_data['name']
+					image=form.cleaned_data['image']
+					code=form.cleaned_data['code']
+					desgination=form.cleaned_data['desgination']
+					department=form.cleaned_data['department']
+					specialization=form.cleaned_data['specialization']
+					email=form.cleaned_data['email']
+					contact=form.cleaned_data['contact']
+					address=form.cleaned_data['address']
+					register=StaffInfo(name=name,image=image,code=code,desgination=desgination,department=department,specialization=specialization,email=email,contact=contact,address=address)
+					print(register)
+					register.save()
+					messages.success(request,'New Staff added.')
+					# form.save()
+					form=StaffInfoForm()
+
+					###new account with new staff automatically in auth_user database
+					uname=name.replace(" ","")
+					uname=uname.lower()
+					print(uname)
+					user=User.objects.create_user(username=email,email=email,password=code,is_staff='True',is_active='False')
+					user.save()
+					###for delete auth_user record code
+					# from django.contrib.auth import get_user_model
+					# User = get_user_model()
+					# obj=get_object_or_404(User,username='ram')
+					# obj.delete()
+			else:
+				form=StaffInfoForm()
+			return render(request,'faceapp/add_new_staff.html',{'form':form})
 	else:
-		form=StaffInfoForm()
-	return render(request,'faceapp/add_new_staff.html',{'form':form,'msg':msg})
+		return HttpResponseRedirect('/login/')
+
 
 #function to edit staffinfo
 def editStaff(request,code):
-	msg=''
 	if request.method=='POST':
 		st_id=StaffInfo.objects.get(pk=code)
 		form=StaffInfoForm(request.POST,instance=st_id)
 		if form.is_valid():
 			form.save()
-			msg='Data Updated!!!'
+			messages.success(request,'Data Updated!!!')
 	else:
 		st_id=StaffInfo.objects.get(pk=code)
 		form=StaffInfoForm(instance=st_id)
-	return render(request,'faceapp/editStaff.html',{'form':form,'msg':msg})
+	return render(request,'faceapp/editStaff.html',{'form':form})
 
 # function to delete staff
 def deletestaff(request,code):
@@ -119,6 +177,20 @@ def deletestaff(request,code):
 		st_id=StaffInfo.objects.get(pk=code)
 		st_id.delete()
 		return redirect('/table/')
+
+
+
+#to check admin or user to pass respective pages
+def dashboardStaff(request):
+	if request.user.is_authenticated:
+		if request.user.is_superuser:
+			# return render(request,'faceapp/home.html')
+			return HttpResponseRedirect('/home/')
+		else:
+			return render(request,'faceapp/dashboard_staff.html')
+	else:
+		return HttpResponseRedirect('/login/')
+
 
 
 def face_exe(request):
@@ -132,6 +204,10 @@ def table(request):
 	# StaffInfos,sql_totstaff,sql_present,sql_absent,presentDetail,absent_detail,dateintable=database_collection()
 	return render(request,'faceapp/tables.html',{'StaffInfos':StaffInfos})
 
+def attendanceTable(request):
+	StaffInfos,sql_totstaff,sql_present,sql_absent,presentDetail,absentDetail,dateintable=database_collection()
+	return render(request,'faceapp/attendance_table.html',{'presentDetail':presentDetail,'absentDetail':absentDetail})
+	
 def datesearch(request):
 	StaffInfos=StaffInfo.objects.all()
 	sql_totstaff = StaffInfo.objects.all().count()
@@ -151,7 +227,7 @@ def datesearch(request):
 	cursor.execute(sql_absentdetail)
 	absentDetail=cursor.fetchall()
 			
-	return render(request,'faceapp/index.html',{'StaffInfos':StaffInfos,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
+	return render(request,'faceapp/home.html',{'StaffInfos':StaffInfos,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
 
 
 #form to save in database of newstaff
@@ -176,7 +252,7 @@ def addstaffDB(request):
 			print(name,image,code,designation,department,specialization,email,contact,address,'@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
 			print("++++++++++++++++++record set in database")
 			# messages.success(request,'Record Saved Successfully...')
-			# return render(request,'faceapp/index.html')
+			# return render(request,'faceapp/home.html')
 		return redirect('/addstaff/')
 		# return render(request,'faceapp/add_new_staff.html',{})
 	else:
@@ -419,5 +495,5 @@ def offline(request):
 #######
 
 # def home(request):
-# 	return render(request,'faceapp/index.html',{})
+# 	return render(request,'faceapp/home.html',{})
 

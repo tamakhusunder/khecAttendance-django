@@ -4,25 +4,37 @@
 
 {% block content %}
 {% load static %}
-
- 				<main>
- 					{% if msg %}
-                    <div class="row">
-                        <div class="col-sm-8 offset-2">
-                           <h5 class="alert alert-info"><center>{{msg}}</center></h5>
-                        </div>
-                    </div>
+<div class="content-page">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+ 				
+ 					{% if messages %}
+                        {% for msg in messages %}
+                            <div class="row">
+                                <div class="col-sm-8 offset-2">
+                                    <center>
+                                    <p {% if msg.tags %} class="alert alert-{{msg.tags}}" {% endif %}>{{msg}}<br><a href="{% url 'table' %}">View Staff</a></p>
+                                    </center>
+                                    
+                                </div>
+                            </div>
+                        {% endfor %}
                     {% endif %}
 
                         <div class="container">
                             <div class="row justify-content-center">
                                 <div class="col-lg-6">
-                                    <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card shadow-lg border-0 rounded-lg mt-4">
                                         <div class="card-header"><h3 class="text-center font-weight-light my-4">Update Staff Information</h3></div>
                                         <div class="card-body">
-                                                <form action="" method="POST" enctype="multipart/form-data">
+                                                <form action="" method="POST" enctype="multipart/form-data" novalidate>
                                                     {% csrf_token %}
-                                                    {{form.as_p}}                                             
+                                                    <!-- {{form.as_p}}   -->
+                                                    {% for fm in form %}
+                                                        {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small><br>
+                                                    {% endfor %}                                            
                                                     <div class="form-group mt-4 mb-0">
                                                         <button type="submit" class='btn btn-primary btn-block'>Update</button>
                                                     </div>
@@ -33,6 +45,11 @@
                                 </div>
                             </div>
                         </div>    
-                </main>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}
