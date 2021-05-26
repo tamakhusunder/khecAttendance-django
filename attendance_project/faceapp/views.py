@@ -73,7 +73,14 @@ def database_collection():
 
 ########################################################	
 
+def index(request):
+	return render(request,'faceapp/index.html')
 
+def demo(request):
+	return render(request,'faceapp/demo.html')
+
+
+# login for both admin and user
 def loginUser(request):
 	if not request.user.is_authenticated:
 		if request.method == "POST":
@@ -84,7 +91,7 @@ def loginUser(request):
 				user = authenticate(username=uname,password=upassword)
 				if user is not None:
 					login(request,user)
-					messages.success(request,'Logged in Successfully !!')
+					messages.success(request,'Welcome admin !!')
 					return HttpResponseRedirect('/dashboard/')
 		else:
 			form=LoginForm()
@@ -95,10 +102,6 @@ def loginUser(request):
 def logoutUser(request):
 	logout(request)
 	return HttpResponseRedirect('/login/')
-
-
-def index(request):
-	return render(request,'faceapp/index.html')
 
 # admin dashboard
 def home(request):
@@ -111,6 +114,7 @@ def home(request):
 			return render(request,'faceapp/pages-401.html',{})
 	else:
 		return HttpResponseRedirect('/login/')
+
 
 def register(request):
 	return render(request,'faceapp/register.html',{})
@@ -158,6 +162,12 @@ def addstaff(request):
 		return HttpResponseRedirect('/login/')
 
 
+# function for table edit
+def editTable(request):
+	StaffInfos=StaffInfo.objects.all()
+	# StaffInfos,sql_totstaff,sql_present,sql_absent,presentDetail,absent_detail,dateintable=database_collection()
+	return render(request,'faceapp/editTables.html',{'StaffInfos':StaffInfos})
+
 #function to edit staffinfo
 def editStaff(request,code):
 	if request.method=='POST':
@@ -176,8 +186,7 @@ def deletestaff(request,code):
 	if request.method=='POST':
 		st_id=StaffInfo.objects.get(pk=code)
 		st_id.delete()
-		return redirect('/table/')
-
+		return redirect('/editTable/')
 
 
 #to check admin or user to pass respective pages
@@ -191,23 +200,6 @@ def dashboardStaff(request):
 	else:
 		return HttpResponseRedirect('/login/')
 
-
-
-def face_exe(request):
-	return render(request,'faceapp/face_exe.html',{})
-
-def chart(request):
-	return render(request,'faceapp/charts.html',{})
-
-def table(request):
-	StaffInfos=StaffInfo.objects.all()
-	# StaffInfos,sql_totstaff,sql_present,sql_absent,presentDetail,absent_detail,dateintable=database_collection()
-	return render(request,'faceapp/tables.html',{'StaffInfos':StaffInfos})
-
-def attendanceTable(request):
-	StaffInfos,sql_totstaff,sql_present,sql_absent,presentDetail,absentDetail,dateintable=database_collection()
-	return render(request,'faceapp/attendance_table.html',{'presentDetail':presentDetail,'absentDetail':absentDetail})
-	
 def datesearch(request):
 	StaffInfos=StaffInfo.objects.all()
 	sql_totstaff = StaffInfo.objects.all().count()
@@ -228,6 +220,46 @@ def datesearch(request):
 	absentDetail=cursor.fetchall()
 			
 	return render(request,'faceapp/home.html',{'StaffInfos':StaffInfos,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
+
+def datesearch2(request):
+	StaffInfos=StaffInfo.objects.all()
+	sql_totstaff = StaffInfo.objects.all().count()
+	dateintable=str(date.today())
+	if request.method=="POST":
+		dateintable=str(request.POST["attendanceDate"])
+		print(dateintable,'<<<<<<<<-----------')
+
+	sql_present = AttendanceTb.objects.filter(status='p',date=dateintable).count()
+	sql_absent=sql_totstaff-sql_present
+
+	cursor=connection.cursor()
+	sql_presentDetail='''SELECT faceapp_StaffInfo.image,faceapp_StaffInfo.name,faceapp_StaffInfo.code,faceapp_StaffInfo.desgination,faceapp_AttendanceTb.status,faceapp_AttendanceTb.time FROM faceapp_StaffInfo,faceapp_AttendanceTb WHERE faceapp_StaffInfo.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}"'''.format(dateintable)
+	cursor.execute(sql_presentDetail)
+	presentDetail=cursor.fetchall()
+	sql_absentdetail='''SELECT * FROM faceapp_StaffInfo WHERE NOT EXISTS(SELECT * FROM faceapp_AttendanceTb WHERE faceapp_StaffInfo.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}")'''.format(dateintable)
+	cursor.execute(sql_absentdetail)
+	absentDetail=cursor.fetchall()
+			
+	return render(request,'faceapp/attendance_table.html',{'StaffInfos':StaffInfos,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
+
+
+
+
+def face_exe(request):
+	return render(request,'faceapp/face_exe.html',{})
+
+def chart(request):
+	return render(request,'faceapp/charts.html',{})
+
+
+
+def attendanceTable(request):
+	StaffInfos,sql_totstaff,sql_present,sql_absent,presentDetail,absentDetail,dateintable=database_collection()
+	# return render(request,'faceapp/attendance_table.html',{'presentDetail':presentDetail,'absentDetail':absentDetail})
+	return render(request,'faceapp/attendance_table.html',{'StaffInfos':StaffInfos,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
+
+		
+	
 
 
 #form to save in database of newstaff
@@ -259,6 +291,14 @@ def addstaffDB(request):
 		print('------------>not saved')
 		# return redirect('/')
 		return render(request,'faceapp/add_new_staff.html',{})
+
+def contactList(request):
+	StaffInfos=StaffInfo.objects.all()
+	return render(request,'faceapp/contactList.html',{'StaffInfos':StaffInfos})
+
+def sendEmail(request,code):
+	StaffInfos = StaffInfo.objects.filter(code=code)
+	return render(request,'faceapp/sendEmail.html',{'StaffInfos':StaffInfos})
 
 
 '''####trying form--->model form

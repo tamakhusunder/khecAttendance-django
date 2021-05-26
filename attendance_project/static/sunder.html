@@ -1,0 +1,799 @@
+
+<!-- home is dashboard page for admin-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+    
+
+<head>
+        <meta charset="utf-8" />
+        <title>KhEC Attendance | Admin</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme for KhEC Attendance system." name="description" />
+        <meta content="CODEBREATHERS" name="hukka" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="/static/faceapp/images/icons/khec.png">
+
+        <!-- Bootstrap-5 Css -->
+        <link href="faceapp/assets/css/bootstrap.min.css" id="bootstrap-stylesheet" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="faceapp/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- DataTable Css -->
+        <!-- <link rel="stylesheet" type="text/css" href="/static/faceapp/assets/css/datatable/dataTables.bootstrap5.min.css"> -->
+        <!-- App Css-->
+        <link href="faceapp/assets/css/app.min.css" id="app-stylesheet" rel="stylesheet" type="text/css" />
+        
+        
+
+    </head>
+
+    <body>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Topbar Start -->
+            <div class="navbar-custom">
+                <ul class="list-unstyled topnav-menu float-right mb-0">
+
+                    <li class="d-none d-sm-block">
+                        <form class="app-search">
+                            <div class="app-search-box">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <div class="input-group-append">
+                                        <button class="btn" type="submit">
+                                            <i class="fe-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+        
+                    <li class="dropdown notification-list">
+                        <a class="nav-link dropdown-toggle  waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <i class="fe-bell noti-icon"></i>
+                            <span class="badge badge-danger rounded-circle noti-icon-badge">9</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-lg">
+
+                            <!-- item-->
+                            <div class="dropdown-item noti-title">
+                                <h5 class="m-0">
+                                    <span class="float-right">
+                                        <a href="#" class="text-dark">
+                                            <small>Clear All</small>
+                                        </a>
+                                    </span>Notification
+                                </h5>
+                            </div>
+
+                            <div class="slimscroll noti-scroll">
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item active">
+                                    <div class="notify-icon">
+                                        <img src="" class="img-fluid rounded-circle" alt="" /> </div>
+                                    <p class="notify-details">Cristina Pride</p>
+                                    <p class="text-muted mb-0 user-msg">
+                                        <small>Hi, How are you? What about our next meeting</small>
+                                    </p>
+                                </a>
+
+
+                            <!-- All-->
+                            <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+                                View all
+                                <i class="fi-arrow-right"></i>
+                            </a>
+
+                        </div>
+                    </li>
+
+                    <li class="dropdown notification-list">
+                        <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <img src="/static/faceapp/images/admin/sunder.jpg" alt="user-image" class="rounded-circle">
+                            <span class="pro-user-name ml-1">
+                                Sunder Tamakhu <i class="mdi mdi-chevron-down"></i> 
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                            <!-- item-->
+                            <div class="dropdown-header noti-title">
+                                <h6 class="text-overflow m-0">Welcome !</h6>
+                            </div>
+
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="fe-user"></i>
+                                <span>My Account</span>
+                            </a>
+
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="fe-settings"></i>
+                                <span>Settings</span>
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <!-- item-->
+                            <a href="/logout/" class="dropdown-item notify-item">
+                                <i class="fe-log-out"></i>
+                                <span>Logout</span>
+                            </a>
+
+                        </div>
+                    </li>
+
+                </ul>
+
+                <!-- LOGO -->
+                <div class="logo-box">
+                    <a href="/home/" class="logo logo-dark text-center">
+                        <span class="logo-lg">
+                            <img src="/static/faceapp/images/icons/khec.png" alt="" height="60"><h3 style="color:black;">  KhEC Attendance</h3>
+                        </span>
+                        <span class="logo-sm">
+                            <img src="/static/faceapp/images/icons/khec_logo.png" alt="" height="50">
+                        </span>
+                    </a>
+                </div>
+
+                <ul class="list-unstyled topnav-menu topnav-menu-left mb-0">
+                    <li>
+                        <button class="button-menu-mobile disable-btn waves-effect">
+                            <i class="fe-menu"></i>
+                        </button>
+                    </li>
+
+                    <li>
+                        <h4 class="page-title-main"><h4 class="mt-3 ml-1">Dashboard</h4></h4>
+                    </li>
+        
+                </ul>
+
+            </div>
+            <!-- end Topbar -->
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="left-side-menu">
+
+                <div class="slimscroll-menu mt-5">
+
+                    <!-- User box -->
+                    <div class="user-box text-center">
+                        <img src="/static/faceapp/images/admin/sunder.jpg" alt="user-img" title="Mat Helme" class="rounded-circle img-thumbnail avatar-md">
+                        <div class="dropdown">
+                            <a href="#" class="user-name dropdown-toggle h5 mt-2 mb-1 d-block" data-toggle="dropdown"  aria-expanded="false">Sunder Tamakhu</a>
+                            <div class="dropdown-menu user-pro-dropdown">
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-user mr-1"></i>
+                                    <span>My Account</span>
+                                </a>
+    
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-settings mr-1"></i>
+                                    <span>Settings</span>
+                                </a>
+    
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-log-out mr-1"></i>
+                                    <span>Logout</span>
+                                </a>
+    
+                            </div>
+                        </div>
+                        <p class="text-muted">Admin Head</p>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a href="#" class="text-muted">
+                                    <i class="mdi mdi-cog"></i>
+                                </a>
+                            </li>
+
+                            <li class="list-inline-item">
+                                <a href="#">
+                                    <i class="mdi mdi-power"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+
+                        <ul class="metismenu" id="side-menu">
+
+                            <li class="menu-title">Navigation</li>
+
+                            <li>
+                                <a href="/home/">
+                                    <i class="mdi mdi-view-dashboard"></i>
+                                    <span> Dashboard </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/attendance/">
+                                    <i class="fas fa-desktop"></i>
+                                    <span> Attendance </span>
+                                </a>
+                            </li>
+
+                            
+
+                            <li class="menu-title">Apps</li>
+
+                            <li>
+                                <a href="/addstaff/">
+                                    <i class="fas fa-user-plus"></i>
+                                    <span> Add New Staff </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/table/">
+                                    <i class="fas fa-edit"></i>
+                                    <span> Edit Staffs </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fas fa-camera-retro"></i>
+                                    <span> Application </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li><a href="/face-application/">Face Recognization</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="menu-title">Components</li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="mdi mdi-view-list"></i>
+                                    <span> Tables </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li><a href="/table/">Staff info</a></li>
+                                    <li><a href="#">Present Staff</a></li>
+                                    <li><a href="#">Absent Staff</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="mdi mdi-chart-donut-variant"></i>
+                                    <span> Charts </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                    <!-- End Sidebar -->
+
+
+                </div>
+                <!-- Sidebar -left -->
+
+            </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+                <!-- following content represent dashboard,chart,applicaiton -->
+                <!-- go to home.html -->
+                
+ <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <div class="row">
+
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card-box">
+                                    <div class="dropdown float-right">
+                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="mdi mdi-dots-vertical"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right pl-2">
+                                            <!-- item-->
+                                                <a href="/table/"> View detail</a>
+                                            
+                                        </div>
+                                    </div>
+
+                                    <h4 class="header-title mt-0 mb-4">Overall Staff</h4>
+
+                                    <div class="widget-chart-1">
+                                        <div class="widget-chart-box-1 float-left" dir="ltr">
+                                             <i class="fas fa-users fa-5x"></i>
+                                        </div>
+
+                                        <div class="widget-detail-1 text-right">
+                                            <h2 class="font-weight-normal pt-2 mb-1"> 13 </h2>
+                                            <a href="/table/"><p class="text-muted mb-1">View details</p></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div><!-- end col -->
+
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card-box">
+                                    <div class="dropdown float-right">
+                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="mdi mdi-dots-vertical"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right pl-2">
+                                            <!-- item-->
+                                            <a href="/attendance/" class="dropdown-item">View detail</a>
+                                        </div>
+                                    </div>
+
+                                    <h4 class="header-title mt-0 mb-3">No. of Present</h4>
+
+                                    <div class="widget-box-2">
+                                        <div class="widget-detail-2 text-right">
+                                            <span class="badge badge-success badge-pill float-left mt-3">0 % <i class="mdi mdi-trending-up"></i></span>
+                                            <h2 class="font-weight-normal mb-1"> 0 </h2>
+                                            <a href="/attendance/"><p class="text-muted mb-3">View details</p></a>
+                                        </div>
+                                        <div class="progress progress-bar-alt-success progress-sm">
+                                            <div class="progress-bar bg-success" role="progressbar"
+                                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="50"
+                                                    style="width: 0%;">
+                                                <span class="sr-only">77% Complete</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                            </div><!-- end col -->
+
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card-box">
+                                    <div class="dropdown float-right">
+                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="mdi mdi-dots-vertical"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <!-- item-->
+                                            <a href="javascript:void(0);" class="dropdown-item">View detail</a>
+                                        </div>
+                                    </div>
+
+                                    <h4 class="header-title mt-0 mb-3">No. of Absentee</h4>
+
+                                    <div class="widget-box-2">
+                                        <div class="widget-detail-2 text-right">
+                                            <span class="badge badge-danger badge-pill float-left mt-3">100 % <i class="mdi mdi-trending-up"></i></span>
+                                            <h2 class="font-weight-normal mb-1">13 </h2>
+                                            <p class="text-muted mb-3">View details</p>
+                                        </div>
+
+                                        <div class="progress progress-bar-alt-pink progress-sm">
+                                            <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"
+                                                    aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+                                                    style="width:100%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                            </div><!-- end col -->
+
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card-box">
+                                    <div class="dropdown float-right">
+                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="mdi mdi-dots-vertical"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <!-- item-->
+                                            <a href="javascript:void(0);" class="dropdown-item">View detail</a>
+                                        </div>
+                                    </div>
+
+                                    <h4 class="header-title mt-0 mb-4">Unlisted Staff</h4>
+
+                                    <div class="widget-chart-1">
+                                        <div class="widget-chart-box-1 float-left" dir="ltr">
+                                            <input data-plugin="knob" data-width="80" data-height="80" data-fgColor="#ffbd4a"
+                                                    data-bgColor="#FFE6BA" value="1"
+                                                    data-skin="tron" data-angleOffset="180" data-readOnly=true
+                                                    data-thickness=".15"/>
+                                        </div>
+                                        <div class="widget-detail-1 text-right">
+                                            <h2 class="font-weight-normal pt-2 mb-1"> 1 </h2>
+                                            <a href="#" class="text-muted mb-1">View details</a>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                            </div><!-- end col -->
+
+                        </div>
+                        <!-- end row -->
+
+                        <div class="row">
+                            <div class="col-xl-4">
+                                <div class="card-box">
+                                    <div class="dropdown float-right">
+                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="mdi mdi-dots-vertical"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <!-- item-->
+                                            <a href="javascript:void(0);" class="dropdown-item">View Details</a>
+                                            <!-- item-->
+                                            <a href="javascript:void(0);" class="dropdown-item">Another action</a>
+                                        </div>
+                                    </div>
+
+                                    <!-- 2nd row -->
+
+                                    <h4 class="header-title mt-0">Daily Status</h4>
+
+                                    <div class="widget-chart text-center">
+                                        <div id="morris-donut-example" dir="ltr" style="height: 245px;" class="morris-chart"></div>
+                                        <ul class="list-inline chart-detail-list mb-0">
+                                            <li class="list-inline-item">
+                                                <h5 style="color: #5b69bc;"><i class="fa fa-circle mr-1"></i>Present</h5>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <h5 style="color: #ff8acc;"><i class="fa fa-circle mr-1"></i>Absentee</h5>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div><!-- end col -->
+
+                            <div class="col-xl-4">
+                                <div class="card-box">
+                                    <div class="dropdown float-right">
+                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="mdi mdi-dots-vertical"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <!-- item-->
+                                            <a href="javascript:void(0);" class="dropdown-item">View Details</a>
+                                        </div>
+                                    </div>
+                                    <h4 class="header-title mt-0">Statistics</h4>
+                                    <div id="morris-bar-example" dir="ltr" style="height: 280px;" class="morris-chart"></div>
+                                </div>
+                            </div><!-- end col -->
+
+                            <div class="col-xl-4">
+                                <div class="card-box">
+                                    <div class="dropdown float-right">
+                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="mdi mdi-dots-vertical"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <!-- item-->
+                                            <a href="javascript:void(0);" class="dropdown-item">View Details</a>
+                                            <!-- item-->
+                                            <a href="javascript:void(0);" class="dropdown-item">Another action</a>
+                                        </div>
+                                    </div>
+                                    <h4 class="header-title mt-0">Total Staff</h4>
+                                    <div id="morris-line-example" dir="ltr" style="height: 280px;" class="morris-chart"></div>
+                                </div>
+                            </div><!-- end col -->
+
+                        </div>
+                        <!-- end row -->
+
+
+                        <!-- Table view -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-box table-responsive">
+                                            <div class="float-right">
+                                                ( 2021-05-09 )
+                                                <form action="datesearch" method="POST">
+                                                    <input type="hidden" name="csrfmiddlewaretoken" value="ZzTAqvmptCAayhaRm5X4yIQi9wukOjGIjJN9GHYX9ekGjUuaLjONiT5CHe3YYmcS">
+                                                    <input type="date" name="attendanceDate" value="Today">
+                                                    <input type="submit" name="searchDate" value="Apply">
+                                                </form>
+                                            </div>
+                                    <h4 class="mt-0 header-title">Staff Attendance Table</h4>
+                                    
+                                    <p class="text-muted font-14 mb-3">This table shows Staff Attendances.
+                                    </p>
+
+                                    <table id="selection-datatable" class="table table-bordered dt-responsive nowrap">
+                                        <thead>
+                                        <tr>
+                                            <th>Teachers</th>
+                                            <th>Code</th>
+                                            <th>Designation</th>
+                                            <!-- <th>Department</th> -->
+                                            <th>Time</th>
+                                            <th>Attendance</th>
+
+                                        </tr>
+                                        </thead>
+
+                                        <tbody> 
+
+                                            <!-- for present student -->
+                                            
+
+                                            <!-- for absent student -->
+                                             
+                                            <tr>
+                                                <td class="text-left">
+                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/faceapp/images/staffs/730301.png">
+                                                    Absolom Silwal
+                                                </td>
+                                                <td>730301</td>
+                                                <td>Lecturer</td>
+                                                <td><h5><span class="badge badge-danger">ABSENT</span></h5></td>
+                                                <td>----</td>
+                                            </tr>
+
+                                            
+                                            <tr>
+                                                <td class="text-left">
+                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/faceapp/images/staffs/730302.png">
+                                                    Aditya Kafle
+                                                </td>
+                                                <td>730302</td>
+                                                <td>Lecturer</td>
+                                                <td><h5><span class="badge badge-danger">ABSENT</span></h5></td>
+                                                <td>----</td>
+                                            </tr>
+
+                                            
+                                            <tr>
+                                                <td class="text-left">
+                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/faceapp/images/staffs/730306.png">
+                                                    Anil
+                                                </td>
+                                                <td>730303</td>
+                                                <td>Lecturer</td>
+                                                <td><h5><span class="badge badge-danger">ABSENT</span></h5></td>
+                                                <td>----</td>
+                                            </tr>
+
+                                            
+                                            <tr>
+                                                <td class="text-left">
+                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/faceapp/images/staffs/730305.png">
+                                                    Amar Naga
+                                                </td>
+                                                <td>730305</td>
+                                                <td>Lecturer</td>
+                                                <td><h5><span class="badge badge-danger">ABSENT</span></h5></td>
+                                                <td>----</td>
+                                            </tr>
+
+                                            
+                                            <tr>
+                                                <td class="text-left">
+                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/faceapp/images/staffs/730307.png">
+                                                    Anirudh Basukala
+                                                </td>
+                                                <td>730307</td>
+                                                <td>Lecturer</td>
+                                                <td><h5><span class="badge badge-danger">ABSENT</span></h5></td>
+                                                <td>----</td>
+                                            </tr>
+
+                                            
+                                            <tr>
+                                                <td class="text-left">
+                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/faceapp/images/staffs/730309.png">
+                                                    Anup Rai
+                                                </td>
+                                                <td>730309</td>
+                                                <td>Lecturer</td>
+                                                <td><h5><span class="badge badge-danger">ABSENT</span></h5></td>
+                                                <td>----</td>
+                                            </tr>
+
+                                            
+                                            <tr>
+                                                <td class="text-left">
+                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/faceapp/images/staffs/730310.png">
+                                                    Bibek Shrestha
+                                                </td>
+                                                <td>730310</td>
+                                                <td>teacher</td>
+                                                <td><h5><span class="badge badge-danger">ABSENT</span></h5></td>
+                                                <td>----</td>
+                                            </tr>
+
+                                            
+                                            <tr>
+                                                <td class="text-left">
+                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/faceapp/images/staffs/730311.png">
+                                                    Bipul Manadar
+                                                </td>
+                                                <td>730311</td>
+                                                <td>teacher</td>
+                                                <td><h5><span class="badge badge-danger">ABSENT</span></h5></td>
+                                                <td>----</td>
+                                            </tr>
+
+                                            
+                                            <tr>
+                                                <td class="text-left">
+                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/faceapp/images/staffs/730320.png">
+                                                    Manish Nhuchhe
+                                                </td>
+                                                <td>730320</td>
+                                                <td>Lecturer</td>
+                                                <td><h5><span class="badge badge-danger">ABSENT</span></h5></td>
+                                                <td>----</td>
+                                            </tr>
+
+                                            
+                                            <tr>
+                                                <td class="text-left">
+                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/faceapp/images/staffs/730345.png">
+                                                    Sunder Tamakhu
+                                                </td>
+                                                <td>730345</td>
+                                                <td>Lecturer</td>
+                                                <td><h5><span class="badge badge-danger">ABSENT</span></h5></td>
+                                                <td>----</td>
+                                            </tr>
+
+                                            
+                                            <tr>
+                                                <td class="text-left">
+                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/faceapp/images/staffs/730319.png">
+                                                    Manish Kharbuja
+                                                </td>
+                                                <td>7303455</td>
+                                                <td>Lecturer</td>
+                                                <td><h5><span class="badge badge-danger">ABSENT</span></h5></td>
+                                                <td>----</td>
+                                            </tr>
+
+                                            
+                                            <tr>
+                                                <td class="text-left">
+                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/faceapp/images/staffs/730347_99uQ0VA.png">
+                                                    Susmita Giri
+                                                </td>
+                                                <td>730347</td>
+                                                <td>Lecturer</td>
+                                                <td><h5><span class="badge badge-danger">ABSENT</span></h5></td>
+                                                <td>----</td>
+                                            </tr>
+
+                                            
+                                            <tr>
+                                                <td class="text-left">
+                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/faceapp/images/staffs/730348_OBaDVdk.png">
+                                                    Unika Shakya
+                                                </td>
+                                                <td>730348</td>
+                                                <td>Lecturer</td>
+                                                <td><h5><span class="badge badge-danger">ABSENT</span></h5></td>
+                                                <td>----</td>
+                                            </tr>
+
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->       
+                        
+                    </div> <!-- container-fluid -->
+
+                </div> <!-- content -->
+
+                
+
+    </div>
+
+
+
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                               2021 &copy; Developed by <a href="#">CODEBREATHERS</a> 
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-right footer-links d-none d-sm-block">
+                                    <a href="javascript:void(0);">About Us</a>
+                                    <a href="javascript:void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+
+
+
+        <!-- Vendor js -->
+        <script src="faceapp/assets/js/vendor.min.js"></script>
+
+        <!-- knob plugin -->
+        <script src="faceapp/assets/libs/jquery-knob/jquery.knob.min.js"></script>
+
+        <!--Morris Chart-->
+        <script src="faceapp/assets/libs/morris-js/morris.min.js"></script>
+        <script src="faceapp/assets/libs/raphael/raphael.min.js"></script>
+
+        <!-- Dashboard init js-->
+        <script src="faceapp/assets/js/pages/dashboard.init.js"></script>
+
+        <!-- App js -->
+        <script src="faceapp/assets/js/app.min.js"></script>
+
+         
+
+         <!-- Option 2: Separate Popper and Bootstrap(5) JS  -->
+        <!-- <script src="/static/faceapp/assets/js/popper.min.js"></script> -->
+        <!-- <script src="/static/faceapp/assets/js/bootstrap.min.js"></script> -->
+
+        <!-- datatable js written by sunder -->
+        <!-- <script src="/static/faceapp/assets/js/datatable/dataTables.bootstrap5.min.js"></script>
+        <script src="/static/faceapp/assets/js/datatable/jquery.dataTables.min.js"></script>
+        <script> $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+        </script> -->
+
+        <!-- third party js -->
+        <!-- <script src="/static/faceapp/assets/libs/datatables/jquery.dataTables.min.js"></script>
+        <script src="/static/faceapp/assets/libs/datatables/dataTables.bootstrap4.js"></script>
+        <script src="/static/faceapp/assets/libs/datatables/dataTables.responsive.min.js"></script>
+        <script src="/static/faceapp/assets/libs/datatables/responsive.bootstrap4.min.js"></script>
+        <script src="/static/faceapp/assets/libs/datatables/dataTables.buttons.min.js"></script>
+        <script src="/static/faceapp/assets/libs/datatables/buttons.bootstrap4.min.js"></script>
+        <script src="/static/faceapp/assets/libs/datatables/buttons.html5.min.js"></script>
+        <script src="/static/faceapp/assets/libs/datatables/buttons.flash.min.js"></script>
+        <script src="/static/faceapp/assets/libs/datatables/buttons.print.min.js"></script>
+        <script src="/static/faceapp/assets/libs/datatables/dataTables.keyTable.min.js"></script>
+        <script src="/static/faceapp/assets/libs/datatables/dataTables.select.min.js"></script>
+        <script src="/static/faceapp/assets/libs/pdfmake/pdfmake.min.js"></script>
+        <script src="/static/faceapp/assets/libs/pdfmake/vfs_fonts.js"></script> -->
+        <!-- third party js ends -->
+
+        <!-- Datatables init -->
+        <!-- <script src="/static/faceapp/assets/js/pages/datatables.init.js"></script> -->
+  </body>
+        
+    </body>
+
+</html>

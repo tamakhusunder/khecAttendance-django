@@ -6,6 +6,18 @@
 {% block content %}
  <div class="content-page">
                 <div class="content">
+                    {% if messages %}
+                        {% for msg in messages %}
+                            <div class="row">
+                                <div class="col-sm-8 offset-2">
+                                    <center>
+                                    <p {% if msg.tags %} class="alert alert-{{msg.tags}}" {% endif %}>{{msg}}</p>
+                                    </center>
+                                    
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
 
                     <!-- Start Content-->
                     <div class="container-fluid">
@@ -20,7 +32,7 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right pl-2">
                                             <!-- item-->
-                                                <a href="{% url 'table' %}"> View detail</a>
+                                                <a href="{% url 'editTable' %}"> View detail</a>
                                             
                                         </div>
                                     </div>
@@ -34,7 +46,7 @@
 
                                         <div class="widget-detail-1 text-right">
                                             <h2 class="font-weight-normal pt-2 mb-1"> {{sql_totstaff}} </h2>
-                                            <a href="{% url 'table' %}"><p class="text-muted mb-1">View details</p></a>
+                                            <a href="{% url 'editTable' %}"><p class="text-muted mb-1">View details</p></a>
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +93,7 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <!-- item-->
-                                            <a href="javascript:void(0);" class="dropdown-item">View detail</a>
+                                            <a href="{% url 'attendance' %}" class="dropdown-item">View detail</a>
                                         </div>
                                     </div>
 
@@ -91,7 +103,7 @@
                                         <div class="widget-detail-2 text-right">
                                             <span class="badge badge-danger badge-pill float-left mt-3">{% widthratio sql_absent sql_totstaff 100 %} % <i class="mdi mdi-trending-up"></i></span>
                                             <h2 class="font-weight-normal mb-1">{{sql_absent}} </h2>
-                                            <p class="text-muted mb-3">View details</p>
+                                            <a href="{% url 'attendance' %}"><p class="text-muted mb-3">View details</p></a>
                                         </div>
 
                                         <div class="progress progress-bar-alt-pink progress-sm">
@@ -226,15 +238,14 @@
                                     <p class="text-muted font-14 mb-3">This table shows Staff Attendances.
                                     </p>
 
-                                    <table id="selection-datatable" class="table table-bordered dt-responsive nowrap">
+                                    <table id="responsive-datatable" class="table table-striped table-bordered dt-responsive nowrap">
                                         <thead>
                                         <tr>
                                             <th>Teachers</th>
                                             <th>Code</th>
                                             <th>Designation</th>
-                                            <!-- <th>Department</th> -->
-                                            <th>Time</th>
                                             <th>Attendance</th>
+                                            <th>Time</th>
 
                                         </tr>
                                         </thead>

@@ -13,6 +13,7 @@ class StaffInfo(models.Model):
 	email = models.CharField(max_length=255)
 	contact = models.CharField(max_length=255)
 	address = models.CharField(max_length=255)
+	# timestamp = models.DateField(auto_now_add=True,auto_now=False,blank=True)
 
 	def __str__(self):
 		return self.name+'-->'+self.code+'-->'+self.department	#--> will be shown in database doesnot effect anything
@@ -28,6 +29,8 @@ class AttendanceTb(models.Model):
 	date=models.CharField(max_length=255)
 	time=models.CharField(max_length=255)
 	status=models.CharField(max_length=255)
+	# attendanceCreated = models.DateField(auto_now_add=True,auto_now=True,blank=True)
+
 
 	def __str__(self):
 		return self.t_id+'-->'+self.date

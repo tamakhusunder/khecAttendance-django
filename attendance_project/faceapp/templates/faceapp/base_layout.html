@@ -14,14 +14,20 @@
         <!-- App favicon -->
         <link rel="shortcut icon" href="{% static 'faceapp/images/icons/khec.png' %}">
 
-        <!-- Bootstrap-5 Css -->
+        <!-- Bootstrap Css -->
         <link href="{% static 'faceapp/assets/css/bootstrap.min.css' %}" id="bootstrap-stylesheet" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
         <link href="{% static 'faceapp/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
-        <!-- DataTable Css -->
-        <!-- <link rel="stylesheet" type="text/css" href="{% static 'faceapp/assets/css/datatable/dataTables.bootstrap5.min.css' %}"> -->
         <!-- App Css-->
         <link href="{% static 'faceapp/assets/css/app.min.css' %}" id="app-stylesheet" rel="stylesheet" type="text/css" />
+
+        <!-- third party css -->
+        <link href="{% static 'faceapp/assets/libs/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'faceapp/assets/libs/datatables/responsive.bootstrap4.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'faceapp/assets/libs/datatables/buttons.bootstrap4.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'faceapp/assets/libs/datatables/select.bootstrap4.css' %}" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
         {% block style %}
         {% endblock%}
 
@@ -237,7 +243,7 @@
                             </li>
 
                             <li>
-                                <a href="{% url 'table' %}">
+                                <a href="{% url 'editTable' %}">
                                     <i class="fas fa-edit"></i>
                                     <span> Edit Staffs </span>
                                 </a>
@@ -256,6 +262,13 @@
 
                             <li class="menu-title">Components</li>
 
+                             <li>
+                                <a href="{% url 'contactList' %}">
+                                    <i class="mdi mdi-email-send"></i>
+                                    <span> Contact list </span>
+                                </a>
+                            </li>
+
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="mdi mdi-view-list"></i>
@@ -263,7 +276,7 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li><a href="{% url 'table' %}">Staff info</a></li>
+                                    <li><a href="{% url 'editTable' %}">Staff info</a></li>
                                     <li><a href="#">Present Staff</a></li>
                                     <li><a href="#">Absent Staff</a></li>
                                 </ul>
@@ -276,6 +289,7 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                             </li>
+                        
 
                         </ul>
 
@@ -351,16 +365,10 @@
         <!-- <script src="{% static 'faceapp/assets/js/popper.min.js' %}"></script> -->
         <!-- <script src="{% static 'faceapp/assets/js/bootstrap.min.js' %}"></script> -->
 
-        <!-- datatable js written by sunder -->
-        <!-- <script src="{% static 'faceapp/assets/js/datatable/dataTables.bootstrap5.min.js' %}"></script>
-        <script src="{% static 'faceapp/assets/js/datatable/jquery.dataTables.min.js' %}"></script>
-        <script> $(document).ready(function() {
-            $('#example').DataTable();
-        } );
-        </script> -->
+       
 
         <!-- third party js -->
-        <!-- <script src="{% static 'faceapp/assets/libs/datatables/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'faceapp/assets/libs/datatables/jquery.dataTables.min.js' %}"></script>
         <script src="{% static 'faceapp/assets/libs/datatables/dataTables.bootstrap4.js' %}"></script>
         <script src="{% static 'faceapp/assets/libs/datatables/dataTables.responsive.min.js' %}"></script>
         <script src="{% static 'faceapp/assets/libs/datatables/responsive.bootstrap4.min.js' %}"></script>
@@ -372,11 +380,13 @@
         <script src="{% static 'faceapp/assets/libs/datatables/dataTables.keyTable.min.js' %}"></script>
         <script src="{% static 'faceapp/assets/libs/datatables/dataTables.select.min.js' %}"></script>
         <script src="{% static 'faceapp/assets/libs/pdfmake/pdfmake.min.js' %}"></script>
-        <script src="{% static 'faceapp/assets/libs/pdfmake/vfs_fonts.js' %}"></script> -->
+        <script src="{% static 'faceapp/assets/libs/pdfmake/vfs_fonts.js' %}"></script>
         <!-- third party js ends -->
 
         <!-- Datatables init -->
-        <!-- <script src="{% static 'faceapp/assets/js/pages/datatables.init.js' %}"></script> -->
+        <script src="{% static 'faceapp/assets/js/pages/datatables.init.js' %}"></script>
+
+        
   </body>
         
     </body>

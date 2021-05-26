@@ -1,0 +1,87 @@
+
+{% extends "faceapp/base_layout.html" %}
+{% block title %}Khec Attendance | Contact{% endblock%}
+
+{% block topbarTitle %}Dashboard > Contact Staff{% endblock %}
+
+
+{% block content %}  
+{% load static %}      
+<!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            {% for object in StaffInfos.all%}
+                            <div class="col-xl-4">
+                                <div class="text-center card-box">
+                                    <div class="dropdown float-right">
+                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="mdi mdi-dots-vertical"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <!-- item-->
+                                            <a href="javascript:void(0);" class="dropdown-item">View Details</a>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <img src="{{object.image.url}}" class="rounded-circle avatar-xl img-thumbnail mb-2" alt="profile-image">
+
+                                        <p class="text-muted font-13 mb-3">
+                                            Hi I'm {{object.name}},has been the Khec's standard {{object.desgination}} of {{object.department}} department.
+                                        </p>
+
+                                        <div class="text-left">
+                                            <p class="text-muted font-13"><strong>Full Name :</strong> <span class="ml-2">{{object.name}}</span></p>
+
+                                            <p class="text-muted font-13"><strong>Mobile :</strong><span class="ml-2">{{object.contact}}</span></p>
+
+                                            <p class="text-muted font-13"><strong>Email :</strong> <span class="ml-2">{{object.email}}</span></p>
+
+                                            <p class="text-muted font-13"><strong>Location :</strong> <span class="ml-2">{{object.address}}</span></p>
+                                        </div>
+
+                                        <a href="{% url 'sendEmail' object.code %}" class="btn btn-primary btn-rounded waves-effect waves-light">Send Message</a> 
+
+                                    </div>
+
+                                </div>
+
+                            </div> <!-- end col -->
+                            {% endfor %}
+              
+                        </div>
+                        <!-- end row -->
+
+
+
+
+
+
+
+
+                        
+                    </div> <!-- container-fluid -->
+
+                </div> <!-- content -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+        </div>
+        <!-- END wrapper -->
+
+ {% endblock %}
+        
