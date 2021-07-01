@@ -1,11 +1,2 @@
-<<<<<<< Updated upstream
-test 6
-
-This is very important code. 
-Do not delete.
-
-added some codes
-=======
->>>>>>> Stashed changes
 
 f;oaksdhflkajsdhfk
