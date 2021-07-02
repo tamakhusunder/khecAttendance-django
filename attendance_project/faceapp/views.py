@@ -76,6 +76,9 @@ def database_collection():
 def index(request):
 	return render(request,'faceapp/index.html')
 
+def amarTable(request):
+	return render(request,'faceapp/table.html')
+
 def demo(request):
 	return render(request,'faceapp/demo.html')
 
