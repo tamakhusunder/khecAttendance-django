@@ -1,0 +1,826 @@
+{% extends "faceapp/base_layout.html" %}
+{% block title %}Khec Attendance | Contact{% endblock%}
+
+{% block topbarTitle %} <a href="{% url 'home' %}">Dashboard</a> > Staff List{% endblock %}
+
+
+{% block content %}
+{% load static %}
+<!-- Begin page -->
+<div id="wrapper">
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+
+                <div class="row">
+                    <!--content area start-->
+                    <div id="content" class="pmd-content inner-page admin">
+
+                        <div class="d-flex align-items-center pb-3">
+                            <div>
+                                <!-- Title -->
+                                <h1>Employees</h1>
+                                <!-- End Title -->
+                                <!--breadcrum start-->
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb pmd-breadcrumb mb-0">
+                                        <li class="breadcrumb-item">
+                                            <a href="dashboard.html">Dashboard</a>
+                                        </li>
+                                        <li class="breadcrumb-item active" aria-current="page">Employees</li>
+                                    </ol>
+                                </nav>
+                                <!--breadcrum end-->
+                            </div>
+
+                            <!-- Right Buttons -->
+                            <div class="ml-auto d-flex">
+                                <ul class="nav nav-tabs border-0">
+                                    <li class="nav-item mr-2">
+                                        <a title="Grid View"
+                                            class="btn pmd-btn-fab pmd-ripple-effect nav-link active btn-sm btn-outline-dark"
+                                            href="#gridView" aria-controls="gridView" role="tab" data-toggle="tab">
+                                            <i class="material-icons">apps</i>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a title="List View"
+                                            class="btn btn-outline-dark pmd-btn-fab pmd-ripple-effect nav-link btn-sm"
+                                            href="#listView" aria-controls="listView" role="tab" data-toggle="tab">
+                                            <i class="material-icons">format_list_bulleted</i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Right Buttons End -->
+                        </div>
+
+                        <section class="component-section" id="employee">
+                            <div class="card pmd-card">
+                                <div class="search-bar card-body">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col">
+                                            <!-- Form Component -->
+                                            <div class="d-md-block d-none">
+                                                <form class="search-form" style="margin-top: -10px;">
+                                                    <div class="form-row">
+                                                        <div class="col-md-5 col-lg-4">
+                                                            <div
+                                                                class="input-group pmd-input-group pmd-input-group-icon mb-0">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text">
+                                                                        <i
+                                                                            class="material-icons md-dark pmd-sm">search</i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="pmd-textfield pmd-textfield-floating-label">
+                                                                    <label for="search-field">Search</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="search-field"
+                                                                        aria-describedby="search-field">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div
+                                                            class="form-group pmd-textfield pmd-textfield-floating-label col-md-3 mb-0">
+                                                            <label for="department">Department</label>
+                                                            <select name="select" id="department" class="form-control">
+                                                                <option></option>
+                                                                <option>Design</option>
+                                                                <option>Development</option>
+                                                                <option>Marketing</option>
+                                                                <option>Sales</option>
+                                                                <option>Quality Assurance</option>
+                                                            </select>
+                                                        </div>
+                                                        <div
+                                                            class="form-group pmd-textfield pmd-textfield-floating-label col-md-3 mb-0">
+                                                            <label>Designation</label>
+                                                            <select name="select" id="designation" class="form-control">
+                                                                <option></option>
+                                                                <option>Product Designer</option>
+                                                                <option>UI/UX Designer</option>
+                                                                <option>PHP Developer</option>
+                                                                <option>Mobile App Developer</option>
+                                                                <option>Quality Tester</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-1 col-lg-2 mt-4">
+                                                            <button
+                                                                class="btn btn-primary pmd-ripple-effect pmd-btn-raised"
+                                                                id="search">Go</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                                <h3 class="card-title advanced-search-title mb-0">Advanced Search</h3>
+                                            </div>
+                                            <!-- Form Component End -->
+
+                                            <!-- Mobile Search -->
+                                            <!-- Form Component (Form Inline) -->
+                                            <form class="d-flex d-md-none media align-items-center col">
+                                                <div class="media-body">
+                                                    <div class="input-group pmd-input-group pmd-input-group-icon mb-0">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <i class="material-icons md-dark pmd-sm">search</i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="pmd-textfield pmd-textfield-floating-label">
+                                                            <label for="search-field">Search</label>
+                                                            <input type="text" class="form-control" id="search-field"
+                                                                aria-describedby="search-field">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100 d-flex mobile-fixed-btn pmd-z-depth-light-2-2">
+                                                    <a title="Filter" href="javascript:void(0);"
+                                                        class="btn btn-primary pmd-ripple-effect pmd-btn-icon mb-0 w-50"
+                                                        data-toggle="modal" data-target="#advanced-search-modal">
+                                                        <i class="pmd-icon-xs">
+                                                            <svg viewBox="0 0 24 24">
+                                                                <g>
+                                                                    <g>
+                                                                        <path fill="#FFFFFF"
+                                                                            d="M9.072,21.162v-9.81L2.214,3.41C1.847,2.961,1.889,2.037,2.837,2.037h18.292
+                                                        c0.892,0,1.098,0.816,0.624,1.373l-6.693,7.732v6.069c0,0.248-0.083,0.458-0.293,0.624l-4.28,3.95
+                                                        C9.992,22.151,9.072,21.954,9.072,21.162z M4.668,3.703l5.864,6.775c0.124,0.165,0.207,0.334,0.207,0.54v8.272l2.659-2.412v-6.024
+                                                        c0-0.207,0.083-0.375,0.206-0.541l5.694-6.61H4.668L4.668,3.703z"></path>
+                                                                    </g>
+                                                                </g>
+                                                            </svg>
+                                                        </i> Filter
+                                                    </a>
+                                                    <a title="Sort" href="javascript:void(0);"
+                                                        class="btn btn-dark pmd-ripple-effect pmd-btn-icon mb-0 w-50"
+                                                        data-toggle="modal" data-target="#sort-modal">
+                                                        <i class="material-icons">sort</i>Sort
+                                                    </a>
+                                                </div>
+                                            </form>
+                                            <!-- Form Component End -->
+                                            <!-- Mobile Search End -->
+                                        </div>
+                                        <!-- Right Menu -->
+                                        <div class="col-auto d-none d-md-flex justify-content-end">
+                                            <ul class="nav border-0">
+                                                <li class="nav-item mr-2">
+                                                    <a title="Advance Search"
+                                                        class="btn pmd-btn-fab btn-outline-dark nav-link btn-sm"
+                                                        data-toggle="collapse" href="#advanceSearch" role="button"
+                                                        aria-expanded="false" aria-controls="advanceSearch"
+                                                        id="advanced-search-toggler">
+                                                        <i class="pmd-icon-circle pmd-icon-sm">
+                                                            <svg viewBox="0 0 24 24">
+                                                                <g>
+                                                                    <g>
+                                                                        <path
+                                                                            d="M9.072,21.162v-9.81L2.214,3.41C1.847,2.961,1.889,2.037,2.837,2.037h18.292
+                                                        c0.892,0,1.098,0.816,0.624,1.373l-6.693,7.732v6.069c0,0.248-0.083,0.458-0.293,0.624l-4.28,3.95
+                                                        C9.992,22.151,9.072,21.954,9.072,21.162z M4.668,3.703l5.864,6.775c0.124,0.165,0.207,0.334,0.207,0.54v8.272l2.659-2.412v-6.024
+                                                        c0-0.207,0.083-0.375,0.206-0.541l5.694-6.61H4.668L4.668,3.703z" />
+                                                                    </g>
+                                                                </g>
+                                                            </svg>
+                                                        </i>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <div class="dropdown pmd-dropdown">
+                                                        <a href="javascript:void(0);" role="button"
+                                                            class="pmd-btn-fab btn-outline-dark btn btn-sm"
+                                                            data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false" title="Sort">
+                                                            <i class="material-icons">sort</i>
+                                                        </a>
+                                                        <div tabindex="-1" role="menu" aria-hidden="false"
+                                                            class="dropdown-menu dropdown-menu-right"
+                                                            aria-labelledby="dropdownMenuLink">
+                                                            <h6 class="dropdown-header">Sort By</h6>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="javascript:void(0);" title="Name"
+                                                                class="dropdown-item">Name</a>
+                                                            <a href="javascript:void(0);" title="Sector"
+                                                                class="dropdown-item">Department</a>
+                                                            <a href="javascript:void(0);" title="Training Status"
+                                                                class="dropdown-item">Date of Joining</a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- Advance Search Form -->
+                                    <div class="collapse" id="advanceSearch">
+                                        <div class="row mt-2">
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="employee_ID">Employee ID</label>
+                                                    <input type="text" class="form-control" name="employee_ID">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="name">Name</label>
+                                                    <input type="text" class="form-control" name="name">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="phone">Phone</label>
+                                                    <input type="text" class="form-control" name="phone" id="phone">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="advance_department">Department</label>
+                                                    <select name="select" id="advance_department" class="form-control">
+                                                        <option></option>
+                                                        <option>Design</option>
+                                                        <option>Development</option>
+                                                        <option>Marketing</option>
+                                                        <option>Sales</option>
+                                                        <option>Quality Assurance</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="advance_designation">Department</label>
+                                                    <select name="select" id="advance_designation" class="form-control">
+                                                        <option></option>
+                                                        <option>Product Designer</option>
+                                                        <option>UI/UX Designer</option>
+                                                        <option>PHP Developer</option>
+                                                        <option>Mobile App Developer</option>
+                                                        <option>Quality Tester</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="reporting">Reporting Employee</label>
+                                                    <select name="select" id="reporting" class="form-control">
+                                                        <option></option>
+                                                        <option>John L. Wade</option>
+                                                        <option>Lolita M. Bradley</option>
+                                                        <option>Kenneth R. Brooks</option>
+                                                        <option>Joseph S. Richardson</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="date-of-joining">Date of Joining</label>
+                                                    <input type="text" class="form-control" id="datepicker">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="type" class="d-block title-label">Type of Employee</label>
+                                                <div
+                                                    class="custom-control custom-radio pmd-radio custom-control-inline">
+                                                    <input type="radio" id="full-time" name="type"
+                                                        class="custom-control-input">
+                                                    <label class="custom-control-label pmd-radio-ripple-effect"
+                                                        for="full-time">Full Time</label>
+                                                </div>
+                                                <div
+                                                    class="custom-control custom-radio pmd-radio custom-control-inline">
+                                                    <input type="radio" id="part-time" name="type"
+                                                        class="custom-control-input">
+                                                    <label class="custom-control-label pmd-radio-ripple-effect"
+                                                        for="part-time">Part Time</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="type" class="d-block title-label">Gender</label>
+                                                <div
+                                                    class="custom-control custom-radio pmd-radio custom-control-inline">
+                                                    <input type="radio" id="male" name="gender"
+                                                        class="custom-control-input">
+                                                    <label class="custom-control-label pmd-radio-ripple-effect"
+                                                        for="male">Male</label>
+                                                </div>
+                                                <div
+                                                    class="custom-control custom-radio pmd-radio custom-control-inline">
+                                                    <input type="radio" id="female" name="gender"
+                                                        class="custom-control-input">
+                                                    <label class="custom-control-label pmd-radio-ripple-effect"
+                                                        for="female">Female</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <a href="javascript:void(0);" title="Apply Filter"
+                                                    class="btn-primary btn pmd-btn-raised pmd-ripple-effect"
+                                                    id="apply-filter">Apply Filter</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Advance Search End -->
+
+                                    <!-- Filter Tags -->
+                                    <div class="border-top filter-tags pt-3 mt-4" id="search-filter">
+                                        <div class="d-flex align-items-center">
+                                            <i class="md-dark">
+                                                <svg version="1.1" x="0px" y="0px" viewBox="0 0 32 32" width="32"
+                                                    height="32" enable-background="new 0 0 32 32" xml:space="preserve">
+                                                    <g>
+                                                        <g id="_x36__13_">
+                                                            <g>
+                                                                <path
+                                                                    d="M14.48,23.2H5.6c-0.441,0-0.8,0.358-0.8,0.8s0.358,0.8,0.8,0.8h8.881c0.371,1.825,1.984,3.2,3.92,3.2
+                                                c1.935,0,3.549-1.375,3.919-3.2H26.4c0.441,0,0.8-0.358,0.8-0.8s-0.358-0.8-0.8-0.8h-4.081c-0.37-1.825-1.984-3.2-3.919-3.2
+                                                C16.465,20,14.852,21.375,14.48,23.2z M20.8,24c0,1.326-1.074,2.4-2.399,2.4c-1.326,0-2.4-1.074-2.4-2.4s1.074-2.4,2.4-2.4
+                                                C19.726,21.6,20.8,22.674,20.8,24z M6.48,15.2H5.6c-0.441,0-0.8,0.358-0.8,0.8s0.358,0.8,0.8,0.8H6.48
+                                                C6.852,18.625,8.465,20,10.4,20c1.935,0,3.549-1.375,3.919-3.2H26.4c0.441,0,0.8-0.358,0.8-0.8s-0.358-0.8-0.8-0.8H14.319
+                                                c-0.37-1.826-1.984-3.2-3.919-3.2C8.465,12,6.852,13.375,6.48,15.2z M12.8,16c0,1.326-1.074,2.4-2.399,2.4
+                                                C9.074,18.4,8,17.326,8,16c0-1.326,1.074-2.4,2.4-2.4C11.726,13.6,12.8,14.674,12.8,16z M17.681,7.2H5.6
+                                                C5.158,7.2,4.8,7.559,4.8,8s0.358,0.8,0.8,0.8h12.081c0.371,1.826,1.984,3.2,3.919,3.2c1.936,0,3.549-1.375,3.92-3.2H26.4
+                                                c0.441,0,0.8-0.358,0.8-0.8s-0.358-0.8-0.8-0.8H25.52C25.148,5.375,23.535,4,21.6,4C19.665,4,18.052,5.375,17.681,7.2z M24,8
+                                                c0,1.326-1.074,2.4-2.4,2.4C20.274,10.4,19.2,9.326,19.2,8s1.074-2.4,2.399-2.4C22.926,5.6,24,6.674,24,8z" />
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </svg>
+                                            </i>
+                                            <div class="media-body">
+                                                <ul class="list-inline mb-0">
+                                                    <li class="list-inline-item"><span class="label">Department</span>
+                                                        <div class="pmd-outline-chip pmd-chip-sm">Design
+                                                            <a class="pmd-chip-action" href="javascript:void(0);"><i
+                                                                    class="material-icons">close</i></a>
+                                                        </div>
+                                                        <div class="pmd-outline-chip pmd-chip-sm">Development
+                                                            <a class="pmd-chip-action" href="javascript:void(0);"><i
+                                                                    class="material-icons">close</i></a>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-inline-item"><span class="label">Gender</span>
+                                                        <div class="pmd-outline-chip pmd-chip-sm">Female
+                                                            <a class="pmd-chip-action" href="javascript:void(0);"><i
+                                                                    class="material-icons">close</i></a>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-inline-item"><span class="label">Reporting
+                                                            Employee</span>
+                                                        <div class="pmd-outline-chip pmd-chip-sm">Wendell M. Grover
+                                                            <a class="pmd-chip-action" href="javascript:void(0);"><i
+                                                                    class="material-icons">close</i></a>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <button
+                                                class="btn btn-outline-primary pmd-ripple-effect btn-sm ml-auto">Clear
+                                                All</button>
+                                        </div>
+                                    </div>
+                                    <!-- Filter Tags End -->
+                                </div>
+                            </div>
+
+                            <div class="tab-content">
+                                <!-- Grid View -->
+                                <div role="tabpanel" class="tab-pane active" id="gridView">
+                                    <div class="row">
+                                        <div class="col-md-6 col-xl-4 col-12">
+                                            <!-- Card Component -->
+                                            <div class="card pmd-card user-info-card">
+                                                <!-- Card Header -->
+                                                <div
+                                                    class="card-header pmd-card-border d-flex flex-row align-items-center">
+                                                    <a class="pmd-avatar-list-img" href="javascript:void(0);">
+                                                        <img src="themes/images/profile-2.jpg" width="40" height="40"
+                                                            alt="Profile Image">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <h3 class="card-title">Darlene C. Larsen</h3>
+                                                        <p class="card-subtitle">Product Designer</p>
+                                                    </div>
+                                                    <div class="dropdown pmd-dropdown pmd-user-info ml-auto">
+                                                        <a href="javascript:void(0);"
+                                                            class="pmd-btn-fab btn-dark pmd-btn-flat btn btn-sm"
+                                                            data-toggle="dropdown" aria-expanded="true"><i
+                                                                class="material-icons pmd-icon-sm">more_vert</i></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a class="dropdown-item d-flex flex-row align-items-center"
+                                                                href="employee-detail.html"><i
+                                                                    class="material-icons md-dark pmd-icon-sm mr-3">edit</i><span
+                                                                    class="media-body">Edit</span></a>
+                                                            <a href="javascript:void(0);" title="Delete"
+                                                                class="dropdown-item d-flex flex-row align-items-center"
+                                                                data-toggle="modal"
+                                                                data-target="#delete_employee_modal"><i
+                                                                    class="material-icons md-dark pmd-icon-sm mr-3">delete</i><span
+                                                                    class="media-body">Delete</span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- List Group Component -->
+                                                <ul class="list-group pmd-list">
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">person_outline</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle">Employee ID</label>
+                                                            <p class="pmd-list-title">XYZ-1005</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">call</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle mb-0">Phone No.</label>
+                                                            <p class="pmd-list-title">+91 98250 98250</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">mail_outline</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle">Email Address</label>
+                                                            <p class="pmd-list-title"><a
+                                                                    href="mailto:darlene@xyz.com">darlene@xyz.com</a>
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">people_outline</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle">Department</label>
+                                                            <p class="pmd-list-title">Design</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">today</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle">Date of Joining</label>
+                                                            <p class="pmd-list-title">25<sup>th</sup> February, 2018</p>
+                                                        </div>
+                                                    </li>
+                                                </ul><!-- List Group Component End -->
+
+                                                <!-- Card Footer -->
+                                                <div class="card-footer pmd-card-border">
+                                                    <a title="View More" href="employee-detail.html"
+                                                        class="btn pmd-btn-flat pmd-ripple-effect btn-primary">View
+                                                        More</a>
+                                                </div>
+                                            </div>
+                                            <!-- Card Component End -->
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-4 col-12">
+                                            <!-- Card Component -->
+                                            <div class="card pmd-card user-info-card">
+                                                <!-- Card Header -->
+                                                <div
+                                                    class="card-header pmd-card-border d-flex flex-row align-items-center">
+                                                    <a class="pmd-avatar-list-img" href="javascript:void(0);">
+                                                        <img src="themes/images/profile-1.jpg" width="40" height="40"
+                                                            alt="Profile Image">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <h3 class="card-title">Robert P. Kinder</h3>
+                                                        <p class="card-subtitle">Mobile App Developer</p>
+                                                    </div>
+                                                    <div class="dropdown pmd-dropdown pmd-user-info ml-auto">
+                                                        <a href="javascript:void(0);"
+                                                            class="pmd-btn-fab btn-dark pmd-btn-flat btn btn-sm"
+                                                            data-toggle="dropdown" aria-expanded="true"><i
+                                                                class="material-icons pmd-icon-sm">more_vert</i></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a class="dropdown-item d-flex flex-row align-items-center"
+                                                                href="employee-detail.html"><i
+                                                                    class="material-icons md-dark pmd-icon-sm mr-3">edit</i><span
+                                                                    class="media-body">Edit</span></a>
+                                                            <a href="javascript:void(0);" title="Delete"
+                                                                class="dropdown-item d-flex flex-row align-items-center"
+                                                                data-toggle="modal"
+                                                                data-target="#delete_employee_modal"><i
+                                                                    class="material-icons md-dark pmd-icon-sm mr-3">delete</i><span
+                                                                    class="media-body">Delete</span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- List Group Component -->
+                                                <ul class="list-group pmd-list">
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">person_outline</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle">Employee ID</label>
+                                                            <p class="pmd-list-title">XYZ-1255</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">call</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle ">Phone No.</label>
+                                                            <p class="pmd-list-title">+91 98983 84531</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">mail_outline</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle">Email Address</label>
+                                                            <p class="pmd-list-title"><a
+                                                                    href="mailto:robert@xyz.com">robert@xyz.com</a></p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">people_outline</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle">Department</label>
+                                                            <p class="pmd-list-title">Development</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">today</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle">Date of Joining</label>
+                                                            <p class="pmd-list-title">8<sup>th</sup> June, 2017</p>
+                                                        </div>
+                                                    </li>
+                                                </ul> <!-- List Group Component End -->
+
+                                                <!-- Card Footer -->
+                                                <div class="card-footer pmd-card-border">
+                                                    <a title="View More" href="employee-detail.html"
+                                                        class="btn pmd-btn-flat pmd-ripple-effect btn-primary">View
+                                                        More</a>
+                                                </div>
+                                            </div>
+                                            <!-- Card Component End -->
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-4 col-12">
+                                            <!-- Card Component -->
+                                            <div class="card pmd-card user-info-card">
+                                                <!-- Card Header -->
+                                                <div
+                                                    class="card-header pmd-card-border d-flex flex-row align-items-center">
+                                                    <a class="pmd-avatar-list-img" href="javascript:void(0);">
+                                                        <img src="themes/images/profile-3.jpg" width="40" height="40"
+                                                            alt="Profile Image">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <h3 class="card-title">Fay A. Sayer</h3>
+                                                        <p class="card-subtitle">PHP Developer</p>
+                                                    </div>
+                                                    <div class="dropdown pmd-dropdown pmd-user-info ml-auto">
+                                                        <a href="javascript:void(0);"
+                                                            class="pmd-btn-fab btn-dark pmd-btn-flat btn btn-sm"
+                                                            data-toggle="dropdown" aria-expanded="true"><i
+                                                                class="material-icons pmd-icon-sm">more_vert</i></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a class="dropdown-item d-flex flex-row align-items-center"
+                                                                href="employee-detail.html"><i
+                                                                    class="material-icons md-dark pmd-icon-sm mr-3">edit</i><span
+                                                                    class="media-body">Edit</span></a>
+                                                            <a href="javascript:void(0);" title="Delete"
+                                                                class="dropdown-item d-flex flex-row align-items-center"
+                                                                data-toggle="modal"
+                                                                data-target="#delete_employee_modal"><i
+                                                                    class="material-icons md-dark pmd-icon-sm mr-3">delete</i><span
+                                                                    class="media-body">Delete</span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- List Group Component -->
+                                                <ul class="list-group pmd-list">
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">person_outline</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle">Employee ID</label>
+                                                            <p class="pmd-list-title">XYZ-2580</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">call</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle ">Phone No.</label>
+                                                            <p class="pmd-list-title">+91 99864 23576</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">mail_outline</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle">Email Address</label>
+                                                            <p class="pmd-list-title"><a
+                                                                    href="mailto:fay@xyz.com">fay@xyz.com</a></p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">people_outline</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle">Department</label>
+                                                            <p class="pmd-list-title">Development</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex flex-row">
+                                                        <i
+                                                            class="material-icons pmd-list-icon align-self-center pmd-md md-dark">today</i>
+                                                        <div class="media-body">
+                                                            <label class="pmd-list-subtitle">Date of Joining</label>
+                                                            <p class="pmd-list-title">26<sup>th</sup> January, 2018</p>
+                                                        </div>
+                                                    </li>
+                                                </ul> <!-- List Group Component End -->
+
+                                                <!-- Card Footer -->
+                                                <div class="card-footer pmd-card-border">
+                                                    <a title="View More" href="employee-detail.html"
+                                                        class="btn pmd-btn-flat pmd-ripple-effect btn-primary">View
+                                                        More</a>
+                                                </div>
+
+                                            </div>
+                                            <!-- Card Component End -->
+                                        </div>
+
+                                        <div class="col-12 text-center">
+                                            <button class="btn btn-secondary pmd-ripple-effect">Load More</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Grid View End -->
+
+                                <!-- List View Start -->
+                                <div role="tabpanel" class="tab-pane" id="listView">
+                                    <div class="card pmd-card">
+                                        <div class="table-responsive">
+                                            <!-- Table -->
+                                            <table class="table pmd-table">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Designation</th>
+                                                        <th>ID</th>
+                                                        <th>Phone No</th>
+                                                        <th>Email Address</th>
+                                                        <th>Department</th>
+                                                        <th>Date of Joining</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td data-title="Name">
+                                                            <div class="d-flex align-items-center">
+                                                                <img src="themes/images/profile-2.jpg"
+                                                                    alt="Profile Image" class="rounded-circle mr-3"
+                                                                    width="40" height="40" />
+                                                                <div class="media-body">
+                                                                    Darlene C. Larsen
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td data-title="Designation">Product Designer</td>
+                                                        <td data-title="ID">XYZ-1005</td>
+                                                        <td data-title="Phone No">+91 98250 98250</td>
+                                                        <td data-title="Email Address"><a
+                                                                href="mailto:darlene@xyz.com">darlene@xyz.com</a></td>
+                                                        <td data-title="Department">Design</td>
+                                                        <td data-title="Date of Joining">25<sup>th</sup> February, 2018
+                                                        </td>
+                                                        <td data-title="">
+                                                            <a href="employee-detail.html"
+                                                                class="btn pmd-btn-fab pmd-btn-flat btn-primary pmd-ripple-effect btn-sm mr-2"><i
+                                                                    class="material-icons pmd-sm">visibility</i></a>
+                                                            <a href="employee-detail.html"
+                                                                class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
+                                                                    class="material-icons pmd-sm">edit</i></a>
+                                                            <a href="javascript:void(0);" title="Delete"
+                                                                class="btn pmd-btn-fab pmd-btn-flat btn-danger pmd-ripple-effect btn-sm"
+                                                                data-toggle="modal"
+                                                                data-target="#delete_employee_modal"><i
+                                                                    class="material-icons pmd-sm">delete_outline</i></a>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td data-title="Name">
+                                                            <div class="d-flex align-items-center">
+                                                                <img src="themes/images/profile-1.jpg"
+                                                                    alt="Profile Image" class="rounded-circle mr-3"
+                                                                    width="40" height="40" />
+                                                                <div class="media-body">
+                                                                    Robert P. Kinder
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td data-title="Designation">Mobile App Developer</td>
+                                                        <td data-title="ID">XYZ-1255</td>
+                                                        <td data-title="Phone No">+91 98983 84531</td>
+                                                        <td data-title="Email Address"><a
+                                                                href="mailto:robert@xyz.com">robert@xyz.com</a></td>
+                                                        <td data-title="Department">Development</td>
+                                                        <td data-title="Date of Joining">8<sup>th</sup> June, 2017</td>
+                                                        <td data-title="">
+                                                            <a href="employee-detail.html"
+                                                                class="btn pmd-btn-fab pmd-btn-flat btn-primary pmd-ripple-effect btn-sm mr-2"><i
+                                                                    class="material-icons pmd-sm">visibility</i></a>
+                                                            <a href="employee-detail.html"
+                                                                class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
+                                                                    class="material-icons pmd-sm">edit</i></a>
+                                                            <a href="javascript:void(0);" title="Delete"
+                                                                class="btn pmd-btn-fab pmd-btn-flat btn-danger pmd-ripple-effect btn-sm"
+                                                                data-toggle="modal"
+                                                                data-target="#delete_employee_modal"><i
+                                                                    class="material-icons pmd-sm">delete_outline</i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-title="Name">
+                                                            <div class="d-flex align-items-center">
+                                                                <img src="themes/images/profile-3.jpg"
+                                                                    alt="Profile Image" class="rounded-circle mr-3"
+                                                                    width="40" height="40" />
+                                                                <div class="media-body">
+                                                                    Fay A. Sayer
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td data-title="Designation">PHP Developer</td>
+                                                        <td data-title="ID">XYZ-2580</td>
+                                                        <td data-title="Phone No">+91 99864 23576</td>
+                                                        <td data-title="Email Address"><a
+                                                                href="mailto:fay@xyz.com">fay@xyz.com</a></td>
+                                                        <td data-title="Department">Development</td>
+                                                        <td data-title="Date of Joining">26<sup>th</sup> January, 2018
+                                                        </td>
+                                                        <td data-title="">
+                                                            <a href="employee-detail.html"
+                                                                class="btn pmd-btn-fab pmd-btn-flat btn-primary pmd-ripple-effect btn-sm mr-2"><i
+                                                                    class="material-icons pmd-sm">visibility</i></a>
+                                                            <a href="employee-detail.html"
+                                                                class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
+                                                                    class="material-icons pmd-sm">edit</i></a>
+                                                            <a href="javascript:void(0);" title="Delete"
+                                                                class="btn pmd-btn-fab pmd-btn-flat btn-danger pmd-ripple-effect btn-sm"
+                                                                data-toggle="modal"
+                                                                data-target="#delete_employee_modal"><i
+                                                                    class="material-icons pmd-sm">delete_outline</i></a>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 text-center">
+                                        <button class="btn btn-secondary pmd-ripple-effect">Load More</button>
+                                    </div>
+                                </div>
+                                <!-- List View End -->
+                            </div>
+                        </section>
+                    </div>
+                    <!-- content area end -->
+
+                </div>
+                <!-- end row -->
+
+            </div> <!-- container-fluid -->
+
+        </div> <!-- content -->
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+
+</div>
+<!-- END wrapper -->
+
+{% endblock %}

@@ -76,8 +76,20 @@ def database_collection():
 def index(request):
 	return render(request,'faceapp/index.html')
 
+#addition in admin page author:Amar Nagaju
 def amarTable(request):
 	return render(request,'faceapp/table.html')
+
+def staffList(request):
+	return render(request,'faceapp/staffList.html')
+
+def staffDetail(request):
+	return render(request,'faceapp/staffDetail.html')
+
+def userDash(request):
+	return render(request,'user/dashboard.html')
+
+#End of addition by amar
 
 def demo(request):
 	return render(request,'faceapp/demo.html')

@@ -1,0 +1,759 @@
+{% extends "faceapp/base_layout.html" %}
+{% block title %}Khec Attendance | Contact{% endblock%}
+
+{% block topbarTitle %}<a href="{% url 'home' %}">Dashboard</a> > Staff Detail{% endblock %}
+
+
+{% block content %}
+{% load static %}
+<!-- Begin page -->
+<div id="wrapper">
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <!--content area start-->
+            <div id="content" class="pmd-content inner-page profile-page">
+                <div class="cover-content">
+                    <div class="page-content">
+                        <div class="d-flex d-flex-row align-items-center mobile-view">
+                            <img alt="Profile-Pic" src="themes/images/card-image-2.jpg"
+                                class="profile-pic rounded-circle pmd-z-depth-light-2-1 mr-md-4 mr-sm-0" height="200"
+                                width="200">
+                            <div class="media-body">
+                                <h1>Marie Meyer</h1>
+                                <p class="pmd-list-subtitle">UI/UX Designer</p>
+                                <p>Amorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae nibh nisl. Cras
+                                    etitikis mauris eget lorem ultricies ferme ntum a inti diam. Amorem ipsum dolor sit
+                                    amet, consectetur adipiscing elit. Cras vitae nibh nisl. Cras etitikis mauris eget
+                                    lorem ultricies ferme ntum a inti diam.</p>
+                                <div class="pmd-social-icon">
+                                    <a class="btn btn-sm pmd-btn-fab pmd-ripple-effect btn-dark ml-0"
+                                        href="javascript:void(0);" title="Facebook">
+                                        <svg version="1.1" x="0px" y="0px" viewBox="0 0 310 310"
+                                            style="enable-background:new 0 0 310 310;" xml:space="preserve"
+                                            class="svg replaced-svg replaced-svg">
+                                            <g id="XMLID_834_">
+                                                <path id="XMLID_835_"
+                                                    d="M81.703,165.106h33.981V305c0,2.762,2.238,5,5,5h57.616c2.762,0,5-2.238,5-5V165.765h39.064   c2.54,0,4.677-1.906,4.967-4.429l5.933-51.502c0.163-1.417-0.286-2.836-1.234-3.899c-0.949-1.064-2.307-1.673-3.732-1.673h-44.996   V71.978c0-9.732,5.24-14.667,15.576-14.667c1.473,0,29.42,0,29.42,0c2.762,0,5-2.239,5-5V5.037c0-2.762-2.238-5-5-5h-40.545   C187.467,0.023,186.832,0,185.896,0c-7.035,0-31.488,1.381-50.804,19.151c-21.402,19.692-18.427,43.27-17.716,47.358v37.752H81.703   c-2.762,0-5,2.238-5,5v50.844C76.703,162.867,78.941,165.106,81.703,165.106z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                    <a class="btn btn-sm pmd-btn-fab pmd-ripple-effect btn-dark"
+                                        href="javascript:void(0);" title="Twitter">
+                                        <svg version="1.1" x="0px" y="0px" viewBox="0 0 310 310"
+                                            style="enable-background:new 0 0 310 310;" xml:space="preserve"
+                                            class="svg replaced-svg replaced-svg">
+                                            <g id="XMLID_826_">
+                                                <path id="XMLID_827_"
+                                                    d="M302.973,57.388c-4.87,2.16-9.877,3.983-14.993,5.463c6.057-6.85,10.675-14.91,13.494-23.73   c0.632-1.977-0.023-4.141-1.648-5.434c-1.623-1.294-3.878-1.449-5.665-0.39c-10.865,6.444-22.587,11.075-34.878,13.783   c-12.381-12.098-29.197-18.983-46.581-18.983c-36.695,0-66.549,29.853-66.549,66.547c0,2.89,0.183,5.764,0.545,8.598   C101.163,99.244,58.83,76.863,29.76,41.204c-1.036-1.271-2.632-1.956-4.266-1.825c-1.635,0.128-3.104,1.05-3.93,2.467   c-5.896,10.117-9.013,21.688-9.013,33.461c0,16.035,5.725,31.249,15.838,43.137c-3.075-1.065-6.059-2.396-8.907-3.977   c-1.529-0.851-3.395-0.838-4.914,0.033c-1.52,0.871-2.473,2.473-2.513,4.224c-0.007,0.295-0.007,0.59-0.007,0.889   c0,23.935,12.882,45.484,32.577,57.229c-1.692-0.169-3.383-0.414-5.063-0.735c-1.732-0.331-3.513,0.276-4.681,1.597   c-1.17,1.32-1.557,3.16-1.018,4.84c7.29,22.76,26.059,39.501,48.749,44.605c-18.819,11.787-40.34,17.961-62.932,17.961   c-4.714,0-9.455-0.277-14.095-0.826c-2.305-0.274-4.509,1.087-5.294,3.279c-0.785,2.193,0.047,4.638,2.008,5.895   c29.023,18.609,62.582,28.445,97.047,28.445c67.754,0,110.139-31.95,133.764-58.753c29.46-33.421,46.356-77.658,46.356-121.367   c0-1.826-0.028-3.67-0.084-5.508c11.623-8.757,21.63-19.355,29.773-31.536c1.237-1.85,1.103-4.295-0.33-5.998   C307.394,57.037,305.009,56.486,302.973,57.388z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                    <a class="btn btn-sm pmd-btn-fab pmd-ripple-effect btn-dark"
+                                        href="javascript:void(0);" title="LinkedIn">
+                                        <svg version="1.1" x="0px" y="0px" viewBox="0 0 310 310"
+                                            style="enable-background:new 0 0 310 310;" xml:space="preserve"
+                                            class="svg replaced-svg replaced-svg">
+                                            <g id="XMLID_801_">
+                                                <path id="XMLID_802_"
+                                                    d="M72.16,99.73H9.927c-2.762,0-5,2.239-5,5v199.928c0,2.762,2.238,5,5,5H72.16c2.762,0,5-2.238,5-5V104.73   C77.16,101.969,74.922,99.73,72.16,99.73z">
+                                                </path>
+                                                <path id="XMLID_803_"
+                                                    d="M41.066,0.341C18.422,0.341,0,18.743,0,41.362C0,63.991,18.422,82.4,41.066,82.4   c22.626,0,41.033-18.41,41.033-41.038C82.1,18.743,63.692,0.341,41.066,0.341z">
+                                                </path>
+                                                <path id="XMLID_804_"
+                                                    d="M230.454,94.761c-24.995,0-43.472,10.745-54.679,22.954V104.73c0-2.761-2.238-5-5-5h-59.599   c-2.762,0-5,2.239-5,5v199.928c0,2.762,2.238,5,5,5h62.097c2.762,0,5-2.238,5-5v-98.918c0-33.333,9.054-46.319,32.29-46.319   c25.306,0,27.317,20.818,27.317,48.034v97.204c0,2.762,2.238,5,5,5H305c2.762,0,5-2.238,5-5V194.995   C310,145.43,300.549,94.761,230.454,94.761z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-content profile-view">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="pmd-tabs">
+                                <div class="pmd-tab-active-bar" style="width: 97.9531px; left: 0px;"></div>
+                                <ul class="nav nav-tabs" role="tablist" style="width: 343.813px;">
+                                    <li class="nav-item"><a class="nav-link active" href="#about" aria-controls="about"
+                                            role="tab" data-toggle="tab">About</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#documents" aria-controls="documents"
+                                            role="tab" data-toggle="tab">Documents</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#salary" aria-controls="salary"
+                                            role="tab" data-toggle="tab">Salary</a></li>
+                                </ul>
+                            </div>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <!-- About Tab -->
+                                <div role="tabpanel" class="tab-pane active" id="about">
+                                    <div class="card pmd-card">
+                                        <div class="card-body">
+
+                                            <!-- Basic Information -->
+                                            <div class="details-tab">
+                                                <div class="d-flex flex-row align-items-center mb-2">
+                                                    <h3 class="card-title media-body">Basic Information</h3>
+
+                                                </div>
+                                                <div class="row view-basic-card">
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">First Name</label>
+                                                        <p class="pmd-list-title">Marie</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Last Name</label>
+                                                        <p class="pmd-list-title">Meyer</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Middle Name</label>
+                                                        <p class="pmd-list-title">Maynard</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Phone</label>
+                                                        <p class="pmd-list-title"><a href="tel:+91 98250 98250"
+                                                                title="+91 98250 98250">+91 98250 98250</a></p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Personal Email</label>
+                                                        <p class="pmd-list-title"><a href="mailto:marie@gmail.com"
+                                                                title="marie@xyz.com">marie@gmail.com</a></p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Date of Birth</label>
+                                                        <p class="pmd-list-title">16<sup>th</sup> June 1991</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Gender</label>
+                                                        <p class="pmd-list-title">Female</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Marital Status</label>
+                                                        <p class="pmd-list-title">Unmarried</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- Employee Information -->
+                                            <div class="details-tab">
+                                                <div class="d-flex flex-row align-items-center mb-2">
+                                                    <h3 class="card-title media-body">Employee Information</h3>
+
+                                                </div>
+                                                <!-- View Card -->
+                                                <div class="row view-employee-card">
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Employee Enrollment ID</label>
+                                                        <p class="pmd-list-title">XYZ - 1111</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Date of Joining</label>
+                                                        <p class="pmd-list-title">16<sup>th</sup> July 2017</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Company Email</label>
+                                                        <p class="pmd-list-title"><a href="mailto:marie@xyz.com"
+                                                                title="marie@xyz.com">marie@xyz.com</a></p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Department</label>
+                                                        <p class="pmd-list-title">Design</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Designation</label>
+                                                        <p class="pmd-list-title">UI / UX Designer</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Reporting Employee</label>
+                                                        <p class="pmd-list-title">Darlene C. Larsen</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Type of Employee</label>
+                                                        <p class="pmd-list-title">Full Time</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- Contact Information -->
+                                            <div class="details-tab">
+                                                <!-- View Card -->
+                                                <div class="d-flex flex-row align-items-center mb-2">
+                                                    <h3 class="card-title media-body">Contact Information</h3>
+
+                                                </div>
+                                                <div class="row view-contact-card">
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Address Line 1</label>
+                                                        <p class="pmd-list-title">2654 Kooter Lane</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Address Line 2</label>
+                                                        <p class="pmd-list-title">Pieter Feddesstraat 90</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">City</label>
+                                                        <p class="pmd-list-title">San Antonio</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">State</label>
+                                                        <p class="pmd-list-title">Texas</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Zip Code</label>
+                                                        <p class="pmd-list-title">78209</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Country</label>
+                                                        <p class="pmd-list-title">United States</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- Education Information -->
+                                            <div class="details-tab mt-4">
+                                                <h3 class="card-title pt-2 pb-3">Education</h3>
+                                                <!-- View Education Details -->
+                                                <div class="row no-gutters card-row">
+                                                    <div class="col-lg-6">
+                                                        <div class="media media-card">
+                                                            <i
+                                                                class="material-icons pmd-icon-lg md-dark mr-md-3 mr-sm-0">
+                                                                <svg x="0px" y="0px" viewBox="164 164 72 72"
+                                                                    enable-background="new 164 164 72 72"
+                                                                    xml:space="preserve">
+                                                                    <g>
+                                                                        <path
+                                                                            d="M229.152,194.031v-9.361l-28.862-16.544l-28.862,16.544v9.361h4.644v27.937h-5.224v10.158h58.159v-10.158h-4.426v-27.937
+                                                                    H229.152z M226.104,224.87v4.354H173.75v-4.354H226.104z M179.057,221.968v-27.937h8.127v27.937H179.057z M190.39,221.968v-27.937
+                                                                    h8.127v27.937H190.39z M201.864,221.968v-27.937h8.127v27.937H201.864z M213.56,221.968v-27.937h8.127v27.937H213.56z
+                                                                    M174.331,191.128v-4.644l25.959-15.093l25.958,15.093v4.644H174.331z" />
+                                                                        <path
+                                                                            d="M200.291,177.342c-2.846,0-5.152,2.307-5.152,5.152c0,2.846,2.306,5.152,5.152,5.152c2.845,0,5.152-2.306,5.152-5.152
+                                                                    C205.442,179.648,203.136,177.342,200.291,177.342z M200.291,184.743c-1.243,0-2.25-1.007-2.25-2.25c0-1.243,1.007-2.25,2.25-2.25
+                                                                    s2.25,1.007,2.25,2.25C202.54,183.736,201.533,184.743,200.291,184.743z" />
+                                                                    </g>
+                                                                </svg>
+                                                            </i>
+                                                            <div class="media-body">
+                                                                <h4 class="media-title">Indus University</h4>
+                                                                <p class="card-subtitle">2004 - 2008</p>
+                                                                <p>Bachelor of Engineering, Computer Engineering, 7.74
+                                                                </p>
+                                                            </div>
+                                                            <button data-target="#edit-dialog" data-toggle="modal"
+                                                                class="btn pmd-ripple-effect btn-dark btn-sm pmd-btn-fab pmd-btn-flat ml-auto"
+                                                                type="button"><i
+                                                                    class="material-icons pmd-icon-xs">edit</i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="media media-card">
+                                                            <i
+                                                                class="material-icons pmd-icon-lg md-dark mr-md-3 mr-sm-0">
+                                                                <svg x="0px" y="0px" viewBox="164 164 72 72"
+                                                                    enable-background="new 164 164 72 72"
+                                                                    xml:space="preserve">
+                                                                    <g>
+                                                                        <path
+                                                                            d="M229.152,194.031v-9.361l-28.862-16.544l-28.862,16.544v9.361h4.644v27.937h-5.224v10.158h58.159v-10.158h-4.426v-27.937
+                                                                    H229.152z M226.104,224.87v4.354H173.75v-4.354H226.104z M179.057,221.968v-27.937h8.127v27.937H179.057z M190.39,221.968v-27.937
+                                                                    h8.127v27.937H190.39z M201.864,221.968v-27.937h8.127v27.937H201.864z M213.56,221.968v-27.937h8.127v27.937H213.56z
+                                                                    M174.331,191.128v-4.644l25.959-15.093l25.958,15.093v4.644H174.331z" />
+                                                                        <path
+                                                                            d="M200.291,177.342c-2.846,0-5.152,2.307-5.152,5.152c0,2.846,2.306,5.152,5.152,5.152c2.845,0,5.152-2.306,5.152-5.152
+                                                                    C205.442,179.648,203.136,177.342,200.291,177.342z M200.291,184.743c-1.243,0-2.25-1.007-2.25-2.25c0-1.243,1.007-2.25,2.25-2.25
+                                                                    s2.25,1.007,2.25,2.25C202.54,183.736,201.533,184.743,200.291,184.743z" />
+                                                                    </g>
+                                                                </svg>
+                                                            </i>
+                                                            <div class="media-body">
+                                                                <h4 class="media-title">Indus University</h4>
+                                                                <p class="card-subtitle">2008 - 2010</p>
+                                                                <p>Masters of Engineering, Computer Engineering, 7.74
+                                                                </p>
+                                                            </div>
+                                                            <button data-target="#edit-dialog" data-toggle="modal"
+                                                                class="btn pmd-ripple-effect btn-dark btn-sm pmd-btn-fab pmd-btn-flat ml-auto"
+                                                                type="button"><i
+                                                                    class="material-icons pmd-icon-xs">edit</i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="media media-card">
+                                                            <i
+                                                                class="material-icons pmd-icon-lg md-dark mr-md-3 mr-sm-0">
+                                                                <svg x="0px" y="0px" viewBox="164 164 72 72"
+                                                                    enable-background="new 164 164 72 72"
+                                                                    xml:space="preserve">
+                                                                    <g>
+                                                                        <path
+                                                                            d="M229.152,194.031v-9.361l-28.862-16.544l-28.862,16.544v9.361h4.644v27.937h-5.224v10.158h58.159v-10.158h-4.426v-27.937
+                                                                    H229.152z M226.104,224.87v4.354H173.75v-4.354H226.104z M179.057,221.968v-27.937h8.127v27.937H179.057z M190.39,221.968v-27.937
+                                                                    h8.127v27.937H190.39z M201.864,221.968v-27.937h8.127v27.937H201.864z M213.56,221.968v-27.937h8.127v27.937H213.56z
+                                                                    M174.331,191.128v-4.644l25.959-15.093l25.958,15.093v4.644H174.331z" />
+                                                                        <path
+                                                                            d="M200.291,177.342c-2.846,0-5.152,2.307-5.152,5.152c0,2.846,2.306,5.152,5.152,5.152c2.845,0,5.152-2.306,5.152-5.152
+                                                                    C205.442,179.648,203.136,177.342,200.291,177.342z M200.291,184.743c-1.243,0-2.25-1.007-2.25-2.25c0-1.243,1.007-2.25,2.25-2.25
+                                                                    s2.25,1.007,2.25,2.25C202.54,183.736,201.533,184.743,200.291,184.743z" />
+                                                                    </g>
+                                                                </svg>
+                                                            </i>
+                                                            <div class="media-body">
+                                                                <h4 class="media-title">University of Pennsylvania</h4>
+                                                                <p class="card-subtitle">2010 - 2012</p>
+                                                                <p>Ph.D, Artificial Intelligence, 8.5</p>
+                                                            </div>
+                                                            <button data-target="#edit-dialog" data-toggle="modal"
+                                                                class="btn pmd-ripple-effect btn-dark btn-sm pmd-btn-fab pmd-btn-flat ml-auto"
+                                                                type="button"><i
+                                                                    class="material-icons pmd-icon-xs">edit</i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                            <!-- Experience Information -->
+                                            <div class="details-tab mt-4">
+                                                <h3 class="card-title pt-2 pb-3">Experience</h3>
+                                                <div class="row no-gutters card-row">
+                                                    <div class="col-lg-6">
+                                                        <div class="media media-card">
+                                                            <i
+                                                                class="material-icons pmd-icon-lg md-dark mr-md-3 mr-sm-0">
+                                                                <svg version="1.1" x="0px" y="0px"
+                                                                    viewBox="164 164 72 72"
+                                                                    enable-background="new 164 164 72 72"
+                                                                    xml:space="preserve">
+                                                                    <path d="M227.199,187.72H202.72V173.8c0-2.56-2.08-4.8-4.8-4.8H172.8c-2.72,0-4.8,2.24-4.8,4.8v54.4c0,2.72,2.08,4.8,4.8,4.8h54.399
+                                                                    c2.721,0,4.801-2.08,4.801-4.8v-35.68C232,189.8,229.92,187.72,227.199,187.72z M178.08,229.8v-9.12c0-0.799,0.64-1.6,1.6-1.6h4
+                                                                    v10.72H178.08z M192.48,229.8h-5.6v-10.72h4c0.96,0,1.6,0.801,1.6,1.6V229.8z M199.52,229.8h-3.68v-9.12
+                                                                    c0-2.72-2.08-4.799-4.8-4.799h-11.2c-2.72,0-4.8,2.079-4.8,4.799v9.12h-2.24c-0.8,0-1.6-0.64-1.6-1.6v-54.4c0-0.96,0.8-1.6,1.6-1.6
+                                                                    h25.12c0.8,0,1.6,0.64,1.6,1.6V229.8z M228.8,228.2c0,0.96-0.8,1.6-1.601,1.6H202.72v-38.88h24.479c0.801,0,1.601,0.8,1.601,1.601
+                                                                    V228.2z" />
+                                                                    <g>
+                                                                        <path d="M194.08,179.88h-17.6c-0.96,0-1.6-0.64-1.6-1.6s0.64-1.6,1.6-1.6h17.6c0.96,0,1.6,0.64,1.6,1.6
+                                                                        S195.04,179.88,194.08,179.88z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path d="M194.08,187.88h-17.6c-0.96,0-1.6-0.64-1.6-1.6s0.64-1.6,1.6-1.6h17.6c0.96,0,1.6,0.64,1.6,1.6
+                                                                        S195.04,187.88,194.08,187.88z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path d="M194.08,195.88h-17.6c-0.96,0-1.6-0.64-1.6-1.6s0.64-1.6,1.6-1.6h17.6c0.96,0,1.6,0.64,1.6,1.6
+                                                                        S195.04,195.88,194.08,195.88z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path
+                                                                            d="M194.08,203.881h-17.6c-0.96,0-1.6-0.641-1.6-1.601s0.64-1.601,1.6-1.601h17.6c0.96,0,1.6,0.641,1.6,1.601S195.04,203.881,194.08,203.881z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path d="M224.48,199.08H206.88c-0.96,0-1.601-0.64-1.601-1.6s0.641-1.6,1.601-1.6h17.601c0.96,0,1.6,0.64,1.6,1.6
+                                                                        S225.44,199.08,224.48,199.08z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path
+                                                                            d="M224.48,207.08H206.88c-0.96,0-1.601-0.641-1.601-1.6c0-0.961,0.641-1.6,1.601-1.6h17.601c0.96,0,1.6,0.639,1.6,1.6
+                                                                        C226.08,206.439,225.44,207.08,224.48,207.08z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path
+                                                                            d="M224.48,215.08H206.88c-0.96,0-1.601-0.641-1.601-1.6c0-0.961,0.641-1.6,1.601-1.6h17.601c0.96,0,1.6,0.639,1.6,1.6
+                                                                        C226.08,214.439,225.44,215.08,224.48,215.08z" />
+                                                                    </g>
+                                                                </svg>
+                                                            </i>
+                                                            <div class="media-body">
+                                                                <h4 class="media-title">UI/UX Designer, Facebook</h4>
+                                                                <p class="mb-1">7<sup>th</sup>Aug 2012 to
+                                                                    3<sup>rd</sup>Aug 2014, $25/hr to $30/hr</p>
+                                                                <p>For better opportunities</p>
+                                                            </div>
+                                                            <button data-target="#edit-exp-dialog" data-toggle="modal"
+                                                                class="btn pmd-ripple-effect btn-dark btn-sm pmd-btn-fab pmd-btn-flat ml-auto"
+                                                                type="button"><i
+                                                                    class="material-icons pmd-icon-xs">edit</i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="media media-card">
+                                                            <i
+                                                                class="material-icons pmd-icon-lg md-dark mr-md-3 mr-sm-0">
+                                                                <svg version="1.1" x="0px" y="0px"
+                                                                    viewBox="164 164 72 72"
+                                                                    enable-background="new 164 164 72 72"
+                                                                    xml:space="preserve">
+                                                                    <path d="M227.199,187.72H202.72V173.8c0-2.56-2.08-4.8-4.8-4.8H172.8c-2.72,0-4.8,2.24-4.8,4.8v54.4c0,2.72,2.08,4.8,4.8,4.8h54.399
+                                                                    c2.721,0,4.801-2.08,4.801-4.8v-35.68C232,189.8,229.92,187.72,227.199,187.72z M178.08,229.8v-9.12c0-0.799,0.64-1.6,1.6-1.6h4
+                                                                    v10.72H178.08z M192.48,229.8h-5.6v-10.72h4c0.96,0,1.6,0.801,1.6,1.6V229.8z M199.52,229.8h-3.68v-9.12
+                                                                    c0-2.72-2.08-4.799-4.8-4.799h-11.2c-2.72,0-4.8,2.079-4.8,4.799v9.12h-2.24c-0.8,0-1.6-0.64-1.6-1.6v-54.4c0-0.96,0.8-1.6,1.6-1.6
+                                                                    h25.12c0.8,0,1.6,0.64,1.6,1.6V229.8z M228.8,228.2c0,0.96-0.8,1.6-1.601,1.6H202.72v-38.88h24.479c0.801,0,1.601,0.8,1.601,1.601
+                                                                    V228.2z" />
+                                                                    <g>
+                                                                        <path d="M194.08,179.88h-17.6c-0.96,0-1.6-0.64-1.6-1.6s0.64-1.6,1.6-1.6h17.6c0.96,0,1.6,0.64,1.6,1.6
+                                                                        S195.04,179.88,194.08,179.88z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path d="M194.08,187.88h-17.6c-0.96,0-1.6-0.64-1.6-1.6s0.64-1.6,1.6-1.6h17.6c0.96,0,1.6,0.64,1.6,1.6
+                                                                        S195.04,187.88,194.08,187.88z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path d="M194.08,195.88h-17.6c-0.96,0-1.6-0.64-1.6-1.6s0.64-1.6,1.6-1.6h17.6c0.96,0,1.6,0.64,1.6,1.6
+                                                                        S195.04,195.88,194.08,195.88z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path
+                                                                            d="M194.08,203.881h-17.6c-0.96,0-1.6-0.641-1.6-1.601s0.64-1.601,1.6-1.601h17.6c0.96,0,1.6,0.641,1.6,1.601S195.04,203.881,194.08,203.881z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path d="M224.48,199.08H206.88c-0.96,0-1.601-0.64-1.601-1.6s0.641-1.6,1.601-1.6h17.601c0.96,0,1.6,0.64,1.6,1.6
+                                                                        S225.44,199.08,224.48,199.08z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path
+                                                                            d="M224.48,207.08H206.88c-0.96,0-1.601-0.641-1.601-1.6c0-0.961,0.641-1.6,1.601-1.6h17.601c0.96,0,1.6,0.639,1.6,1.6
+                                                                        C226.08,206.439,225.44,207.08,224.48,207.08z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path
+                                                                            d="M224.48,215.08H206.88c-0.96,0-1.601-0.641-1.601-1.6c0-0.961,0.641-1.6,1.601-1.6h17.601c0.96,0,1.6,0.639,1.6,1.6
+                                                                        C226.08,214.439,225.44,215.08,224.48,215.08z" />
+                                                                    </g>
+                                                                </svg>
+                                                            </i>
+                                                            <div class="media-body">
+                                                                <h4 class="media-title">UI/UX Designer, Adobe</h4>
+                                                                <p class="mb-1">7<sup>th</sup>Jan 2015 to
+                                                                    3<sup>rd</sup>Aug 2017, $35/hr to $45/hr</p>
+                                                                <p>For better opportunities</p>
+                                                            </div>
+                                                            <button data-target="#edit-exp-dialog" data-toggle="modal"
+                                                                class="btn pmd-ripple-effect btn-dark btn-sm pmd-btn-fab pmd-btn-flat ml-auto"
+                                                                type="button"><i
+                                                                    class="material-icons pmd-icon-xs">edit</i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="media media-card">
+                                                            <i
+                                                                class="material-icons pmd-icon-lg md-dark mr-md-3 mr-sm-0">
+                                                                <svg version="1.1" x="0px" y="0px"
+                                                                    viewBox="164 164 72 72"
+                                                                    enable-background="new 164 164 72 72"
+                                                                    xml:space="preserve">
+                                                                    <path d="M227.199,187.72H202.72V173.8c0-2.56-2.08-4.8-4.8-4.8H172.8c-2.72,0-4.8,2.24-4.8,4.8v54.4c0,2.72,2.08,4.8,4.8,4.8h54.399
+                                                                    c2.721,0,4.801-2.08,4.801-4.8v-35.68C232,189.8,229.92,187.72,227.199,187.72z M178.08,229.8v-9.12c0-0.799,0.64-1.6,1.6-1.6h4
+                                                                    v10.72H178.08z M192.48,229.8h-5.6v-10.72h4c0.96,0,1.6,0.801,1.6,1.6V229.8z M199.52,229.8h-3.68v-9.12
+                                                                    c0-2.72-2.08-4.799-4.8-4.799h-11.2c-2.72,0-4.8,2.079-4.8,4.799v9.12h-2.24c-0.8,0-1.6-0.64-1.6-1.6v-54.4c0-0.96,0.8-1.6,1.6-1.6
+                                                                    h25.12c0.8,0,1.6,0.64,1.6,1.6V229.8z M228.8,228.2c0,0.96-0.8,1.6-1.601,1.6H202.72v-38.88h24.479c0.801,0,1.601,0.8,1.601,1.601
+                                                                    V228.2z" />
+                                                                    <g>
+                                                                        <path d="M194.08,179.88h-17.6c-0.96,0-1.6-0.64-1.6-1.6s0.64-1.6,1.6-1.6h17.6c0.96,0,1.6,0.64,1.6,1.6
+                                                                        S195.04,179.88,194.08,179.88z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path d="M194.08,187.88h-17.6c-0.96,0-1.6-0.64-1.6-1.6s0.64-1.6,1.6-1.6h17.6c0.96,0,1.6,0.64,1.6,1.6
+                                                                        S195.04,187.88,194.08,187.88z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path d="M194.08,195.88h-17.6c-0.96,0-1.6-0.64-1.6-1.6s0.64-1.6,1.6-1.6h17.6c0.96,0,1.6,0.64,1.6,1.6
+                                                                        S195.04,195.88,194.08,195.88z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path d="M194.08,203.881h-17.6c-0.96,0-1.6-0.641-1.6-1.601s0.64-1.601,1.6-1.601h17.6c0.96,0,1.6,0.641,1.6,1.601
+                                                                        S195.04,203.881,194.08,203.881z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path d="M224.48,199.08H206.88c-0.96,0-1.601-0.64-1.601-1.6s0.641-1.6,1.601-1.6h17.601c0.96,0,1.6,0.64,1.6,1.6
+                                                                        S225.44,199.08,224.48,199.08z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path
+                                                                            d="M224.48,207.08H206.88c-0.96,0-1.601-0.641-1.601-1.6c0-0.961,0.641-1.6,1.601-1.6h17.601c0.96,0,1.6,0.639,1.6,1.6
+                                                                        C226.08,206.439,225.44,207.08,224.48,207.08z" />
+                                                                    </g>
+                                                                    <g>
+                                                                        <path
+                                                                            d="M224.48,215.08H206.88c-0.96,0-1.601-0.641-1.601-1.6c0-0.961,0.641-1.6,1.601-1.6h17.601c0.96,0,1.6,0.639,1.6,1.6
+                                                                        C226.08,214.439,225.44,215.08,224.48,215.08z" />
+                                                                    </g>
+                                                                </svg>
+                                                            </i>
+                                                            <div class="media-body">
+                                                                <h4 class="media-title">UI/UX Designer, Google</h4>
+                                                                <p class="mb-1">7<sup>th</sup>Aug 2017 to
+                                                                    3<sup>rd</sup>Aug 2018, $45/hr to $50/hr</p>
+                                                                <p>For better opportunities</p>
+                                                            </div>
+                                                            <button data-target="#edit-exp-dialog" data-toggle="modal"
+                                                                class="btn pmd-ripple-effect btn-dark btn-sm pmd-btn-fab pmd-btn-flat ml-auto"
+                                                                type="button"><i
+                                                                    class="material-icons pmd-icon-xs">edit</i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Documents Tab -->
+                                <div role="tabpanel" class="tab-pane" id="documents">
+                                    <!-- Documents -->
+                                    <div class="card pmd-card">
+                                        <div class="card-body">
+                                            <div class="details-tab">
+                                                <div class="d-flex flex-row align-items-center mb-2">
+                                                    <div class="media-body">
+                                                        <h3 class="card-title">Employee Documents</h3>
+                                                    </div>
+                                                    <button data-target="#add-document-dialog" data-toggle="modal"
+                                                        class="btn pmd-ripple-effect btn-outline-primary pmd-btn-flat btn-sm pmd-btn-fab"
+                                                        type="button"><i class="material-icons pmd-sm">add</i></button>
+                                                </div>
+                                                <!-- Documents Table -->
+                                                <div class="table-responsive pt-2">
+                                                    <table class="table pmd-table table-bordered" id="table-propeller">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>File Name</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td data-title="File Name">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <i
+                                                                            class="pmd-list-icon pmd-icon-sm material-icons pdf-icon">
+                                                                            <svg version="1.1" x="0px" y="0px"
+                                                                                viewBox="0 0 100 100"
+                                                                                enable-background="new 0 0 100 100"
+                                                                                xml:space="preserve">
+                                                                                <path
+                                                                                    d="M92.5,40H85V22.5c0-0.663-0.263-1.299-0.732-1.768l-15-15C68.799,5.263,68.163,5,67.5,5h-50C16.119,5,15,6.119,15,7.5V40  H7.5C6.119,40,5,41.119,5,42.5v35C5,78.881,6.119,80,7.5,80H15v12.5c0,1.381,1.119,2.5,2.5,2.5h65c1.381,0,2.5-1.119,2.5-2.5V80h7.5  c1.381,0,2.5-1.119,2.5-2.5v-35C95,41.119,93.881,40,92.5,40z M70,13.536L76.464,20H70V13.536z M20,10h45v15h15v15H20V10z M80,90H20  V80h60V90z M90,75H10V45h80V75z" />
+                                                                                <path
+                                                                                    d="M30,65h2.5c4.136,0,7.5-3.364,7.5-7.5S36.636,50,32.5,50h-5c-1.381,0-2.5,1.119-2.5,2.5V70h5V65z M30,55h2.5  c1.378,0,2.5,1.122,2.5,2.5S33.878,60,32.5,60H30V55z" />
+                                                                                <path
+                                                                                    d="M57.5,62.5v-5c0-4.136-3.364-7.5-7.5-7.5h-7.5v20H50C54.136,70,57.5,66.636,57.5,62.5z M47.5,55H50  c1.378,0,2.5,1.122,2.5,2.5v5c0,1.378-1.122,2.5-2.5,2.5h-2.5V55z" />
+                                                                                <path
+                                                                                    d="M65,62.5h7.5v-5H65V55h10v-5H62.5c-1.381,0-2.5,1.119-2.5,2.5v5v5V70h5V62.5z" />
+                                                                            </svg>
+                                                                        </i>
+                                                                        <div class="media-body">Degree-Certificate.pdf
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td data-title="">
+                                                                    <a href="javascript:void(0);"
+                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
+                                                                            class="material-icons pmd-sm">visibility</i></a>
+                                                                    <a href="javascript:void(0);"
+                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
+                                                                            class="material-icons pmd-sm">edit</i></a>
+                                                                    <a href="javascript:void(0);"
+                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm"
+                                                                        data-toggle="modal"
+                                                                        data-target="#delete_document_modal"><i
+                                                                            class="material-icons pmd-sm">delete_outline</i>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td data-title="File Name">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <i
+                                                                            class="pmd-list-icon pmd-icon-sm material-icons pdf-icon">
+                                                                            <svg version="1.1" x="0px" y="0px"
+                                                                                viewBox="0 0 100 100"
+                                                                                enable-background="new 0 0 100 100"
+                                                                                xml:space="preserve">
+                                                                                <path
+                                                                                    d="M92.5,40H85V22.5c0-0.663-0.263-1.299-0.732-1.768l-15-15C68.799,5.263,68.163,5,67.5,5h-50C16.119,5,15,6.119,15,7.5V40  H7.5C6.119,40,5,41.119,5,42.5v35C5,78.881,6.119,80,7.5,80H15v12.5c0,1.381,1.119,2.5,2.5,2.5h65c1.381,0,2.5-1.119,2.5-2.5V80h7.5  c1.381,0,2.5-1.119,2.5-2.5v-35C95,41.119,93.881,40,92.5,40z M70,13.536L76.464,20H70V13.536z M20,10h45v15h15v15H20V10z M80,90H20  V80h60V90z M90,75H10V45h80V75z" />
+                                                                                <path
+                                                                                    d="M30,65h2.5c4.136,0,7.5-3.364,7.5-7.5S36.636,50,32.5,50h-5c-1.381,0-2.5,1.119-2.5,2.5V70h5V65z M30,55h2.5  c1.378,0,2.5,1.122,2.5,2.5S33.878,60,32.5,60H30V55z" />
+                                                                                <path
+                                                                                    d="M57.5,62.5v-5c0-4.136-3.364-7.5-7.5-7.5h-7.5v20H50C54.136,70,57.5,66.636,57.5,62.5z M47.5,55H50  c1.378,0,2.5,1.122,2.5,2.5v5c0,1.378-1.122,2.5-2.5,2.5h-2.5V55z" />
+                                                                                <path
+                                                                                    d="M65,62.5h7.5v-5H65V55h10v-5H62.5c-1.381,0-2.5,1.119-2.5,2.5v5v5V70h5V62.5z" />
+                                                                            </svg>
+                                                                        </i>
+                                                                        <div class="media-body">Experience-Letter.pdf
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td data-title="">
+                                                                    <a href="javascript:void(0);"
+                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
+                                                                            class="material-icons pmd-sm">visibility</i></a>
+                                                                    <a href="javascript:void(0);"
+                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
+                                                                            class="material-icons pmd-sm">edit</i></a>
+                                                                    <a href="javascript:void(0);" data-toggle="modal"
+                                                                        data-target="#delete_document_modal"
+                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm"><i
+                                                                            class="material-icons pmd-sm">delete_outline</i>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td data-title="File Name">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <i
+                                                                            class="pmd-list-icon pmd-icon-sm material-icons jpg-icon">
+                                                                            <svg version="1.1" x="0px" y="0px"
+                                                                                viewBox="0 0 100 100"
+                                                                                enable-background="new 0 0 100 100"
+                                                                                xml:space="preserve">
+                                                                                <path
+                                                                                    d="M92.5,40H85V22.5c0-0.663-0.264-1.299-0.732-1.768l-15-15C68.799,5.264,68.163,5,67.5,5h-50C16.119,5,15,6.119,15,7.5V40  H7.5C6.119,40,5,41.119,5,42.5v35C5,78.881,6.119,80,7.5,80H15v12.5c0,1.381,1.119,2.5,2.5,2.5h65c1.381,0,2.5-1.119,2.5-2.5V80h7.5  c1.381,0,2.5-1.119,2.5-2.5v-35C95,41.119,93.881,40,92.5,40z M70,13.535L76.465,20H70V13.535z M20,10h45v15h15v15H20V10z M80,90H20  V80h60V90z M90,75H10V45h80V75z" />
+                                                                                <path
+                                                                                    d="M37.5,62.5V50h-5v12.5c0,1.379-1.121,2.5-2.5,2.5h-2.5v5H30C34.136,70,37.5,66.636,37.5,62.5z" />
+                                                                                <path
+                                                                                    d="M45,65h2.5c4.136,0,7.5-3.364,7.5-7.5S51.636,50,47.5,50h-5c-1.381,0-2.5,1.119-2.5,2.5V70h5V65z M45,55h2.5  c1.379,0,2.5,1.121,2.5,2.5S48.879,60,47.5,60H45V55z" />
+                                                                                <path
+                                                                                    d="M65,70h5c1.381,0,2.5-1.119,2.5-2.5V60c0-1.381-1.119-2.5-2.5-2.5h-5v5h2.5V65H65c-1.379,0-2.5-1.121-2.5-2.5v-5  c0-1.379,1.121-2.5,2.5-2.5h5v-5h-5c-4.136,0-7.5,3.364-7.5,7.5v5C57.5,66.636,60.864,70,65,70z" />
+                                                                            </svg>
+                                                                        </i>
+                                                                        <div class="media-body">Passport-Size-Photo.jpg
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td data-title="">
+                                                                    <a href="javascript:void(0);"
+                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
+                                                                            class="material-icons pmd-sm">visibility</i></a>
+                                                                    <a href="javascript:void(0);"
+                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
+                                                                            class="material-icons pmd-sm">edit</i></a>
+                                                                    <a href="javascript:void(0);" data-toggle="modal"
+                                                                        data-target="#delete_document_modal"
+                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm"><i
+                                                                            class="material-icons pmd-sm">delete_outline</i>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Add Document Dialog -->
+                                <div tabindex="-1" class="modal pmd-modal fade add-dialog" id="add-document-dialog"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header pmd-modal-border">
+                                                <h2 class="modal-title">Add Document</h2>
+                                                <button aria-hidden="true" data-dismiss="modal" class="close"
+                                                    type="button">×</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                        <label for="filename">File Name</label>
+                                                        <input type="text" class="mat-input form-control" id="filename"
+                                                            value="">
+                                                    </div>
+                                                    <div class="custom-file pmd-custom-file">
+                                                        <input type="file" class="custom-file-input" id="customFile">
+                                                        <label class="custom-file-label" for="customFile">Choose
+                                                            file</label>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button data-dismiss="modal"
+                                                    class="btn pmd-ripple-effect btn-primary pmd-btn-raised"
+                                                    type="button">Add</button>
+                                                <button data-dismiss="modal"
+                                                    class="btn pmd-ripple-effect btn-outline-secondary"
+                                                    type="button">Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Salary Tab -->
+                                <div role="tabpanel" class="tab-pane" id="salary">
+                                    <!-- Basic Information -->
+                                    <div class="card pmd-card">
+                                        <div class="card-body">
+                                            <div class="details-tab">
+                                                <div class="d-flex flex-row align-items-center mb-2">
+                                                    <div class="media-body">
+                                                        <h3 class="card-title">Salary Information</h3>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row view-salary-card">
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Actual Hourly Salary</label>
+                                                        <p class="pmd-list-title">$25/hr</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Total Monthly Salary</label>
+                                                        <p class="pmd-list-title">$6000</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Annual Gross Salary</label>
+                                                        <p class="pmd-list-title">$72000</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Federal Withholding</label>
+                                                        <p class="pmd-list-title">$12500</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Medicare</label>
+                                                        <p class="pmd-list-title">$1800</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Social Security</label>
+                                                        <p class="pmd-list-title">$2500</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Allowances</label>
+                                                        <p class="pmd-list-title">$0</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Add. Allowances</label>
+                                                        <p class="pmd-list-title">$0</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Net Pay</label>
+                                                        <p class="pmd-list-title">$88800</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content area end -->
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

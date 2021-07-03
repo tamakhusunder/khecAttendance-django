@@ -4,7 +4,13 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'), 
 
+    # admin page addition author:Amar Nagaju
     path('table/', views.amarTable, name='table'),
+    path('staffList/', views.staffList, name='staffList'),
+    path('staffDetail/', views.staffDetail, name='staffDetail'),
+
+    #user page
+    path('userdash/', views.userDash, name='userdash'),
 
     path('login/', views.loginUser, name='login'),
     path('demo/', views.demo, name='demo'),

@@ -4,294 +4,482 @@
 {% load static %}
 
 {% block content %}
- <div class="content-page">
-                <div class="content">
-                    {% if messages %}
-                        {% for msg in messages %}
-                            <div class="row">
-                                <div class="col-sm-8 offset-2">
-                                    <center>
-                                    <p {% if msg.tags %} class="alert alert-{{msg.tags}}" {% endif %}>{{msg}}</p>
-                                    </center>
-                                    
+<div class="content-page">
+    <div class="content">
+        {% if messages %}
+        {% for msg in messages %}
+        <div class="row">
+            <div class="col-sm-8 offset-2">
+                <center>
+                    <p {% if msg.tags %} class="alert alert-{{msg.tags}}" {% endif %}>{{msg}}</p>
+                </center>
+
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="card-box">
+                        <div class="dropdown float-right">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right pl-2">
+                                <!-- item-->
+                                <a href="{% url 'editTable' %}"> View detail</a>
+
+                            </div>
+                        </div>
+
+                        <h4 class="header-title mt-0 mb-4">Overall Staff</h4>
+
+                        <div class="widget-chart-1">
+                            <div class="widget-chart-box-1 float-left" dir="ltr">
+                                <i class="fas fa-users fa-5x"></i>
+                            </div>
+
+                            <div class="widget-detail-1 text-right">
+                                <h2 class="font-weight-normal pt-2 mb-1"> {{sql_totstaff}} </h2>
+                                <a href="{% url 'editTable' %}">
+                                    <p class="text-muted mb-1">View details</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- end col -->
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="card-box">
+                        <div class="dropdown float-right">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right pl-2">
+                                <!-- item-->
+                                <a href="{% url 'attendance' %}" class="dropdown-item">View detail</a>
+                            </div>
+                        </div>
+
+                        <h4 class="header-title mt-0 mb-3">No. of Present</h4>
+
+                        <div class="widget-box-2">
+                            <div class="widget-detail-2 text-right">
+                                <span
+                                    class="badge badge-success badge-pill float-left mt-3">{% widthratio sql_present sql_totstaff 100 %}
+                                    % <i class="mdi mdi-trending-up"></i></span>
+                                <h2 class="font-weight-normal mb-1"> {{sql_present}} </h2>
+                                <a href="{% url 'attendance' %}">
+                                    <p class="text-muted mb-3">View details</p>
+                                </a>
+                            </div>
+                            <div class="progress progress-bar-alt-success progress-sm">
+                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{sql_present}}"
+                                    aria-valuemin="0" aria-valuemax="50"
+                                    style="width: {% widthratio sql_present sql_totstaff 100 %}%;">
+                                    <span class="sr-only">77% Complete</span>
                                 </div>
                             </div>
-                        {% endfor %}
-                    {% endif %}
-
-                    <!-- Start Content-->
-                    <div class="container-fluid">
-
-                        <div class="row">
-
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card-box">
-                                    <div class="dropdown float-right">
-                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right pl-2">
-                                            <!-- item-->
-                                                <a href="{% url 'editTable' %}"> View detail</a>
-                                            
-                                        </div>
-                                    </div>
-
-                                    <h4 class="header-title mt-0 mb-4">Overall Staff</h4>
-
-                                    <div class="widget-chart-1">
-                                        <div class="widget-chart-box-1 float-left" dir="ltr">
-                                             <i class="fas fa-users fa-5x"></i>
-                                        </div>
-
-                                        <div class="widget-detail-1 text-right">
-                                            <h2 class="font-weight-normal pt-2 mb-1"> {{sql_totstaff}} </h2>
-                                            <a href="{% url 'editTable' %}"><p class="text-muted mb-1">View details</p></a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div><!-- end col -->
-
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card-box">
-                                    <div class="dropdown float-right">
-                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right pl-2">
-                                            <!-- item-->
-                                            <a href="{% url 'attendance' %}" class="dropdown-item">View detail</a>
-                                        </div>
-                                    </div>
-
-                                    <h4 class="header-title mt-0 mb-3">No. of Present</h4>
-
-                                    <div class="widget-box-2">
-                                        <div class="widget-detail-2 text-right">
-                                            <span class="badge badge-success badge-pill float-left mt-3">{% widthratio sql_present sql_totstaff 100 %} % <i class="mdi mdi-trending-up"></i></span>
-                                            <h2 class="font-weight-normal mb-1"> {{sql_present}} </h2>
-                                            <a href="{% url 'attendance' %}"><p class="text-muted mb-3">View details</p></a>
-                                        </div>
-                                        <div class="progress progress-bar-alt-success progress-sm">
-                                            <div class="progress-bar bg-success" role="progressbar"
-                                                    aria-valuenow="{{sql_present}}" aria-valuemin="0" aria-valuemax="50"
-                                                    style="width: {% widthratio sql_present sql_totstaff 100 %}%;">
-                                                <span class="sr-only">77% Complete</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-        
-                            </div><!-- end col -->
-
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card-box">
-                                    <div class="dropdown float-right">
-                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <!-- item-->
-                                            <a href="{% url 'attendance' %}" class="dropdown-item">View detail</a>
-                                        </div>
-                                    </div>
-
-                                    <h4 class="header-title mt-0 mb-3">No. of Absentee</h4>
-
-                                    <div class="widget-box-2">
-                                        <div class="widget-detail-2 text-right">
-                                            <span class="badge badge-danger badge-pill float-left mt-3">{% widthratio sql_absent sql_totstaff 100 %} % <i class="mdi mdi-trending-up"></i></span>
-                                            <h2 class="font-weight-normal mb-1">{{sql_absent}} </h2>
-                                            <a href="{% url 'attendance' %}"><p class="text-muted mb-3">View details</p></a>
-                                        </div>
-
-                                        <div class="progress progress-bar-alt-pink progress-sm">
-                                            <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"
-                                                    aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-                                                    style="width:{% widthratio sql_absent sql_totstaff 100 %}%;">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-        
-                            </div><!-- end col -->
-
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card-box">
-                                    <div class="dropdown float-right">
-                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <!-- item-->
-                                            <a href="javascript:void(0);" class="dropdown-item">View detail</a>
-                                        </div>
-                                    </div>
-
-                                    <h4 class="header-title mt-0 mb-4">Unlisted Staff</h4>
-
-                                    <div class="widget-chart-1">
-                                        <div class="widget-chart-box-1 float-left" dir="ltr">
-                                            <input data-plugin="knob" data-width="80" data-height="80" data-fgColor="#ffbd4a"
-                                                    data-bgColor="#FFE6BA" value="1"
-                                                    data-skin="tron" data-angleOffset="180" data-readOnly=true
-                                                    data-thickness=".15"/>
-                                        </div>
-                                        <div class="widget-detail-1 text-right">
-                                            <h2 class="font-weight-normal pt-2 mb-1"> 1 </h2>
-                                            <a href="#" class="text-muted mb-1">View details</a>
-                                        </div>
-                                    </div>
-                                </div>
-        
-                            </div><!-- end col -->
-
                         </div>
-                        <!-- end row -->
+                    </div>
 
-                        <div class="row">
-                            <div class="col-xl-4">
-                                <div class="card-box">
-                                    <div class="dropdown float-right">
-                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <!-- item-->
-                                            <a href="javascript:void(0);" class="dropdown-item">View Details</a>
-                                            <!-- item-->
-                                            <a href="javascript:void(0);" class="dropdown-item">Another action</a>
-                                        </div>
-                                    </div>
+                </div><!-- end col -->
 
-                                    <!-- 2nd row -->
-
-                                    <h4 class="header-title mt-0">Daily Status</h4>
-
-                                    <div class="widget-chart text-center">
-                                        <div id="morris-donut-example" dir="ltr" style="height: 245px;" class="morris-chart"></div>
-                                        <ul class="list-inline chart-detail-list mb-0">
-                                            <li class="list-inline-item">
-                                                <h5 style="color: #5b69bc;"><i class="fa fa-circle mr-1"></i>Present</h5>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <h5 style="color: #ff8acc;"><i class="fa fa-circle mr-1"></i>Absentee</h5>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div><!-- end col -->
-
-                            <div class="col-xl-4">
-                                <div class="card-box">
-                                    <div class="dropdown float-right">
-                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <!-- item-->
-                                            <a href="javascript:void(0);" class="dropdown-item">View Details</a>
-                                        </div>
-                                    </div>
-                                    <h4 class="header-title mt-0">Statistics</h4>
-                                    <div id="morris-bar-example" dir="ltr" style="height: 280px;" class="morris-chart"></div>
-                                </div>
-                            </div><!-- end col -->
-
-                            <div class="col-xl-4">
-                                <div class="card-box">
-                                    <div class="dropdown float-right">
-                                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <!-- item-->
-                                            <a href="javascript:void(0);" class="dropdown-item">View Details</a>
-                                            <!-- item-->
-                                            <a href="javascript:void(0);" class="dropdown-item">Another action</a>
-                                        </div>
-                                    </div>
-                                    <h4 class="header-title mt-0">Total Staff</h4>
-                                    <div id="morris-line-example" dir="ltr" style="height: 280px;" class="morris-chart"></div>
-                                </div>
-                            </div><!-- end col -->
-
+                <div class="col-xl-3 col-md-6">
+                    <div class="card-box">
+                        <div class="dropdown float-right">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <!-- item-->
+                                <a href="{% url 'attendance' %}" class="dropdown-item">View detail</a>
+                            </div>
                         </div>
-                        <!-- end row -->
+
+                        <h4 class="header-title mt-0 mb-3">No. of Absentee</h4>
+
+                        <div class="widget-box-2">
+                            <div class="widget-detail-2 text-right">
+                                <span
+                                    class="badge badge-danger badge-pill float-left mt-3">{% widthratio sql_absent sql_totstaff 100 %}
+                                    % <i class="mdi mdi-trending-up"></i></span>
+                                <h2 class="font-weight-normal mb-1">{{sql_absent}} </h2>
+                                <a href="{% url 'attendance' %}">
+                                    <p class="text-muted mb-3">View details</p>
+                                </a>
+                            </div>
+
+                            <div class="progress progress-bar-alt-pink progress-sm">
+                                <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"
+                                    aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+                                    style="width:{% widthratio sql_absent sql_totstaff 100 %}%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- end col -->
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="card-box">
+                        <div class="dropdown float-right">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">View detail</a>
+                            </div>
+                        </div>
+
+                        <h4 class="header-title mt-0 mb-4">Unlisted Staff</h4>
+
+                        <div class="widget-chart-1">
+                            <div class="widget-chart-box-1 float-left" dir="ltr">
+                                <input data-plugin="knob" data-width="80" data-height="80" data-fgColor="#ffbd4a"
+                                    data-bgColor="#FFE6BA" value="1" data-skin="tron" data-angleOffset="180"
+                                    data-readOnly=true data-thickness=".15" />
+                            </div>
+                            <div class="widget-detail-1 text-right">
+                                <h2 class="font-weight-normal pt-2 mb-1"> 1 </h2>
+                                <a href="#" class="text-muted mb-1">View details</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- end col -->
+
+            </div>
+            <!-- end row -->
+
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="card-box">
+                        <div class="dropdown float-right">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">View Details</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Another action</a>
+                            </div>
+                        </div>
+
+                        <!-- 2nd row -->
+
+                        <h4 class="header-title mt-0">Daily Status</h4>
+
+                        <div class="widget-chart text-center">
+                            <div id="morris-donut-example" dir="ltr" style="height: 245px;" class="morris-chart"></div>
+                            <ul class="list-inline chart-detail-list mb-0">
+                                <li class="list-inline-item">
+                                    <h5 style="color: #5b69bc;"><i class="fa fa-circle mr-1"></i>Present</h5>
+                                </li>
+                                <li class="list-inline-item">
+                                    <h5 style="color: #ff8acc;"><i class="fa fa-circle mr-1"></i>Absentee</h5>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!-- end col -->
+
+                <div class="col-xl-4">
+                    <div class="card-box">
+                        <div class="dropdown float-right">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">View Details</a>
+                            </div>
+                        </div>
+                        <h4 class="header-title mt-0">Statistics</h4>
+                        <div id="morris-bar-example" dir="ltr" style="height: 280px;" class="morris-chart"></div>
+                    </div>
+                </div><!-- end col -->
+
+                <div class="col-xl-4">
+                    <div class="card-box">
+                        <div class="dropdown float-right">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">View Details</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Another action</a>
+                            </div>
+                        </div>
+                        <h4 class="header-title mt-0">Total Staff</h4>
+                        <div id="morris-line-example" dir="ltr" style="height: 280px;" class="morris-chart"></div>
+                    </div>
+                </div><!-- end col -->
+
+            </div>
+            <!-- end row -->
 
 
-                        <!-- Table view -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card-box table-responsive">
-                                            <div class="float-right">
-                                                ( {{dateintable}} )
-                                                <form action="datesearch" method="POST">
-                                                    {% csrf_token %}
-                                                    <input type="date" name="attendanceDate" value="Today">
-                                                    <input type="submit" name="searchDate" value="Apply">
-                                                </form>
-                                            </div>
-                                    <h4 class="mt-0 header-title">Staff Attendance Table</h4>
-                                    
-                                    <p class="text-muted font-14 mb-3">This table shows Staff Attendances.
-                                    </p>
+            {% comment %}
+            <!-- Table view -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-box table-responsive">
+                        <div class="float-right">
+                            ( {{dateintable}} )
+                            <form action="datesearch" method="POST">
+                                {% csrf_token %}
+                                <input type="date" name="attendanceDate" value="Today">
+                                <input type="submit" name="searchDate" value="Apply">
+                            </form>
+                        </div>
+                        <h4 class="mt-0 header-title">Staff Attendance Table</h4>
 
-                                    <table id="responsive-datatable" class="table table-striped table-bordered dt-responsive nowrap">
+                        <p class="text-muted font-14 mb-3">This table shows Staff Attendances.
+                        </p>
+
+                        <table id="responsive-datatable"
+                            class="table table-striped table-bordered dt-responsive nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Teachers</th>
+                                    <th>Code</th>
+                                    <th>Designation</th>
+                                    <th>Attendance</th>
+                                    <th>Time</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <!-- for present student -->
+                                {% for object in presentDetail %}
+                                <tr>
+                                    <td class="text-left">
+                                        <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon"
+                                            src="http://127.0.0.1:8000/media/{{object.0}}">
+                                        {{object.1}}
+                                    </td>
+                                    <td>{{object.2}}</td>
+                                    <td>{{object.3}}</td>
+                                    <td>
+                                        <h5><span class="badge badge-success">PRESENT</span></h5>
+                                    </td>
+                                    <td>{{object.5}}</td>
+                                </tr>
+                                {% endfor %}
+
+                                <!-- for absent student -->
+                                {% for object in absentDetail %}
+                                <tr>
+                                    <td class="text-left">
+                                        <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon"
+                                            src="http://127.0.0.1:8000/media/{{object.1}}">
+                                        {{object.0}}
+                                    </td>
+                                    <td>{{object.2}}</td>
+                                    <td>{{object.4}}</td>
+                                    <td>
+                                        <h5><span class="badge badge-danger">ABSENT</span></h5>
+                                    </td>
+                                    <td>----</td>
+                                </tr>
+
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- end row --> {% endcomment %}
+            <div class="row">
+                <!-- Todo Lists -->
+                <div class="col-xl-4 col-lg-6 col-sm-6 col-12">
+                    <div class="card pmd-card note-bg">
+                        <!-- Card hedaer -->
+                        <div class="card-header pmd-card-border">
+                            <h2 class="card-title h3">Today's News</h2>
+                            <p class="card-subtitle">news from the main khec website</p>
+                        </div>
+                        <!-- Card list -->
+                        {% comment %} <ul class="list-group pmd-list mb-0">
+                            <li class="list-group-item">
+                                <div class="custom-control custom-checkbox pmd-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1">Check the Resume of
+                                        Sean E. Bliss</label>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="custom-control custom-checkbox pmd-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                    <label class="custom-control-label" for="customCheck3">Do a background check
+                                        of Trina C. Sparks</label>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="custom-control custom-checkbox pmd-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck4">
+                                    <label class="custom-control-label" for="customCheck4">Prepare Appointment
+                                        and Salary Letter for Kevin N. Hensley</label>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="custom-control custom-checkbox pmd-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck5">
+                                    <label class="custom-control-label" for="customCheck5">Attend monthly
+                                        performance meeting</label>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="custom-control custom-checkbox pmd-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck6">
+                                    <label class="custom-control-label" for="customCheck6">Have a meeting with
+                                        Wendell M. Glover regarding Appraisal</label>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="custom-control custom-checkbox pmd-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck7">
+                                    <label class="custom-control-label" for="customCheck5">Check the leaves and
+                                        prepare the Payroll Sheet for July Month</label>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="custom-control custom-checkbox pmd-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck8">
+                                    <label class="custom-control-label" for="customCheck10">Prepare the Salary
+                                        Slip of Jonathan M. Blackmon</label>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="card-footer">
+                            <div class="add-todo-form">
+                                <form>
+                                    <div class="form-group pmd-textfield">
+                                        <input type="text" class="mat-input form-control" id="taskname" value=""
+                                            placeholder="eg. Have to attend meeting">
+                                    </div>
+                                    <button class="btn pmd-ripple-effect btn-primary pmd-btn-raised" type="button">Add
+                                        Task</button>
+                                    <button class="btn pmd-ripple-effect btn-outline-secondary cancel-todo"
+                                        type="button">Cancel</button>
+                                </form>
+                            </div>
+                            <button class="btn pmd-ripple-effect btn-primary pmd-btn-raised" type="button"
+                                id="add-todo">Add
+                                Todo</button>
+                        </div> {% endcomment %}
+                    </div>
+                </div>
+                <!-- end Todo Lists -->
+
+                <!-- Interview Status -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12 col-xl-8">
+                    <div class="card pmd-card sms-details">
+                        <div class="card-header pmd-card-border d-flex align-items-start">
+                            <div class="media-body">
+                                <h2 class="card-title h3">Employee List</h2>
+                                <p class="card-subtitle">Current Employees of KhEC</p>
+                            </div>
+                            <a class="btn pmd-ripple-effect btn-outline-primary ml-auto btn-sm" href="
+                                {% url 'staffList' %}">View
+                                All</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="body">
+                                <div class="table-responsive">
+                                    <table class="table pmd-table table-hover">
                                         <thead>
-                                        <tr>
-                                            <th>Teachers</th>
-                                            <th>Code</th>
-                                            <th>Designation</th>
-                                            <th>Attendance</th>
-                                            <th>Time</th>
-
-                                        </tr>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Candidate</th>
+                                                <th>Position</th>
+                                                <th>Status</th>
+                                                <th>Interviewer</th>
+                                                <th>Notes</th>
+                                            </tr>
                                         </thead>
-
-                                        <tbody> 
-
-                                            <!-- for present student -->
-                                            {% for object in presentDetail %}
+                                        <tbody>
                                             <tr>
-                                                <td class="text-left">
-                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/{{object.0}}">
-                                                    {{object.1}}
-                                                </td>
-                                                <td>{{object.2}}</td>
-                                                <td>{{object.3}}</td>
-                                                <td><h5><span class="badge badge-success">PRESENT</span></h5></td>
-                                                <td>{{object.5}}</td>
+                                                <td>1</td>
+                                                <td>Tarah L. Faulkner</td>
+                                                <td>UI/UX Designer</td>
+                                                <td><span class="badge badge-pill badge-secondary">Test
+                                                        Cleared</span></td>
+                                                <td>John Doe</td>
+                                                <td>Scored - 80/100 in Test</td>
                                             </tr>
-                                            {% endfor %}
-
-                                            <!-- for absent student -->
-                                             {% for object in absentDetail %}
                                             <tr>
-                                                <td class="text-left">
-                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="http://127.0.0.1:8000/media/{{object.1}}">
-                                                    {{object.0}}
-                                                </td>
-                                                <td>{{object.2}}</td>
-                                                <td>{{object.4}}</td>
-                                                <td><h5><span class="badge badge-danger">ABSENT</span></h5></td>
-                                                <td>----</td>
+                                                <td>2</td>
+                                                <td>James J. Kellogg</td>
+                                                <td>Mobile App Developer</td>
+                                                <td><span class="badge badge-pill badge-secondary">Interview
+                                                        Cleared</span></td>
+                                                <td>Robert P. Kinder</td>
+                                                <td>Good Development Knowledge</td>
                                             </tr>
-
-                                            {% endfor %}
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Frank S. Terrones</td>
+                                                <td>Sales Manager</td>
+                                                <td><span class="badge badge-pill badge-info">Called for
+                                                        Test</span></td>
+                                                <td>Wendell M. Glover</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Kevin N. Hensley</td>
+                                                <td>PHP Developer</td>
+                                                <td><span class="badge badge-pill badge-primary">Selected</span>
+                                                </td>
+                                                <td>Fay A. Sayer</td>
+                                                <td>Joining on 2<sup>nd</sup> August, 2018</td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td>Maria T. Johnson</td>
+                                                <td>UI/UX Designer</td>
+                                                <td><span class="badge badge-pill badge-info">Called for
+                                                        Test</span></td>
+                                                <td>John Doe</td>
+                                                <td></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                        <!-- end row -->       
-                        
-                    </div> <!-- container-fluid -->
+                    </div>
+                </div>
+                <!-- End Interview Status -->
 
-                </div> <!-- content -->
+            </div>
 
-                
+        </div> <!-- container-fluid -->
 
-    </div>
+    </div> <!-- content -->
+
+
+
+</div>
 {% endblock %}
