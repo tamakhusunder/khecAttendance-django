@@ -86,6 +86,13 @@ def staffList(request):
 def staffDetail(request):
 	return render(request,'faceapp/staffDetail.html')
 
+def holiday(request):
+	return render(request,'faceapp/holiday.html')
+
+def leave(request):
+	return render(request,'faceapp/leave.html')
+
+#user section
 def userDash(request):
 	return render(request,'user/dashboard.html')
 

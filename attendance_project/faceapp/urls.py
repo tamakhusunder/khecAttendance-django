@@ -8,6 +8,8 @@ urlpatterns = [
     path('table/', views.amarTable, name='table'),
     path('staffList/', views.staffList, name='staffList'),
     path('staffDetail/', views.staffDetail, name='staffDetail'),
+    path('holiday/', views.holiday, name='holiday'),
+    path('leave/', views.leave, name='leave'),
 
     #user page
     path('userdash/', views.userDash, name='userdash'),
