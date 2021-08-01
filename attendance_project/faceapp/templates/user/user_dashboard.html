@@ -1,2 +1,12 @@
-<h2>This is user dashboard.!!!</h2>
-<h2>This page is under construction.!!</h2>
+{% extends "user/base_layout.html" %}
+
+{% block nav-dash %}
+active
+{% endblock nav-dash %}
+
+{% block content %}
+{% load static %}
+
+<p>user dashboard</p>
+
+{% endblock %}

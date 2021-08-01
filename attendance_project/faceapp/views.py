@@ -92,9 +92,17 @@ def holiday(request):
 def leave(request):
 	return render(request,'faceapp/leave.html')
 
+#temporary pages
+def staffAddNew(request):
+	return render(request,'faceapp/add_employee.html')
+
+#addition in user page author:Amar Nagaju
+def userProfile(request):
+	return render(request,'user/user_profile.html')
+
 #user section
 def userDash(request):
-	return render(request,'user/dashboard.html')
+	return render(request,'user/user_dashboard.html')
 
 #End of addition by amar
 

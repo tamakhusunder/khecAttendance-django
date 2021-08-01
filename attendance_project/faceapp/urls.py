@@ -11,6 +11,12 @@ urlpatterns = [
     path('holiday/', views.holiday, name='holiday'),
     path('leave/', views.leave, name='leave'),
 
+    #temporary paths
+    path('staffAddNew/', views.staffAddNew, name='staffAddNew'),
+
+    #user page addition author:Amar Nagaju
+    path('userProfile/', views.userProfile, name='userProfile'),
+
     #user page
     path('userdash/', views.userDash, name='userdash'),
 
@@ -39,6 +45,7 @@ urlpatterns = [
 
     path('home/datesearch',views.datesearch,name='datesearch'),
     path('attendance/datesearch2',views.datesearch2,name='datesearch2'),
+    path('table/datesearch2',views.datesearch2,name='datesearch2'),
     path('addstaff/addstaffDB/',views.addstaffDB,name='addstaffDB'),
 
     path('contactList/',views.contactList,name='contactList'),
