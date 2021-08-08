@@ -53,10 +53,11 @@ class AttendanceTb(models.Model):
 	# 	('PRESENT','Present'),
 	# 	('ABSENT','Absent'),
 	# 	]
-	t=models.ForeignKey('Profile',on_delete=models.CASCADE)
-	date=models.CharField(max_length=255)
-	time=models.CharField(max_length=255)
-	status=models.CharField(max_length=255)
+	user = models.ForeignKey(User,on_delete=models.CASCADE)
+	date = models.CharField(max_length=255)
+	time = models.CharField(max_length=255)
+	late_time = models.CharField(max_length=255)
+	status = models.CharField(max_length=255,blank=True)
 	# attendanceCreated = models.DateField(auto_now_add=True,auto_now=True,blank=True)
 	createdDate = models.DateTimeField(auto_now_add=True,blank=True,null=True)
 	updatedDate = models.DateTimeField(auto_now=True)

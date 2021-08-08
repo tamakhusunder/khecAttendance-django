@@ -81,7 +81,7 @@ def index(request):
 
 #addition in admin page author:Amar Nagaju
 def amarTable(request):
-	return render(request,'unwanted/startup.html')
+	return render(request,'faceapp/sunder.html')
 
 # admin dashboard
 @login_required(login_url='/login/')
@@ -89,7 +89,7 @@ def home(request):
 	userAdmin = User.objects.get(pk=request.user.id)
 	sqlUser = User.objects.filter(is_superuser=False).all()
 	sqlTotal = User.objects.filter(is_superuser=False).all().count()
-	sqlInactive = Profile.objects.filter(active=False).all().count()
+	sqlInactive = User.objects.filter(is_staff=False,is_superuser=False).all().count()
 	print(sqlTotal)
 	context = {
 				'userAdmin' : userAdmin,
@@ -113,10 +113,10 @@ def home(request):
 #inactive portion little wrong
 @login_required(login_url='/login/')
 def inActiveList(request):
-	profileSql=Profile.objects.filter(active=False).all()
-	print(profileSql)
+	sqlInactive=User.objects.filter(is_staff=False,is_superuser=False).all()
+	print(sqlInactive)
 	context ={
-				'profileSql':profileSql
+				'sqlInactive':sqlInactive
 			}
 	return render(request,'faceapp/inActiveList.html',context)
 
@@ -263,6 +263,7 @@ def addStaffNewDetail(request,userID):
 			user.profile.contact=contact
 			user.profile.address=address
 			user.profile.active=active
+			user.is_staff=active    #to change is_Staff in user model
 			user.profile.dob=dob
 			user.profile.gender=gender
 			user.profile.dateOfJoin=dateOfJoin
@@ -313,7 +314,10 @@ def editStaff(request,userID):
 		st_id=Profile.objects.get(user_id=userID)
 		form=ProfileForm(request.POST,request.FILES,instance=st_id)
 		if form.is_valid():
+			active = form.cleaned_data['active']    #to change in is_staff in usermodel
+			user.is_staff = active
 			form.save()
+			user.save()
 			messages.success(request,'Data Updated!!!')
 	else:
 		st_id=Profile.objects.get(user_id=userID)

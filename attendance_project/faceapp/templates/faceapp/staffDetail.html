@@ -85,8 +85,6 @@
                                 <ul class="nav nav-tabs" role="tablist" style="width: 343.813px;">
                                     <li class="nav-item"><a class="nav-link active" href="#about" aria-controls="about"
                                             role="tab" data-toggle="tab">About</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#documents" aria-controls="documents"
-                                            role="tab" data-toggle="tab">Documents</a></li>
                                 </ul>
                             </div>
                             <!-- Tab panes -->
@@ -122,6 +120,20 @@
                                                     <div class="col-12 col-md-6 col-lg-3">
                                                         <label class="pmd-list-subtitle">Gender</label>
                                                         <p class="pmd-list-title">{{userSql.profile.gender}}</p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">Status</label>
+                                                        <p class="pmd-list-title">
+                                                        {% if userSql.profile.active == True %}
+                                                            <span class="badge badge-pill badge-secondary">Active</span>
+                                                        {%  else %}
+                                                            <span class="badge badge-pill badge-danger">Inactive</span>
+                                                        {% endif %}
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <label class="pmd-list-subtitle">User Id</label>
+                                                        <p class="pmd-list-title">{{userSql.id}}</p>
                                                     </div>
                                                 </div>
 
@@ -220,188 +232,16 @@
 
 
                                             </div>
+
+                                            <div class="card-footer pmd-card-border">
+                                                <a href="{% url 'editStaff' userSql.profile.user_id %}"  class="btn pmd-ripple-effect btn-primary pmd-btn-raised">Edit</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
 
-                                <!-- nothing is done in documents tab -->
-                                <!-- Documents Tab -->
-                                <div role="tabpanel" class="tab-pane" id="documents">
-                                    <!-- Documents -->
-                                    <div class="card pmd-card">
-                                        <div class="card-body">
-                                            <div class="details-tab">
-                                                <div class="d-flex flex-row align-items-center mb-2">
-                                                    <div class="media-body">
-                                                        <h3 class="card-title">Employee Documents</h3>
-                                                    </div>
-                                                    <button data-target="#add-document-dialog" data-toggle="modal"
-                                                        class="btn pmd-ripple-effect btn-outline-primary pmd-btn-flat btn-sm pmd-btn-fab"
-                                                        type="button"><i class="material-icons pmd-sm">add</i></button>
-                                                </div>
-                                                <!-- Documents Table -->
-                                                <div class="table-responsive pt-2">
-                                                    <table class="table pmd-table table-bordered" id="table-propeller">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>File Name</th>
-                                                                <th>Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td data-title="File Name">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <i
-                                                                            class="pmd-list-icon pmd-icon-sm material-icons pdf-icon">
-                                                                            <svg version="1.1" x="0px" y="0px"
-                                                                                viewBox="0 0 100 100"
-                                                                                enable-background="new 0 0 100 100"
-                                                                                xml:space="preserve">
-                                                                                <path
-                                                                                    d="M92.5,40H85V22.5c0-0.663-0.263-1.299-0.732-1.768l-15-15C68.799,5.263,68.163,5,67.5,5h-50C16.119,5,15,6.119,15,7.5V40  H7.5C6.119,40,5,41.119,5,42.5v35C5,78.881,6.119,80,7.5,80H15v12.5c0,1.381,1.119,2.5,2.5,2.5h65c1.381,0,2.5-1.119,2.5-2.5V80h7.5  c1.381,0,2.5-1.119,2.5-2.5v-35C95,41.119,93.881,40,92.5,40z M70,13.536L76.464,20H70V13.536z M20,10h45v15h15v15H20V10z M80,90H20  V80h60V90z M90,75H10V45h80V75z" />
-                                                                                <path
-                                                                                    d="M30,65h2.5c4.136,0,7.5-3.364,7.5-7.5S36.636,50,32.5,50h-5c-1.381,0-2.5,1.119-2.5,2.5V70h5V65z M30,55h2.5  c1.378,0,2.5,1.122,2.5,2.5S33.878,60,32.5,60H30V55z" />
-                                                                                <path
-                                                                                    d="M57.5,62.5v-5c0-4.136-3.364-7.5-7.5-7.5h-7.5v20H50C54.136,70,57.5,66.636,57.5,62.5z M47.5,55H50  c1.378,0,2.5,1.122,2.5,2.5v5c0,1.378-1.122,2.5-2.5,2.5h-2.5V55z" />
-                                                                                <path
-                                                                                    d="M65,62.5h7.5v-5H65V55h10v-5H62.5c-1.381,0-2.5,1.119-2.5,2.5v5v5V70h5V62.5z" />
-                                                                            </svg>
-                                                                        </i>
-                                                                        <div class="media-body">Degree-Certificate.pdf
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td data-title="">
-                                                                    <a href="javascript:void(0);"
-                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
-                                                                            class="material-icons pmd-sm">visibility</i></a>
-                                                                    <a href="javascript:void(0);"
-                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
-                                                                            class="material-icons pmd-sm">edit</i></a>
-                                                                    <a href="javascript:void(0);"
-                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm"
-                                                                        data-toggle="modal"
-                                                                        data-target="#delete_document_modal"><i
-                                                                            class="material-icons pmd-sm">delete_outline</i>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td data-title="File Name">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <i
-                                                                            class="pmd-list-icon pmd-icon-sm material-icons pdf-icon">
-                                                                            <svg version="1.1" x="0px" y="0px"
-                                                                                viewBox="0 0 100 100"
-                                                                                enable-background="new 0 0 100 100"
-                                                                                xml:space="preserve">
-                                                                                <path
-                                                                                    d="M92.5,40H85V22.5c0-0.663-0.263-1.299-0.732-1.768l-15-15C68.799,5.263,68.163,5,67.5,5h-50C16.119,5,15,6.119,15,7.5V40  H7.5C6.119,40,5,41.119,5,42.5v35C5,78.881,6.119,80,7.5,80H15v12.5c0,1.381,1.119,2.5,2.5,2.5h65c1.381,0,2.5-1.119,2.5-2.5V80h7.5  c1.381,0,2.5-1.119,2.5-2.5v-35C95,41.119,93.881,40,92.5,40z M70,13.536L76.464,20H70V13.536z M20,10h45v15h15v15H20V10z M80,90H20  V80h60V90z M90,75H10V45h80V75z" />
-                                                                                <path
-                                                                                    d="M30,65h2.5c4.136,0,7.5-3.364,7.5-7.5S36.636,50,32.5,50h-5c-1.381,0-2.5,1.119-2.5,2.5V70h5V65z M30,55h2.5  c1.378,0,2.5,1.122,2.5,2.5S33.878,60,32.5,60H30V55z" />
-                                                                                <path
-                                                                                    d="M57.5,62.5v-5c0-4.136-3.364-7.5-7.5-7.5h-7.5v20H50C54.136,70,57.5,66.636,57.5,62.5z M47.5,55H50  c1.378,0,2.5,1.122,2.5,2.5v5c0,1.378-1.122,2.5-2.5,2.5h-2.5V55z" />
-                                                                                <path
-                                                                                    d="M65,62.5h7.5v-5H65V55h10v-5H62.5c-1.381,0-2.5,1.119-2.5,2.5v5v5V70h5V62.5z" />
-                                                                            </svg>
-                                                                        </i>
-                                                                        <div class="media-body">Experience-Letter.pdf
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td data-title="">
-                                                                    <a href="javascript:void(0);"
-                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
-                                                                            class="material-icons pmd-sm">visibility</i></a>
-                                                                    <a href="javascript:void(0);"
-                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
-                                                                            class="material-icons pmd-sm">edit</i></a>
-                                                                    <a href="javascript:void(0);" data-toggle="modal"
-                                                                        data-target="#delete_document_modal"
-                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm"><i
-                                                                            class="material-icons pmd-sm">delete_outline</i>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td data-title="File Name">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <i
-                                                                            class="pmd-list-icon pmd-icon-sm material-icons jpg-icon">
-                                                                            <svg version="1.1" x="0px" y="0px"
-                                                                                viewBox="0 0 100 100"
-                                                                                enable-background="new 0 0 100 100"
-                                                                                xml:space="preserve">
-                                                                                <path
-                                                                                    d="M92.5,40H85V22.5c0-0.663-0.264-1.299-0.732-1.768l-15-15C68.799,5.264,68.163,5,67.5,5h-50C16.119,5,15,6.119,15,7.5V40  H7.5C6.119,40,5,41.119,5,42.5v35C5,78.881,6.119,80,7.5,80H15v12.5c0,1.381,1.119,2.5,2.5,2.5h65c1.381,0,2.5-1.119,2.5-2.5V80h7.5  c1.381,0,2.5-1.119,2.5-2.5v-35C95,41.119,93.881,40,92.5,40z M70,13.535L76.465,20H70V13.535z M20,10h45v15h15v15H20V10z M80,90H20  V80h60V90z M90,75H10V45h80V75z" />
-                                                                                <path
-                                                                                    d="M37.5,62.5V50h-5v12.5c0,1.379-1.121,2.5-2.5,2.5h-2.5v5H30C34.136,70,37.5,66.636,37.5,62.5z" />
-                                                                                <path
-                                                                                    d="M45,65h2.5c4.136,0,7.5-3.364,7.5-7.5S51.636,50,47.5,50h-5c-1.381,0-2.5,1.119-2.5,2.5V70h5V65z M45,55h2.5  c1.379,0,2.5,1.121,2.5,2.5S48.879,60,47.5,60H45V55z" />
-                                                                                <path
-                                                                                    d="M65,70h5c1.381,0,2.5-1.119,2.5-2.5V60c0-1.381-1.119-2.5-2.5-2.5h-5v5h2.5V65H65c-1.379,0-2.5-1.121-2.5-2.5v-5  c0-1.379,1.121-2.5,2.5-2.5h5v-5h-5c-4.136,0-7.5,3.364-7.5,7.5v5C57.5,66.636,60.864,70,65,70z" />
-                                                                            </svg>
-                                                                        </i>
-                                                                        <div class="media-body">Passport-Size-Photo.jpg
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td data-title="">
-                                                                    <a href="javascript:void(0);"
-                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
-                                                                            class="material-icons pmd-sm">visibility</i></a>
-                                                                    <a href="javascript:void(0);"
-                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2"><i
-                                                                            class="material-icons pmd-sm">edit</i></a>
-                                                                    <a href="javascript:void(0);" data-toggle="modal"
-                                                                        data-target="#delete_document_modal"
-                                                                        class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm"><i
-                                                                            class="material-icons pmd-sm">delete_outline</i>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Add Document Dialog -->
-                                <div tabindex="-1" class="modal pmd-modal fade add-dialog" id="add-document-dialog"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header pmd-modal-border">
-                                                <h2 class="modal-title">Add Document</h2>
-                                                <button aria-hidden="true" data-dismiss="modal" class="close"
-                                                    type="button">×</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form>
-                                                    <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                                                        <label for="filename">File Name</label>
-                                                        <input type="text" class="mat-input form-control" id="filename"
-                                                            value="">
-                                                    </div>
-                                                    <div class="custom-file pmd-custom-file">
-                                                        <input type="file" class="custom-file-input" id="customFile">
-                                                        <label class="custom-file-label" for="customFile">Choose
-                                                            file</label>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button data-dismiss="modal"
-                                                    class="btn pmd-ripple-effect btn-primary pmd-btn-raised"
-                                                    type="button">Add</button>
-                                                <button data-dismiss="modal"
-                                                    class="btn pmd-ripple-effect btn-outline-secondary"
-                                                    type="button">Reset</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
 
                             </div>
                         </div>

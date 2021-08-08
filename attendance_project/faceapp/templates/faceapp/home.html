@@ -412,58 +412,27 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Candidate</th>
-                                                <th>Position</th>
+                                                <th>Designation</th>
                                                 <th>Status</th>
-                                                <th>Interviewer</th>
-                                                <th>Notes</th>
+                                                <th>Department</th>
+                                                <th>Email</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {% for object in sqlUser|slice:":5" %}
                                             <tr>
-                                                <td>1</td>
-                                                <td>Tarah L. Faulkner</td>
-                                                <td>UI/UX Designer</td>
-                                                <td><span class="badge badge-pill badge-secondary">Test
-                                                        Cleared</span></td>
-                                                <td>John Doe</td>
-                                                <td>Scored - 80/100 in Test</td>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td><a href="{% url 'staffDetail' object.profile.user_id%}">{{object.profile.name}}</a></td>
+                                                <td>{{object.profile.desgination}}</td>
+                                                {% if object.profile.active == True %}
+                                                    <td><span class="badge badge-pill badge-secondary">Active</span></td>
+                                                {%  else %}
+                                                    <td><span class="badge badge-pill badge-danger">Inactive</span></td>
+                                                {% endif %}
+                                                <td>{{object.profile.department}}</td>
+                                                <td>{{object.profile.email}}</td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>James J. Kellogg</td>
-                                                <td>Mobile App Developer</td>
-                                                <td><span class="badge badge-pill badge-secondary">Interview
-                                                        Cleared</span></td>
-                                                <td>Robert P. Kinder</td>
-                                                <td>Good Development Knowledge</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Frank S. Terrones</td>
-                                                <td>Sales Manager</td>
-                                                <td><span class="badge badge-pill badge-info">Called for
-                                                        Test</span></td>
-                                                <td>Wendell M. Glover</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Kevin N. Hensley</td>
-                                                <td>PHP Developer</td>
-                                                <td><span class="badge badge-pill badge-primary">Selected</span>
-                                                </td>
-                                                <td>Fay A. Sayer</td>
-                                                <td>Joining on 2<sup>nd</sup> August, 2018</td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Maria T. Johnson</td>
-                                                <td>UI/UX Designer</td>
-                                                <td><span class="badge badge-pill badge-info">Called for
-                                                        Test</span></td>
-                                                <td>John Doe</td>
-                                                <td></td>
-                                            </tr>
+                                            {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>

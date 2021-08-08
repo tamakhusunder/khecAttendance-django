@@ -70,10 +70,16 @@
                                             </div>
                                         </li>
                                         <li class="list-group-item d-flex flex-row">
-                                            <i class="material-icons pmd-list-icon align-self-center pmd-md md-dark">people_outline</i>
+                                            <i class="material-icons pmd-list-icon align-self-center pmd-md md-dark">accessibility</i>
                                             <div class="media-body">
-                                                <label class="pmd-list-subtitle">Department</label>
-                                                    <p class="pmd-list-title">{{object.profile.department}}</p>
+                                                <label class="pmd-list-subtitle">Status</label>
+                                                    <p class="pmd-list-title">
+                                                    {% if object.profile.active == True %}
+                                                        <span class="badge badge-pill badge-secondary">Active</span>
+                                                    {%  else %}
+                                                        <span class="badge badge-pill badge-danger">Inactive</span>
+                                                    {% endif %}
+                                                    </p>
                                             </div>
                                         </li>
                                         <li class="list-group-item d-flex flex-row">
@@ -81,6 +87,13 @@
                                             <div class="media-body">
                                                 <label class="pmd-list-subtitle">Date of Joining</label>
                                                 <p class="pmd-list-title">{{object.profile.dateOfJoin}}</p>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item d-flex flex-row">
+                                            <i class="material-icons pmd-list-icon align-self-center pmd-md md-dark">person_outline</i>
+                                            <div class="media-body">
+                                                <label class="pmd-list-subtitle">User ID</label>
+                                                <p class="pmd-list-title">{{object.id}}</p>
                                             </div>
                                         </li>
                                     </ul><!-- List Group Component End -->
