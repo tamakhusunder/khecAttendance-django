@@ -4,6 +4,12 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'), 
 
+    path('login/', views.loginUser, name='login'),
+    path('demo/', views.demo, name='demo'),
+    # path('', views.loginUser, name='login'),
+    path('logout/', views.logoutUser, name='logout'),
+
+# <<<<<<<<<<<<<----admin url--->>>>>>>>>>>>
     # admin page addition author:Amar Nagaju
     path('table/', views.amarTable, name='table'),
     path('holiday/', views.holiday, name='holiday'),
@@ -23,27 +29,14 @@ urlpatterns = [
     path('deletestaff/<int:userID>',views.deletestaff,name='deletestaff'),
     path('editTable/',views.editTable,name='editTable'),
 
-    #user page
-    path('userdash/', views.userDash, name='userdash'),
-
-    path('login/', views.loginUser, name='login'),
-    path('demo/', views.demo, name='demo'),
-    # path('', views.loginUser, name='login'),
-    path('logout/', views.logoutUser, name='logout'),
-
 
     path('home/', views.home, name='home'), 
-    # path('', views.index, name='index'),  
     path('attendance/',views.attendanceTable,name='attendance'),
     path('register/',views.register, name='register'),
     path('dashboard/',views.dashboardStaff,name='dashboardStaff'),
 
     
-    path('face-application/',views.face_exe,name='face_exe'),
-    path('chart/',views.chart,name='chart'),
-    path(r'face-application/facecapture', views.captureface, name='capturefaces'),
-    path('recognization/', views.recognization, name='recognizations'),
-    path('offline/',views.offline,name='offline'),
+
 
     path('home/datesearch',views.datesearch,name='datesearch'),
     path('attendance/datesearch2',views.datesearch2,name='datesearch2'),
@@ -52,6 +45,18 @@ urlpatterns = [
     path('contactList/',views.contactList,name='contactList'),
     path('sendEmail/<int:code>/',views.sendEmail,name='sendEmail'),
 
+# <<<<<<<<<<<<<----customer url--->>>>>>>>>>>>
+    #user page addition author:Amar Nagaju
+    path('userDash/', views.userDash, name='userDash'),
+    path('userProfile/', views.userProfile, name='userProfile'),
 
+    
+
+# <<<<<<<<<<<<<----application--->>>>>>>>>>>>
+    path('face-application/',views.face_exe,name='face_exe'),
+    path('chart/',views.chart,name='chart'),
+    path(r'face-application/facecapture', views.captureface, name='capturefaces'),
+    path('recognization/', views.recognization, name='recognizations'),
+    path('offline/',views.offline,name='offline'),
 
 ]

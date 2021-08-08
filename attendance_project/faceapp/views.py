@@ -81,7 +81,7 @@ def index(request):
 
 #addition in admin page author:Amar Nagaju
 def amarTable(request):
-	return render(request,'faceapp/table.html')
+	return render(request,'unwanted/startup.html')
 
 # admin dashboard
 @login_required(login_url='/login/')
@@ -346,23 +346,7 @@ def editTable(request):
 #<<<<<<<----------------- End Employee --------------->>>>>>>> 
 
 
-#temporary pages
-def staffAddNew(request):
-	return render(request,'faceapp/add_employee.html')
-
-#addition in user page author:Amar Nagaju
-def userProfile(request):
-	return render(request,'user/user_profile.html')
-
-#user section
-def userDash(request):
-	return render(request,'user/user_dashboard.html')
-
-#End of addition by amar
-
-def demo(request):
-	return render(request,'faceapp/demo.html')
-
+###############   --login-- logout---dashboard######
 
 # login for both admin and user
 def loginUser(request):
@@ -387,6 +371,53 @@ def logoutUser(request):
 	logout(request)
 	return HttpResponseRedirect('/login/')
 
+#data is transfer from login -> to check admin or user to pass respective pages
+def dashboardStaff(request):
+	if request.user.is_authenticated:
+		if request.user.is_superuser:
+			# return render(request,'faceapp/home.html')
+			return HttpResponseRedirect('/home/')
+		else:
+			return redirect('/userDash/')
+	else:
+		return HttpResponseRedirect('/login/')
+
+
+
+###############  end of --login-- logout---dashboard######
+
+
+#<<<<<<----------User/Customer site----->>>>>>>>
+
+#addition in user page author:Amar Nagaju
+@login_required(login_url='/login/')
+def userDash(request):
+	currentUser = request.user.id
+	userSql = User.objects.get(pk=currentUser)
+	context = {
+				'userSql':userSql
+			}
+	return render(request,'user/user_dashboard.html', context )
+
+@login_required(login_url='/login/')
+def userProfile(request):
+	currentUser = request.user.id
+	userSql = User.objects.get(pk=currentUser)
+	context = {
+				'userSql':userSql
+			}
+	return render(request,'user/user_profile.html', context)
+
+
+
+#End of addition by amar
+
+def demo(request):
+	return render(request,'faceapp/demo.html')
+
+
+
+
 
 
 @login_required(login_url='/login/')
@@ -402,16 +433,7 @@ def register(request):
 
 
 
-#data is transfer from login -> to check admin or user to pass respective pages
-def dashboardStaff(request):
-	if request.user.is_authenticated:
-		if request.user.is_superuser:
-			# return render(request,'faceapp/home.html')
-			return HttpResponseRedirect('/home/')
-		else:
-			return render(request,'faceapp/dashboard_staff.html')
-	else:
-		return HttpResponseRedirect('/login/')
+
 
 def datesearch(request):
 	Profiles=Profile.objects.all()
