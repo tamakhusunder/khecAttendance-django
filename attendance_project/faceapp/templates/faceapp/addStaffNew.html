@@ -1,0 +1,56 @@
+{% extends "faceapp/base_layout.html" %}
+
+{%block title%}Khec Attendance | Register{% endblock %}
+
+{% block topbarTitle %}Dashboard > Register{% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="content-page">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-7">
+                                    <div class="card shadow-lg border-0 rounded-lg mt-4">
+                                        <div class="card-header"><h3 class="text-center font-weight-light my-2">Create Employee Account</h3></div>
+                                        <div class="card-body">
+
+                                            <form method="POST" action="" novalidate>
+                                                {% csrf_token %}
+                                                {% for fm in form %}
+                                                    <div class="form-group">
+                                                        {{fm.label_tag}} {{fm}} 
+
+                                                        {% for err in fm.errors %}
+                                                        	<small class="text-danger ml-2">{{err}}</small>
+                                                    	{% endfor%}
+
+                                                    </div>
+                                                {% endfor %}
+
+                                                <div class="form-group mb-0 text-center">
+                                                    <button class="btn btn-primary btn-block" type="submit"> Create and Add Detail </button>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                        <div class="card-footer text-center">
+                                            <div class="small"><a href="{% url 'logout' %}">Have an account? Go to login</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+           

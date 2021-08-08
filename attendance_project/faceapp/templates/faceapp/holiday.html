@@ -15,8 +15,61 @@
 
     <div class="content-page">
         <div class="content">
+            <form class="" method="POST" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                            <div class="card-body">
+                                <!-- Upload Picture -->
+                                
+                                <!-- Basic Information -->
+                                <div class="details-tab">
+                                    <h3 class="card-title">Basic Information</h3>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <div class="form-group pmd-textfield pmd-textfield-label">
+                                                <label for="fn" class="col-form-label control-label">First Name</label>
+                                                {{ form.weekend }}
+                                                <!-- <input type="text" class="form-control" value="" id="fn"> -->
+                                                {% for err in form.weekend.errors %}
+                                                    <small class="text-danger ml-2">{{err}}</small>
+                                                {% endfor%}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <div class="form-group pmd-textfield pmd-textfield-label">
+                                                <label for="ln" class="col-form-label control-label">date</label>
+                                                {{ form.date }}
+                                                {% for err in form.date.errors %}
+                                                    <small class="text-danger ml-2">{{err}}</small>
+                                                {% endfor%}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <div class="form-group pmd-textfield pmd-textfield-label">
+                                                <label for="ln" class="col-form-label control-label">image</label>
+                                                {{ form.image }}
+                                                {% for err in form.image.errors %}
+                                                    <small class="text-danger ml-2">{{err}}</small>
+                                                {% endfor%}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <div class="form-group pmd-textfield pmd-textfield-label">
+                                                <label for="ln" class="col-form-label control-label">active</label>
+                                                {{ form.active }}
+                                                {% for err in form.active.errors %}
+                                                    <small class="text-danger ml-2">{{err}}</small>
+                                                {% endfor%}
+                                            </div>
+                                        </div>
 
 
+                                    </div>
+                                    <input type="submit" value="Submit">
+                                </div>
+                            </div>
+                        </form>
 
         </div>
     </div>

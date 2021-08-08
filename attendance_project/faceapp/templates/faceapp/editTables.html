@@ -25,7 +25,7 @@
                                 <i class="fas fa-table mr-1"></i>
                                 DataTable of Teachers/staffs
                                 <div class="float-right">
-                                    <a href="{%url 'addnewstaff' %}" class="btn btn-success btn-md waves-effect waves-light" data-animation="fadein" data-overlaySpeed="200" data-overlayColor="#36404a"><i class="mdi mdi-plus-circle-outline"></i> Add Staff</a>
+                                    <a href="{%url 'addStaffNew' %}" class="btn btn-success btn-md waves-effect waves-light" data-animation="fadein" data-overlaySpeed="200" data-overlayColor="#36404a"><i class="mdi mdi-plus-circle-outline"></i> Add Staff</a>
                                 </div>
                             </div>
                             
@@ -39,7 +39,6 @@
                                                 <th>Department</th>
                                                 <th>Designation</th>
                                                 <th>Email</th>
-                                                <th>Address</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -50,30 +49,31 @@
                                                 <th>Department</th>
                                                 <th>Designation</th>
                                                 <th>Email</th>
-                                                <th>Address</th>
                                                 <th>Action</th>
+                                            </tr>
                                         </tfoot>
                                         <tbody class="">
-                                            {% for object in StaffInfos.all%}
+                                        {% for object in userSql %}
+
                                             <tr>
                                                 <td class="text-left">
-                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="{{object.image.url}}">
-                                                     {{object.name}}
+                                                    <img class="img rounded-circle img-thumbnail" width="30" height="30" alt="icon" src="/media/{{object.profile.image}}"> 
+                                                     {{object.profile.name}}
                                                 </td>
-                                                <td>{{object.code}}</td>
-                                                <td>{{object.department}}</td>
-                                                <td>{{object.desgination}}</td>
-                                                <td>{{object.email}}</td>
-                                                <td>{{object.address}}</td>
+                                                <td>{{object.username}}</td>
+                                                <td>{{object.profile.department}}</td>
+                                                <td>{{object.profile.desgination}}</td>
+                                                <td>{{object.profile.email}}</td>
                                                 <td>
-                                                    <a href="{% url 'editStaff' object.code %}" class="btn btn-warning"><i class="fas fa-pen"></i> Edit</a>  
-                                                    <form action="{% url 'deletestaff' object.code %}" method="POST" class="d-inline">
+                                                    <a href="{% url 'editStaff' object.id %}" class="btn btn-warning"><i class="fas fa-pen"></i> Edit</a>  
+                                                    <form action="{% url 'deletestaff' object.id %}" method="POST" class="d-inline"> 
                                                         {% csrf_token %}
                                                         <input type="submit" value="Delete" class="btn btn-danger">
                                                     </form>
                                                 </td>
                                             </tr> 
-                                            {% endfor %}
+
+                                        {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>

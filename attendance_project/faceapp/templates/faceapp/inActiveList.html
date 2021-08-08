@@ -20,12 +20,12 @@
                     <div class="container-fluid">
                         <div class="card mb-4">
                             <div class="card-body">
-                                Representing the list of staff in our organization.
+                                Representing the inactive list of staff in our organization.
                             </div>
                         </div>
 
                         <div class="row">
-                        {% for object in userSql %}
+                        {% for object in profileSql %}
 
                             <div class="col-xl-4">
                                 
@@ -36,11 +36,11 @@
                                     <!-- Card Header -->
                                     <div class="card-header pmd-card-border d-flex flex-row align-items-center">
                                         <a class="pmd-avatar-list-img">
-                                            <img src="/media/{{object.profile.image}}" width="40" height="40" alt="Profile Image">
+                                            <img src="/media/{{object.image}}" width="40" height="40" alt="Profile Image">
                                         </a>
                                         <div class="media-body">
-                                            <a href="{% url 'staffDetail' object.id %}"><h3 class="card-title">{{object.profile.name}}</h3></a>
-                                            <p class="card-subtitle">{{object.profile.designation}}</p>
+                                            <a href="{% url 'staffDetail' object.user_id %}"><h3 class="card-title">{{object.name}}</h3></a>
+                                            <p class="card-subtitle">{{object.designation}}</p>
                                         </div>
                                                     
                                     </div>
@@ -51,21 +51,21 @@
                                             <i class="material-icons pmd-list-icon align-self-center pmd-md md-dark">person_outline</i>
                                             <div class="media-body">
                                                 <label class="pmd-list-subtitle">Employee ID</label>
-                                                <p class="pmd-list-title">{{object.username}}</p>
+                                                <!-- <p class="pmd-list-title">{{object.user.username}}</p> -->
                                             </div>
                                         </li>
                                         <li class="list-group-item d-flex flex-row">
                                             <i class="material-icons pmd-list-icon align-self-center pmd-md md-dark">call</i>
                                             <div class="media-body">
                                                 <label class="pmd-list-subtitle mb-0">Phone No.</label>
-                                                <p class="pmd-list-title">{{object.profile.contact}}</p>
+                                                <p class="pmd-list-title">{{object.contact}}</p>
                                             </div>
                                         </li>
                                         <li class="list-group-item d-flex flex-row">
                                             <i class="material-icons pmd-list-icon align-self-center pmd-md md-dark">mail_outline</i>
                                             <div class="media-body">
                                                 <label class="pmd-list-subtitle">Email Address</label>
-                                                <p class="pmd-list-title"><a href="mailto:darlene@xyz.com">{{object.profile.email}}</a>
+                                                <p class="pmd-list-title"><a href="mailto:darlene@xyz.com">{{object.email}}</a>
                                                 </p>
                                             </div>
                                         </li>
@@ -73,21 +73,21 @@
                                             <i class="material-icons pmd-list-icon align-self-center pmd-md md-dark">people_outline</i>
                                             <div class="media-body">
                                                 <label class="pmd-list-subtitle">Department</label>
-                                                    <p class="pmd-list-title">{{object.profile.department}}</p>
+                                                    <p class="pmd-list-title">{{object.department}}</p>
                                             </div>
                                         </li>
                                         <li class="list-group-item d-flex flex-row">
                                             <i class="material-icons pmd-list-icon align-self-center pmd-md md-dark">today</i>
                                             <div class="media-body">
                                                 <label class="pmd-list-subtitle">Date of Joining</label>
-                                                <p class="pmd-list-title">{{object.profile.dateOfJoin}}</p>
+                                                <p class="pmd-list-title">{{object.dateOfJoin}}</p>
                                             </div>
                                         </li>
                                     </ul><!-- List Group Component End -->
 
                                     <!-- Card Footer -->
                                     <div class="card-footer pmd-card-border">
-                                        <a title="View More" href="{% url 'staffDetail' object.id %}" class="btn pmd-btn-flat pmd-ripple-effect btn-primary">View More</a>
+                                        <a title="View More" href="{% url 'staffDetail' object.user_id %}" class="btn pmd-btn-flat pmd-ripple-effect btn-primary">View More</a>
                                     </div>
                                 </div>
                                 <!-- Card Component End -->

@@ -4,19 +4,22 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .forms import LoginForm
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db import transaction
 
 from django.shortcuts import get_object_or_404
 
 
-from .models import StaffInfo,AttendanceTb
+
+from .models import Profile,AttendanceTb
 
 
 from django.db import connection
 from datetime import date
 
-from .forms import StaffInfoForm
-from .models import StaffInfo 	#to save form data in dataset
+from .forms import ProfileForm, UserForm, LeaveForm, HolidayForm, TimeSettingForm
+from .models import Profile, Holiday, Leave, TimeSetting 	#to save form data in dataset
 
 
 import numpy as np
@@ -28,23 +31,23 @@ import numpy as np
 
 
 # def database_collection():
-# 	StaffInfos=StaffInfo.objects
+# 	Profiles=Profile.objects
 # 	cursor = connection.cursor()
-# 	cursor.execute("SELECT COUNT(*) FROM faceapp_StaffInfo")
+# 	cursor.execute("SELECT COUNT(*) FROM faceapp_Profile")
 #     sql_totstaff = fetchone()
 #     print(connection.queries)
 # 	print('sunder')
 # 	print(sql_totstaff)
 # 	print('sunder')
-# 	return StaffInfos,sql_totstaff
+# 	return Profiles,sql_totstaff
 
 #####################################################################
 #function to enter sql
 def database_collection():
-	StaffInfos=StaffInfo.objects.all()
-	sql_totstaff = StaffInfo.objects.all().count()
-	# print(StaffInfos.image)
-	# sql_totstaff=StaffInfo.objects.raw("SELECT  COUNT(*) FROM faceapp_StaffInfo")
+	Profiles=Profile.objects.all()
+	sql_totstaff = Profile.objects.all().count()
+	# print(Profiles.image)
+	# sql_totstaff=Profile.objects.raw("SELECT  COUNT(*) FROM faceapp_Profile")
 	dateintable=str(date.today())
 	sql_present = AttendanceTb.objects.filter(status='p',date=dateintable).count()
 	print('<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>')
@@ -53,14 +56,14 @@ def database_collection():
 	sql_absent=sql_totstaff-sql_present
 
 	cursor=connection.cursor()
-	sql_presentDetail='''SELECT faceapp_StaffInfo.image,faceapp_StaffInfo.name,faceapp_StaffInfo.code,faceapp_StaffInfo.desgination,faceapp_AttendanceTb.status,faceapp_AttendanceTb.time FROM faceapp_StaffInfo,faceapp_AttendanceTb WHERE faceapp_StaffInfo.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}"'''.format(dateintable)
+	sql_presentDetail='''SELECT faceapp_Profile.image,faceapp_Profile.name,faceapp_Profile.code,faceapp_Profile.desgination,faceapp_AttendanceTb.status,faceapp_AttendanceTb.time FROM faceapp_Profile,faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}"'''.format(dateintable)
 	cursor.execute(sql_presentDetail)
 	# print(cursor.execute(sql_presentDetail))
 	print("----------------------------------------------------")
 	presentDetail=cursor.fetchall()
 
 	
-	sql_absentdetail='''SELECT * FROM faceapp_StaffInfo WHERE NOT EXISTS(SELECT * FROM faceapp_AttendanceTb WHERE faceapp_StaffInfo.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}")'''.format(dateintable)
+	sql_absentdetail='''SELECT * FROM faceapp_Profile WHERE NOT EXISTS(SELECT * FROM faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}")'''.format(dateintable)
 	cursor.execute(sql_absentdetail)
 	absentDetail=cursor.fetchall()
 
@@ -69,10 +72,10 @@ def database_collection():
 	print("**_______")
 	print(type(absentDetail),absentDetail)
 
-	return StaffInfos,sql_totstaff,sql_present,sql_absent,presentDetail,absentDetail,dateintable
+	return Profiles,sql_totstaff,sql_present,sql_absent,presentDetail,absentDetail,dateintable
 
 ########################################################	
-
+# first startup page function
 def index(request):
 	return render(request,'faceapp/index.html')
 
@@ -80,17 +83,268 @@ def index(request):
 def amarTable(request):
 	return render(request,'faceapp/table.html')
 
+# admin dashboard
+@login_required(login_url='/login/')
+def home(request):
+	userAdmin = User.objects.get(pk=request.user.id)
+	sqlUser = User.objects.filter(is_superuser=False).all()
+	sqlTotal = User.objects.filter(is_superuser=False).all().count()
+	sqlInactive = Profile.objects.filter(active=False).all().count()
+	print(sqlTotal)
+	context = {
+				'userAdmin' : userAdmin,
+				'sqlTotal' : sqlTotal,
+				'sqlUser' : sqlUser,
+				'sqlInactive' : sqlInactive
+				}
+	return render(request,'faceapp/home.html',context)
+	# if request.user.is_authenticated:
+	# 	if request.user.is_superuser:
+	# 		##Profiles,sql_totstaff,sql_present,sql_absent,presentDetail,absentDetail,dateintable=database_collection()
+	# # return render(request,'faceapp/home.html',{'Profiles':Profiles,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent})
+	# 		##return render(request,'faceapp/home.html',{'Profiles':Profiles,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
+	# 		return render(request,'faceapp/home.html')
+	# 	else:
+	# 		return render(request,'faceapp/pages-401.html',{})
+	# else:
+	# 	return HttpResponseRedirect('/login/')
+
+# view list of staff in grid format
+#inactive portion little wrong
+@login_required(login_url='/login/')
+def inActiveList(request):
+	profileSql=Profile.objects.filter(active=False).all()
+	print(profileSql)
+	context ={
+				'profileSql':profileSql
+			}
+	return render(request,'faceapp/inActiveList.html',context)
+
+@login_required(login_url='/login/')
 def staffList(request):
-	return render(request,'faceapp/staffList.html')
+	userSql=User.objects.filter(is_superuser=False).all()
+	context ={
+				'userSql':userSql
+			}
+	return render(request,'faceapp/staffList.html',context)
 
-def staffDetail(request):
-	return render(request,'faceapp/staffDetail.html')
+# view staff detail in indiviual page
+@login_required(login_url='/login/')
+def staffDetail(request,userID):
+	userSql = User.objects.get(pk=userID)
+	print(userSql.username)
+	context ={
+				'userSql':userSql
+			}
+	return render(request,'faceapp/staffDetail.html',context)
 
+# def holiday(request):
+# 	form=HolidayForm()
+# 	if request.method == 'POST':
+# 		form = ProfileForm(request.POST)
+# 		if form.is_valid():
+# 			weekend = form.cleaned_data['weekend']
+# 			date = form.cleaned_data['date']
+# 			add=Holiday(
+# 				weekend = weekend,
+# 				date = date
+# 				)
+# 			print(add)
+# 			add.save()
+# 			messages.success(request,'Holiday has been added')
+# 			# return HttpResponseRedirect(reverse(''))
+# 	context = {
+# 				"form": form,
+# 			}	
+# 	return render(request,'faceapp/holiday.html', context)
+@login_required(login_url='/login/')
 def holiday(request):
-	return render(request,'faceapp/holiday.html')
+	print("sunder")
+	form = HolidayForm()
+	if request.method == 'POST':
+		print("2222")
+		form = HolidayForm(request.POST,request.FILES)
+		if form.is_valid():
+			image=form.cleaned_data['image']
+			active=form.cleaned_data['active']
+			weekend = form.cleaned_data['weekend']
+			date = form.cleaned_data['date']
+			print(weekend,date,"----->",image,active)
+			register = Holiday(image=image,active=active,weekend=weekend,date=date)
+			register.save()
+			print("dinnnner")
+	return render(request,'faceapp/holiday.html', {'form':form})
 
+@login_required(login_url='/login/')
 def leave(request):
-	return render(request,'faceapp/leave.html')
+	form=LeaveForm()
+	if request.method == 'POST':
+		form = ProfileForm(request.POST)
+		if form.is_valid():
+			leaveType = form.cleaned_data['leaveType']
+			startDate = form.cleaned_data['startDate']
+			endDate = form.cleaned_data['endDate']
+			reason = form.cleaned_data['reason']
+			halfday = form.cleaned_data['halfday']
+			add=Leave(
+				name = name,
+				image = image,
+				code = code,
+				desgination = desgination,
+				department = department,
+				specialization = specialization,
+				email = email,
+				contact = contact,
+				address = address
+				)
+			print(add)
+			add.save()
+			messages.success(request,'Leave message created.')
+			# return HttpResponseRedirect(reverse(''))
+	context = {
+				"form": form,
+			}				
+	return render(request,'faceapp/leave.html',context)
+
+#<<<<<<<----------------- Start Employee --------------->>>>>>>> 
+# Add user in user model
+@login_required(login_url='/login/')
+def addStaffNew(request):
+	user_form = UserForm()
+	if request.method == 'POST':
+		user_form = UserForm(request.POST)
+		if user_form.is_valid():
+			print(user_form.cleaned_data['username'])
+			print(user_form.cleaned_data['password1'])
+			user_form.save()
+			userSQL = User.objects.latest('id')
+			userId = userSQL.id
+			print('useer id-->',userId)
+			url = '/addStaffNewDetail/'+str(userId)
+			print(url)
+			return redirect(url)
+	return render(request,'faceapp/addStaffNew.html', {'form':user_form})
+
+# add extra detail in profile model with onetoone relation to user model
+# @transaction.atomic
+@login_required(login_url='/login/')
+def addStaffNewDetail(request,userID):
+	user = User.objects.get(pk=userID)
+	code = user.username
+	profile_form = ProfileForm()
+	if request.method == 'POST':
+		profile_form = ProfileForm(request.POST,request.FILES)
+		if profile_form.is_valid():
+			name = profile_form.cleaned_data['name']
+			image = profile_form.cleaned_data['image']
+			desgination = profile_form.cleaned_data['desgination']
+			department = profile_form.cleaned_data['department']
+			specialization = profile_form.cleaned_data['specialization']
+			email = profile_form.cleaned_data['email']
+			contact = profile_form.cleaned_data['contact']
+			address = profile_form.cleaned_data['address']
+			active = profile_form.cleaned_data['active']
+			dob = profile_form.cleaned_data['dob']
+			gender = profile_form.cleaned_data['gender']
+			dateOfJoin = profile_form.cleaned_data['dateOfJoin']
+			city = profile_form.cleaned_data['city']
+			state = profile_form.cleaned_data['state']
+			startYear = profile_form.cleaned_data['startYear']
+			endYear = profile_form.cleaned_data['endYear']
+			university = profile_form.cleaned_data['university']
+			college = profile_form.cleaned_data['college']
+			user = User.objects.get(pk=userID)
+			user.profile.name=name
+			user.profile.image=image
+			user.profile.desgination=desgination
+			user.profile.department=department
+			user.profile.specialization=specialization
+			user.profile.email=email
+			user.profile.contact=contact
+			user.profile.address=address
+			user.profile.active=active
+			user.profile.dob=dob
+			user.profile.gender=gender
+			user.profile.dateOfJoin=dateOfJoin
+			user.profile.city=city
+			user.profile.state=state
+			user.profile.startYear=startYear
+			user.profile.endYear=endYear
+			user.profile.university=university
+			user.profile.college=college
+			user.save()
+			# profileSql = Profile.objects.get(user_id=userID)
+			# profileSql.name=name
+			# profileSql.image=image
+			# profileSql.desgination=desgination
+			# profileSql.department=department
+			# profileSql.specialization=specialization
+			# profileSql.email=email
+			# profileSql.contact=contact
+			# profileSql.address=address
+			# profileSql.active=active
+			# profileSql.dob=dob
+			# profileSql.gender=gender
+			# profileSql.dateOfJoin=dateOfJoin
+			# profileSql.city=city
+			# profileSql.state=state
+			# profileSql.startYear=startYear
+			# profileSql.endYear=endYear
+			# profileSql.university=university
+			# profileSql.college=college
+			# profileSql.save()
+			# print(profileSql)
+			messages.success(request,'New Staff added.')
+			return redirect('/editTable/')
+		else:
+			messages.error(request, 'Please correct the error below.')
+	context = {
+				"form": profile_form,
+				"codeNum": code
+			}				
+	return render(request,'faceapp/addStaffNewDetail.html', context)
+
+#function to edit Profile
+@login_required(login_url='/login/')
+def editStaff(request,userID):
+	user = User.objects.get(pk=userID)
+	code = user.username
+	if request.method=='POST':
+		st_id=Profile.objects.get(user_id=userID)
+		form=ProfileForm(request.POST,request.FILES,instance=st_id)
+		if form.is_valid():
+			form.save()
+			messages.success(request,'Data Updated!!!')
+	else:
+		st_id=Profile.objects.get(user_id=userID)
+		form=ProfileForm(instance=st_id)
+	context = {
+				"form": form,
+				"codeNum": code
+			}	
+	return render(request,'faceapp/editStaff.html', context)
+
+# function to delete staff
+@login_required(login_url='/login/')
+def deletestaff(request,userID):
+	if request.method=='POST':
+		st_id=User.objects.get(pk=userID)
+		st_id.delete()
+		return redirect('/editTable/')
+
+# function for table edit
+@login_required(login_url='/login/')
+def editTable(request):
+	userSql=User.objects.filter(is_superuser=False).all()
+	print(userSql)
+	for u in userSql:
+		print("---------------")
+		print(u.username)
+		print(u.profile.name)
+	return render(request, 'faceapp/editTables.html', {'userSql':userSql})
+
+#<<<<<<<----------------- End Employee --------------->>>>>>>> 
+
 
 #temporary pages
 def staffAddNew(request):
@@ -133,93 +387,22 @@ def logoutUser(request):
 	logout(request)
 	return HttpResponseRedirect('/login/')
 
-# admin dashboard
-def home(request):
-	if request.user.is_authenticated:
-		if request.user.is_superuser:
-			StaffInfos,sql_totstaff,sql_present,sql_absent,presentDetail,absentDetail,dateintable=database_collection()
-	# return render(request,'faceapp/home.html',{'StaffInfos':StaffInfos,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent})
-			return render(request,'faceapp/home.html',{'StaffInfos':StaffInfos,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
-		else:
-			return render(request,'faceapp/pages-401.html',{})
-	else:
-		return HttpResponseRedirect('/login/')
 
 
+@login_required(login_url='/login/')
 def register(request):
-	return render(request,'faceapp/register.html',{})
-
-
-#form to signin new staff 
-def addstaff(request):
-	if request.user.is_authenticated:
-		if request.user.is_superuser:
-			if request.method == 'POST':
-				form=StaffInfoForm(request.POST,request.FILES)
-				print(form.is_valid())
-				if form.is_valid():
-					name=form.cleaned_data['name']
-					image=form.cleaned_data['image']
-					code=form.cleaned_data['code']
-					desgination=form.cleaned_data['desgination']
-					department=form.cleaned_data['department']
-					specialization=form.cleaned_data['specialization']
-					email=form.cleaned_data['email']
-					contact=form.cleaned_data['contact']
-					address=form.cleaned_data['address']
-					register=StaffInfo(name=name,image=image,code=code,desgination=desgination,department=department,specialization=specialization,email=email,contact=contact,address=address)
-					print(register)
-					register.save()
-					messages.success(request,'New Staff added.')
-					# form.save()
-					form=StaffInfoForm()
-
-					###new account with new staff automatically in auth_user database
-					uname=name.replace(" ","")
-					uname=uname.lower()
-					print(uname)
-					user=User.objects.create_user(username=email,email=email,password=code,is_staff='True',is_active='False')
-					user.save()
-					###for delete auth_user record code
-					# from django.contrib.auth import get_user_model
-					# User = get_user_model()
-					# obj=get_object_or_404(User,username='ram')
-					# obj.delete()
-			else:
-				form=StaffInfoForm()
-			return render(request,'faceapp/add_new_staff.html',{'form':form})
+	if request.user.is_superuser:
+		return render(request,'faceapp/register.html',{})
 	else:
 		return HttpResponseRedirect('/login/')
 
 
-# function for table edit
-def editTable(request):
-	StaffInfos=StaffInfo.objects.all()
-	# StaffInfos,sql_totstaff,sql_present,sql_absent,presentDetail,absent_detail,dateintable=database_collection()
-	return render(request,'faceapp/editTables.html',{'StaffInfos':StaffInfos})
-
-#function to edit staffinfo
-def editStaff(request,code):
-	if request.method=='POST':
-		st_id=StaffInfo.objects.get(pk=code)
-		form=StaffInfoForm(request.POST,instance=st_id)
-		if form.is_valid():
-			form.save()
-			messages.success(request,'Data Updated!!!')
-	else:
-		st_id=StaffInfo.objects.get(pk=code)
-		form=StaffInfoForm(instance=st_id)
-	return render(request,'faceapp/editStaff.html',{'form':form})
-
-# function to delete staff
-def deletestaff(request,code):
-	if request.method=='POST':
-		st_id=StaffInfo.objects.get(pk=code)
-		st_id.delete()
-		return redirect('/editTable/')
 
 
-#to check admin or user to pass respective pages
+
+
+
+#data is transfer from login -> to check admin or user to pass respective pages
 def dashboardStaff(request):
 	if request.user.is_authenticated:
 		if request.user.is_superuser:
@@ -231,8 +414,8 @@ def dashboardStaff(request):
 		return HttpResponseRedirect('/login/')
 
 def datesearch(request):
-	StaffInfos=StaffInfo.objects.all()
-	sql_totstaff = StaffInfo.objects.all().count()
+	Profiles=Profile.objects.all()
+	sql_totstaff = Profile.objects.all().count()
 	dateintable=str(date.today())
 	if request.method=="POST":
 		dateintable=str(request.POST["attendanceDate"])
@@ -242,18 +425,18 @@ def datesearch(request):
 	sql_absent=sql_totstaff-sql_present
 
 	cursor=connection.cursor()
-	sql_presentDetail='''SELECT faceapp_StaffInfo.image,faceapp_StaffInfo.name,faceapp_StaffInfo.code,faceapp_StaffInfo.desgination,faceapp_AttendanceTb.status,faceapp_AttendanceTb.time FROM faceapp_StaffInfo,faceapp_AttendanceTb WHERE faceapp_StaffInfo.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}"'''.format(dateintable)
+	sql_presentDetail='''SELECT faceapp_Profile.image,faceapp_Profile.name,faceapp_Profile.code,faceapp_Profile.desgination,faceapp_AttendanceTb.status,faceapp_AttendanceTb.time FROM faceapp_Profile,faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}"'''.format(dateintable)
 	cursor.execute(sql_presentDetail)
 	presentDetail=cursor.fetchall()
-	sql_absentdetail='''SELECT * FROM faceapp_StaffInfo WHERE NOT EXISTS(SELECT * FROM faceapp_AttendanceTb WHERE faceapp_StaffInfo.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}")'''.format(dateintable)
+	sql_absentdetail='''SELECT * FROM faceapp_Profile WHERE NOT EXISTS(SELECT * FROM faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}")'''.format(dateintable)
 	cursor.execute(sql_absentdetail)
 	absentDetail=cursor.fetchall()
 			
-	return render(request,'faceapp/home.html',{'StaffInfos':StaffInfos,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
+	return render(request,'faceapp/home.html',{'Profiles':Profiles,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
 
 def datesearch2(request):
-	StaffInfos=StaffInfo.objects.all()
-	sql_totstaff = StaffInfo.objects.all().count()
+	Profiles=Profile.objects.all()
+	sql_totstaff = Profile.objects.all().count()
 	dateintable=str(date.today())
 	if request.method=="POST":
 		dateintable=str(request.POST["attendanceDate"])
@@ -263,14 +446,14 @@ def datesearch2(request):
 	sql_absent=sql_totstaff-sql_present
 
 	cursor=connection.cursor()
-	sql_presentDetail='''SELECT faceapp_StaffInfo.image,faceapp_StaffInfo.name,faceapp_StaffInfo.code,faceapp_StaffInfo.desgination,faceapp_AttendanceTb.status,faceapp_AttendanceTb.time FROM faceapp_StaffInfo,faceapp_AttendanceTb WHERE faceapp_StaffInfo.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}"'''.format(dateintable)
+	sql_presentDetail='''SELECT faceapp_Profile.image,faceapp_Profile.name,faceapp_Profile.code,faceapp_Profile.desgination,faceapp_AttendanceTb.status,faceapp_AttendanceTb.time FROM faceapp_Profile,faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}"'''.format(dateintable)
 	cursor.execute(sql_presentDetail)
 	presentDetail=cursor.fetchall()
-	sql_absentdetail='''SELECT * FROM faceapp_StaffInfo WHERE NOT EXISTS(SELECT * FROM faceapp_AttendanceTb WHERE faceapp_StaffInfo.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}")'''.format(dateintable)
+	sql_absentdetail='''SELECT * FROM faceapp_Profile WHERE NOT EXISTS(SELECT * FROM faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}")'''.format(dateintable)
 	cursor.execute(sql_absentdetail)
 	absentDetail=cursor.fetchall()
 			
-	return render(request,'faceapp/attendance_table.html',{'StaffInfos':StaffInfos,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
+	return render(request,'faceapp/attendance_table.html',{'Profiles':Profiles,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
 
 
 
@@ -284,9 +467,9 @@ def chart(request):
 
 
 def attendanceTable(request):
-	StaffInfos,sql_totstaff,sql_present,sql_absent,presentDetail,absentDetail,dateintable=database_collection()
+	Profiles,sql_totstaff,sql_present,sql_absent,presentDetail,absentDetail,dateintable=database_collection()
 	# return render(request,'faceapp/attendance_table.html',{'presentDetail':presentDetail,'absentDetail':absentDetail})
-	return render(request,'faceapp/attendance_table.html',{'StaffInfos':StaffInfos,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
+	return render(request,'faceapp/attendance_table.html',{'Profiles':Profiles,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
 
 		
 	
@@ -297,7 +480,7 @@ def addstaffDB(request):
 	if request.method=='POST':
 		if request.POST['inputFirstName'] and request.POST['inputLastName'] and request.POST['inputCodeNo'] and request.POST['inputDesignation'] and request.POST['inputDepartment'] and request.POST['inputSpecialization'] and request.POST['inputEmailAddress'] and request.POST['inputContactNo'] and request.POST['inputAddress']:
 			print('----------------->saved')
-			# saverecord=StaffInfo()
+			# saverecord=Profile()
 			f_name=request.POST.get('inputFirstName')
 			l_name=request.POST['inputLastName']
 			name=f_name+' '+l_name
@@ -309,7 +492,7 @@ def addstaffDB(request):
 			email=request.POST['inputEmailAddress']
 			contact=request.POST['inputContactNo']
 			address=request.POST['inputAddress']
-			ins_record=StaffInfo(name=name,image=image,code=code,department=department,desgination=designation,specialization=specialization,email=email,contact=contact,address=address)
+			ins_record=Profile(name=name,image=image,code=code,department=department,desgination=designation,specialization=specialization,email=email,contact=contact,address=address)
 			ins_record.save()
 			print(name,image,code,designation,department,specialization,email,contact,address,'@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
 			print("++++++++++++++++++record set in database")
@@ -323,19 +506,19 @@ def addstaffDB(request):
 		return render(request,'faceapp/add_new_staff.html',{})
 
 def contactList(request):
-	StaffInfos=StaffInfo.objects.all()
-	return render(request,'faceapp/contactList.html',{'StaffInfos':StaffInfos})
+	Profiles=Profile.objects.all()
+	return render(request,'faceapp/contactList.html',{'Profiles':Profiles})
 
 def sendEmail(request,code):
-	StaffInfos = StaffInfo.objects.filter(code=code)
-	return render(request,'faceapp/sendEmail.html',{'StaffInfos':StaffInfos})
+	Profiles = Profile.objects.filter(code=code)
+	return render(request,'faceapp/sendEmail.html',{'Profiles':Profiles})
 
 
 '''####trying form--->model form
-from .forms import StaffInfoForm
+from .forms import ProfileForm
 def addstaffDB(request):
     if request.method == "POST":
-        form = StaffInfoForm(request.POST, request.FILES)
+        form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
 

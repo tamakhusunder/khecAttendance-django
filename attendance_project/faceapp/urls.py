@@ -6,16 +6,22 @@ urlpatterns = [
 
     # admin page addition author:Amar Nagaju
     path('table/', views.amarTable, name='table'),
-    path('staffList/', views.staffList, name='staffList'),
-    path('staffDetail/', views.staffDetail, name='staffDetail'),
     path('holiday/', views.holiday, name='holiday'),
     path('leave/', views.leave, name='leave'),
 
-    #temporary paths
-    path('staffAddNew/', views.staffAddNew, name='staffAddNew'),
+    #view staffinActiveList
+    path('inActiveList/', views.inActiveList, name='inActiveList'),
+    path('staffList/', views.staffList, name='staffList'),
+    path('staffDetail/<int:userID>', views.staffDetail, name='staffDetail'),
 
-    #user page addition author:Amar Nagaju
-    path('userProfile/', views.userProfile, name='userProfile'),
+    #register staff
+    path('addStaffNew/', views.addStaffNew, name='addStaffNew'),
+    path('addStaffNewDetail/<int:userID>', views.addStaffNewDetail, name='addStaffNewDetail'),
+
+    #edit staff
+    path('editStaff/<int:userID>/',views.editStaff,name='editStaff'),
+    path('deletestaff/<int:userID>',views.deletestaff,name='deletestaff'),
+    path('editTable/',views.editTable,name='editTable'),
 
     #user page
     path('userdash/', views.userDash, name='userdash'),
@@ -29,11 +35,7 @@ urlpatterns = [
     path('home/', views.home, name='home'), 
     # path('', views.index, name='index'),  
     path('attendance/',views.attendanceTable,name='attendance'),
-    path('register/',views.register,name='register'),
-    path('addstaff/',views.addstaff,name='addnewstaff'),
-    path('editTable/',views.editTable,name='editTable'),
-    path('deletestaff/<int:code>/',views.deletestaff,name='deletestaff'),
-    path('<int:code>/',views.editStaff,name='editStaff'),
+    path('register/',views.register, name='register'),
     path('dashboard/',views.dashboardStaff,name='dashboardStaff'),
 
     
@@ -45,7 +47,6 @@ urlpatterns = [
 
     path('home/datesearch',views.datesearch,name='datesearch'),
     path('attendance/datesearch2',views.datesearch2,name='datesearch2'),
-    path('table/datesearch2',views.datesearch2,name='datesearch2'),
     path('addstaff/addstaffDB/',views.addstaffDB,name='addstaffDB'),
 
     path('contactList/',views.contactList,name='contactList'),

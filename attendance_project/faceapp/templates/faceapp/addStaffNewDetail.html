@@ -1,0 +1,270 @@
+{% extends "faceapp/base_layout.html" %}
+{% block title %}Khec Attendance | add{% endblock%}
+
+{% block topbarTitle %}Dashboard > Add Employee{% endblock %}
+
+
+{% block content %}
+{% load static %}
+<!-- Begin page -->
+<div class="content-page">
+    <div class="content">
+        {% if messages %}
+        {% for msg in messages %}
+        <div class="row">
+            <div class="col-sm-8 offset-2">
+                <center>
+                    <p {% if msg.tags %} class="alert alert-{{msg.tags}}" {% endif %}>{{msg}}</p>
+                </center>
+
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+               
+                    <div class="container-fluid">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-user-plus mr-1"></i>
+                                Fill the Detail Form for <b>User: {{codeNum}}</b>
+                            </div>
+                            <form class="" method="POST" enctype="multipart/form-data" novalidate>
+                                {% csrf_token %}
+                                <div class="card-body">
+                                    <!-- Upload Picture -->
+                                    <div class="details-tab">
+                                        <h3 class="card-title mb-3">Profile Picture</h3>
+                                        <div class="row">
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="image" class="col-form-label control-label">Profile Avatar</label>
+                                                    {{ form.image }}
+                                                    {% for err in form.image.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="active" class="col-form-label control-label">Working status</label>
+                                                    {{ form.active }}
+                                                    {% for err in form.active.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Basic Information -->
+                                    <div class="details-tab">
+                                        <h3 class="card-title">Basic Information</h3>
+                                        <div class="row">
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="name" class="col-form-label control-label">Full name*</label>
+                                                    {{ form.name }}
+                                                    {% for err in form.name.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="contact" class="col-form-label control-label">Phone*</label>
+                                                    {{ form.contact }}
+                                                    {% for err in form.contact.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="email" class="col-form-label control-label">Personal Email*</label>
+                                                    {{ form.email }}
+                                                    {% for err in form.email.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="dob" class="col-form-label control-label">Date of Birth</label>
+                                                    {{ form.dob }}
+                                                    {% for err in form.dob.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="gender" class="col-form-label control-label">Gender*</label>
+                                                    {{ form.gender }}
+                                                    {% for err in form.gender.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Employee Information -->
+                                    <div class="details-tab">
+                                        <h3 class="card-title mb-3">Employee Information</h3>
+                                        <div class="row">
+                                            <!-- <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="code" class="col-form-label control-label">Employee code*</label>
+                                                    {{ user_form.username }}
+                                                    {% for err in user_form.username.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div> -->
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="dateOfJoin" class="col-form-label control-label">Date of Joining*</label>
+                                                    {{ form.dateOfJoin }}
+                                                    {% for err in form.dateOfJoin.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="department" class="col-form-label control-label">Department*</label>
+                                                    {{ form.department }}
+                                                    {% for err in form.department.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="desgination" class="col-form-label control-label">Desgination*</label>
+                                                    {{ form.desgination }}
+                                                    {% for err in form.desgination.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Contact Information -->
+                                    <div class="details-tab">
+                                        <h3 class="card-title">Contact Information</h3>
+                                        <div class="row">
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="address" class="col-form-label control-label">Address*</label>
+                                                    {{ form.address }}
+                                                    {% for err in form.address.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="city" class="col-form-label control-label">City*</label>
+                                                    {{ form.city }}
+                                                    {% for err in form.city.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="state" class="col-form-label control-label">State*</label>
+                                                    {{ form.state }}
+                                                    {% for err in form.state.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Education Information -->
+                                    <div class="details-tab">
+                                        <h3 class="card-title">Education</h3>
+                                        <div class="row">
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="specialization" class="col-form-label control-label">Specialization*</label>
+                                                    {{ form.specialization }}
+                                                    {% for err in form.specialization.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="startYear" class="col-form-label control-label">Start Year*</label>
+                                                    {{ form.startYear }}
+                                                    {% for err in form.startYear.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="endYear" class="col-form-label control-label">End Year*</label>
+                                                    {{ form.endYear }}
+                                                    {% for err in form.endYear.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="university" class="col-form-label control-label">University</label>
+                                                    {{ form.university }}
+                                                    {% for err in form.university.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6 col-md-3">
+                                                <div class="form-group pmd-textfield pmd-textfield-label">
+                                                    <label for="college" class="col-form-label control-label">College*</label>
+                                                    {{ form.college }}
+                                                    {% for err in form.college.errors %}
+                                                        <small class="text-danger ml-2">{{err}}</small>
+                                                    {% endfor%}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer pmd-card-border">
+                                        <input  class="btn pmd-ripple-effect btn-primary pmd-btn-raised" type="submit" value="Save">
+                                        <button class="btn pmd-ripple-effect btn-outline-secondary" type="button">Reset</button>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- END page -->
+
+
+
+{% endblock %}

@@ -33,7 +33,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right pl-2">
                                 <!-- item-->
-                                <a href="{% url 'editTable' %}"> View detail</a>
+                                <a href="{% url 'staffList' %}"> View detail</a>
 
                             </div>
                         </div>
@@ -46,8 +46,8 @@
                             </div>
 
                             <div class="widget-detail-1 text-right">
-                                <h2 class="font-weight-normal pt-2 mb-1"> {{sql_totstaff}} </h2>
-                                <a href="{% url 'editTable' %}">
+                                <h2 class="font-weight-normal pt-2 mb-1"> {{sqlTotal}} </h2>
+                                <a href="{% url 'staffList' %}">
                                     <p class="text-muted mb-1">View details</p>
                                 </a>
                             </div>
@@ -139,21 +139,21 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">View detail</a>
+                                <a href="{% url 'inActiveList' %}" class="dropdown-item">View detail</a>
                             </div>
                         </div>
 
-                        <h4 class="header-title mt-0 mb-4">Unlisted Staff</h4>
+                        <h4 class="header-title mt-0 mb-4">Inactive Staff</h4>
 
                         <div class="widget-chart-1">
                             <div class="widget-chart-box-1 float-left" dir="ltr">
                                 <input data-plugin="knob" data-width="80" data-height="80" data-fgColor="#ffbd4a"
-                                    data-bgColor="#FFE6BA" value="1" data-skin="tron" data-angleOffset="180"
+                                    data-bgColor="#FFE6BA" value="{{sqlInactive}}" data-skin="tron" data-angleOffset="180"
                                     data-readOnly=true data-thickness=".15" />
                             </div>
                             <div class="widget-detail-1 text-right">
-                                <h2 class="font-weight-normal pt-2 mb-1"> 1 </h2>
-                                <a href="#" class="text-muted mb-1">View details</a>
+                                <h2 class="font-weight-normal pt-2 mb-1"> {{sqlInactive}} </h2>
+                                <a href="{% url 'inActiveList' %}" class="text-muted mb-1">View details</a>
                             </div>
                         </div>
                     </div>

@@ -116,7 +116,7 @@
                         <img src="{% static 'faceapp/images/admin/sunder.jpg' %}" alt="user-image"
                             class="rounded-circle">
                         <span class="pro-user-name ml-1">
-                            Sunder Tamakhu <i class="mdi mdi-chevron-down"></i>
+                            Sunder Tamakhu<i class="mdi mdi-chevron-down"></i>
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
@@ -132,9 +132,9 @@
                         </a>
 
                         <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <a href="http://127.0.0.1:8000/admin/" class="dropdown-item notify-item">
                             <i class="fe-settings"></i>
-                            <span>Settings</span>
+                            <span>Settings</a></span>
                         </a>
 
                         <div class="dropdown-divider"></div>
@@ -238,23 +238,9 @@
                                     </a>
                                 </li>
 
+                                <!-- {% comment %} staff detail New {% endcomment %} -->
                                 <li>
-                                    <a href="{% url 'staffDetail' %}">
-                                        <i class="fas fa-user-plus"></i>
-                                        <span> Staff Detail </span>
-                                    </a>
-                                </li>
-
-                                {% comment %} staff detail New {% endcomment %}
-                                <li>
-                                    <a href="{% url 'staffAddNew' %}">
-                                        <i class="fas fa-user-plus"></i>
-                                        <span> Add New Staff (Updated)</span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="{% url 'addnewstaff' %}">
+                                    <a href="{% url 'addStaffNew' %}">
                                         <i class="fas fa-user-plus"></i>
                                         <span> Add New Staff </span>
                                     </a>

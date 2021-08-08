@@ -31,7 +31,7 @@
 
     <body class="authentication-bg">
 
-        <div class="account-pages mt-5 mb-5">
+        <div class="account-pages mt-4 mb-5">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 col-xl-5">
@@ -54,7 +54,14 @@
                                     
                                     {% for fm in form %}
                                         <div class="form-group">
-                                            {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.error|striptags}}</small>
+                                            {{fm.label_tag}} {{fm}} 
+
+                                            {% for err in fm.errors %}
+                                                <small class="text-danger ml-2">{{err}}</small>
+                                            {% endfor%}
+                                            <!-- <small class="text-danger">{{fm.error|striptags}}
+                                            </small> -->
+
                                         </div>
                                     {% endfor %}
                                     

@@ -31,7 +31,7 @@
                                         <div class="card-body">
                                                 <form action="" method="POST" enctype="multipart/form-data" novalidate>
                                                     {% csrf_token %}
-                                                    <center>Please donot edit code field.</center><br>
+                                                    <center>User : {{codeNum}}</center><br>
                                                     <!-- {{form.as_p}}   -->
                                                     {% for fm in form %}
                                                         {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small><br>
