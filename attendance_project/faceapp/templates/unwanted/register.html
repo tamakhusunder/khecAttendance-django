@@ -1,0 +1,71 @@
+{% extends "faceapp/base_layout.html" %}
+
+{%block title%}Khec Attendance | Register{% endblock %}
+
+{% block topbarTitle %}Dashboard > Register{% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="content-page">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-7">
+                                    <div class="card shadow-lg border-0 rounded-lg mt-4">
+                                        <div class="card-header"><h3 class="text-center font-weight-light my-2">Create Account</h3></div>
+                                        <div class="card-body">
+                                            <form method="POST" action="" novalidate>
+                                                <div class="form-row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="small mb-1" for="inputFirstName">First Name</label>
+                                                            <input class="form-control" id="inputFirstName" type="text" placeholder="Enter first name" required autocomplete="off" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="small mb-1" for="inputLastName">Last Name</label>
+                                                            <input class="form-control" id="inputLastName" type="text" placeholder="Enter last name" required autocomplete="off" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="small mb-1" for="inputEmailAddress">Email</label>
+                                                    <input class="form-control" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Enter email address" required autocomplete="off" />
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="small mb-1" for="inputPassword">Password</label>
+                                                            <input class="form-control" id="inputPassword" type="password" placeholder="Enter password" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="small mb-1" for="inputConfirmPassword">Confirm Password</label>
+                                                            <input class="form-control" id="inputConfirmPassword" type="password" placeholder="Confirm password" required autocomplete="off" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mt-4 mb-0"><a class="btn btn-primary btn-block" href="login.html">Create Account</a></div>
+                                            </form>
+                                        </div>
+                                        <div class="card-footer text-center">
+                                            <div class="small"><a href="login.html">Have an account? Go to login</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+           
