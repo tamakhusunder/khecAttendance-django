@@ -16,7 +16,7 @@ from .models import Profile,AttendanceTb
 
 
 from django.db import connection
-from datetime import date
+from datetime import date,datetime
 
 from .forms import ProfileForm, UserForm, LeaveForm, HolidayForm, TimeSettingForm
 from .models import Profile, Holiday, Leave, TimeSetting 	#to save form data in dataset
@@ -43,36 +43,29 @@ import numpy as np
 
 #####################################################################
 #function to enter sql
-def database_collection():
-	Profiles=Profile.objects.all()
-	sql_totstaff = Profile.objects.all().count()
-	# print(Profiles.image)
-	# sql_totstaff=Profile.objects.raw("SELECT  COUNT(*) FROM faceapp_Profile")
-	dateintable=str(date.today())
-	sql_present = AttendanceTb.objects.filter(status='p',date=dateintable).count()
-	print('<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>')
-	print(sql_present)
-	# sql_absent = AttendanceTb.objects.filter(status='Absent',date='2021-02-12').count()
-	sql_absent=sql_totstaff-sql_present
-
-	cursor=connection.cursor()
-	sql_presentDetail='''SELECT faceapp_Profile.image,faceapp_Profile.name,faceapp_Profile.code,faceapp_Profile.desgination,faceapp_AttendanceTb.status,faceapp_AttendanceTb.time FROM faceapp_Profile,faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}"'''.format(dateintable)
-	cursor.execute(sql_presentDetail)
-	# print(cursor.execute(sql_presentDetail))
-	print("----------------------------------------------------")
-	presentDetail=cursor.fetchall()
-
+def database_collection(dateArg):
+	dateIntable = dateArg
+	activeTotal = User.objects.filter(is_staff=True, is_superuser=False).all().count()
+	#filter date
+	# if request.method=="POST":
+	# 	dateIntable=(request.POST["attendanceDate"])
+	# 	if len(dateIntable)==0:			#check empty date
+	# 		dateIntable=str(date.today())
+	#attedance list
+	attendSql = AttendanceTb.objects.filter(date=dateIntable).all()
+	presentNum = AttendanceTb.objects.filter(date=dateIntable).all().count()
+	absentNum = activeTotal-presentNum
+	print(attendSql,">>>>",presentNum)
+	print("==================")
+	#id collection
+	presentIdList = []
+	# if attendSql.exists():
+	for i in attendSql:
+		presentIdList.append(i.user_id)
+	presentSql = User.objects.filter(is_staff=True, is_superuser=False, id__in = presentIdList)
+	absentSql = User.objects.filter(is_staff=True, is_superuser=False).exclude(id__in=presentIdList)
+	return activeTotal, attendSql, presentSql, presentNum, absentSql,absentNum,presentSql,dateIntable
 	
-	sql_absentdetail='''SELECT * FROM faceapp_Profile WHERE NOT EXISTS(SELECT * FROM faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}")'''.format(dateintable)
-	cursor.execute(sql_absentdetail)
-	absentDetail=cursor.fetchall()
-
-
-	print(type(presentDetail),presentDetail)
-	print("**_______")
-	print(type(absentDetail),absentDetail)
-
-	return Profiles,sql_totstaff,sql_present,sql_absent,presentDetail,absentDetail,dateintable
 
 ########################################################	
 # first startup page function
@@ -88,14 +81,20 @@ def amarTable(request):
 def home(request):
 	userAdmin = User.objects.get(pk=request.user.id)
 	sqlUser = User.objects.filter(is_superuser=False).all()
-	sqlTotal = User.objects.filter(is_superuser=False).all().count()
-	sqlInactive = User.objects.filter(is_staff=False,is_superuser=False).all().count()
-	print(sqlTotal)
+	sqlTotalNum = User.objects.filter(is_superuser=False).all().count()
+	sqlInactiveNum = User.objects.filter(is_staff=False,is_superuser=False).all().count()
+	print(sqlTotalNum)
+	todayDate=str(date.today())
+	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,presentSql,dateIntable=database_collection(todayDate)
+	# sqlActiveNum= sqlTotal-sqlInactiveNum
 	context = {
 				'userAdmin' : userAdmin,
-				'sqlTotal' : sqlTotal,
+				'sqlTotalNum' : sqlTotalNum,
 				'sqlUser' : sqlUser,
-				'sqlInactive' : sqlInactive
+				'sqlInactiveNum' : sqlInactiveNum,
+				'sqlActiveNum' : sqlTotalNum-sqlInactiveNum,
+				'presentNum' : presentNum,
+				'absentNum' : absentNum
 				}
 	return render(request,'faceapp/home.html',context)
 	# if request.user.is_authenticated:
@@ -108,6 +107,30 @@ def home(request):
 	# 		return render(request,'faceapp/pages-401.html',{})
 	# else:
 	# 	return HttpResponseRedirect('/login/')
+
+
+
+def attendanceTable(request):
+	#filter date
+	dateArg=str(date.today())
+	if request.method=="POST":
+		dateArg=(request.POST["attendanceDate"])
+		if len(dateArg)==0:			#check empty date
+			dateArg=str(date.today())
+	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,presentSql,dateIntable=database_collection(dateArg)
+	context = {
+				'activeTotal' : activeTotal,
+				'attendSql' : attendSql,
+				'presentSql' : presentSql,
+				'presentNum' : presentNum,
+				'absentSql' : absentSql,
+				'absentNum' : absentNum,
+				'presentSql' : presentSql,
+				'dateIntable' : dateIntable
+			}
+	print(context)
+	return render(request,'faceapp/attendance_table.html',context)
+
 
 # view list of staff in grid format
 #inactive portion little wrong
@@ -421,10 +444,6 @@ def demo(request):
 
 
 
-
-
-
-@login_required(login_url='/login/')
 def register(request):
 	if request.user.is_superuser:
 		return render(request,'faceapp/register.html',{})
@@ -492,12 +511,7 @@ def chart(request):
 
 
 
-def attendanceTable(request):
-	Profiles,sql_totstaff,sql_present,sql_absent,presentDetail,absentDetail,dateintable=database_collection()
-	# return render(request,'faceapp/attendance_table.html',{'presentDetail':presentDetail,'absentDetail':absentDetail})
-	return render(request,'faceapp/attendance_table.html',{'Profiles':Profiles,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
-
-		
+	
 	
 
 
@@ -775,4 +789,3 @@ def offline(request):
 
 # def home(request):
 # 	return render(request,'faceapp/home.html',{})
-

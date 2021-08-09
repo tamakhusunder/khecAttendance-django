@@ -6,6 +6,9 @@ from django.dispatch import receiver
 
 # Create your models here.
 class Profile(models.Model):
+	GENDER_MALE = 0
+	GENDER_FEMALE = 1
+	GENDER_CHOICES = [(GENDER_MALE, 'Male'), (GENDER_FEMALE, 'Female')]
 	"""database/table for staffs"""
 	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 	name = models.CharField(max_length=255, blank=True)
@@ -19,9 +22,9 @@ class Profile(models.Model):
 	address = models.CharField(max_length=255, blank=True)
 	# role = models.CharField(max_length=255, default='staff')
 	active = models.BooleanField(default=False)
-	dob = models.CharField(max_length=255, blank=True)
+	dob = models.DateTimeField(default=None,blank=True,null=True)
 	gender = models.CharField(max_length=255, blank=True)
-	dateOfJoin = models.CharField(max_length=255, blank=True)
+	dateOfJoin = models.DateTimeField(default=None,blank=True,null=True)
 	city = models.CharField(max_length=255, blank=True)
 	state = models.CharField(max_length=255, blank=True)
 	startYear = models.IntegerField(null=True)
@@ -54,17 +57,16 @@ class AttendanceTb(models.Model):
 	# 	('ABSENT','Absent'),
 	# 	]
 	user = models.ForeignKey(User,on_delete=models.CASCADE)
-	date = models.CharField(max_length=255)
-	time = models.CharField(max_length=255)
-	late_time = models.CharField(max_length=255)
+	date = models.DateField()
+	time = models.TimeField()
+	late_time = models.IntegerField(null=True)
 	status = models.CharField(max_length=255,blank=True)
 	# attendanceCreated = models.DateField(auto_now_add=True,auto_now=True,blank=True)
 	createdDate = models.DateTimeField(auto_now_add=True,blank=True,null=True)
 	updatedDate = models.DateTimeField(auto_now=True)
 
-
 	def __str__(self):
-		return self.t_id+'-->'+self.date
+		return f"AttendanceTb('{self.user}', '{self.date}', '{self.time}', '{self.late_time}')"
 
 
 class Leave(models.Model):

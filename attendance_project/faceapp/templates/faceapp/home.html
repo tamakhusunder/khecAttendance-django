@@ -7,7 +7,7 @@
 <div class="content-page">
     <div class="content">
         {% if messages %}
-        {% for msg in messages %}
+        {% for msg in messages|slice:":1" %}
         <div class="row">
             <div class="col-sm-8 offset-2">
                 <center>
@@ -46,7 +46,7 @@
                             </div>
 
                             <div class="widget-detail-1 text-right">
-                                <h2 class="font-weight-normal pt-2 mb-1"> {{sqlTotal}} </h2>
+                                <h2 class="font-weight-normal pt-2 mb-1"> {{sqlTotalNum}} </h2>
                                 <a href="{% url 'staffList' %}">
                                     <p class="text-muted mb-1">View details</p>
                                 </a>
@@ -74,9 +74,9 @@
                         <div class="widget-box-2">
                             <div class="widget-detail-2 text-right">
                                 <span
-                                    class="badge badge-success badge-pill float-left mt-3">{% widthratio sql_present sql_totstaff 100 %}
+                                    class="badge badge-success badge-pill float-left mt-3">{% widthratio presentNum sqlActiveNum 100 %}
                                     % <i class="mdi mdi-trending-up"></i></span>
-                                <h2 class="font-weight-normal mb-1"> {{sql_present}} </h2>
+                                <h2 class="font-weight-normal mb-1"> {{presentNum}} </h2>
                                 <a href="{% url 'attendance' %}">
                                     <p class="text-muted mb-3">View details</p>
                                 </a>
@@ -84,7 +84,7 @@
                             <div class="progress progress-bar-alt-success progress-sm">
                                 <div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{sql_present}}"
                                     aria-valuemin="0" aria-valuemax="50"
-                                    style="width: {% widthratio sql_present sql_totstaff 100 %}%;">
+                                    style="width: {% widthratio presentNum sqlActiveNum 100 %}%;">
                                     <span class="sr-only">77% Complete</span>
                                 </div>
                             </div>
@@ -111,9 +111,9 @@
                         <div class="widget-box-2">
                             <div class="widget-detail-2 text-right">
                                 <span
-                                    class="badge badge-danger badge-pill float-left mt-3">{% widthratio sql_absent sql_totstaff 100 %}
+                                    class="badge badge-danger badge-pill float-left mt-3">{% widthratio absentNum sqlActiveNum 100 %}
                                     % <i class="mdi mdi-trending-up"></i></span>
-                                <h2 class="font-weight-normal mb-1">{{sql_absent}} </h2>
+                                <h2 class="font-weight-normal mb-1">{{absentNum}} </h2>
                                 <a href="{% url 'attendance' %}">
                                     <p class="text-muted mb-3">View details</p>
                                 </a>
@@ -122,7 +122,7 @@
                             <div class="progress progress-bar-alt-pink progress-sm">
                                 <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"
                                     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-                                    style="width:{% widthratio sql_absent sql_totstaff 100 %}%;">
+                                    style="width:{% widthratio absentNum sqlActiveNum 100 %}%;">
                                 </div>
                             </div>
                         </div>
@@ -148,17 +148,18 @@
                         <div class="widget-chart-1">
                             <div class="widget-chart-box-1 float-left" dir="ltr">
                                 <input data-plugin="knob" data-width="80" data-height="80" data-fgColor="#ffbd4a"
-                                    data-bgColor="#FFE6BA" value="{{sqlInactive}}" data-skin="tron" data-angleOffset="180"
+                                    data-bgColor="#FFE6BA" value="{{sqlInactiveNum}}" data-skin="tron" data-angleOffset="180"
                                     data-readOnly=true data-thickness=".15" />
                             </div>
                             <div class="widget-detail-1 text-right">
-                                <h2 class="font-weight-normal pt-2 mb-1"> {{sqlInactive}} </h2>
+                                <h2 class="font-weight-normal pt-2 mb-1"> {{sqlInactiveNum}} </h2>
                                 <a href="{% url 'inActiveList' %}" class="text-muted mb-1">View details</a>
                             </div>
                         </div>
                     </div>
 
                 </div><!-- end col -->
+
 
             </div>
             <!-- end row -->

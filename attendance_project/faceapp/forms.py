@@ -2,6 +2,9 @@
 from django.contrib.auth.forms import AuthenticationForm,UsernameField
 from django.utils.translation import gettext, gettext_lazy as _
 
+
+from django.core.exceptions import ValidationError
+
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
@@ -46,6 +49,8 @@ class UserForm(UserCreationForm):
 		return username  
 
 class ProfileForm(forms.ModelForm):
+	contact = forms.IntegerField(validators=[validate_mobile], widget=forms.NumberInput(attrs={'autofocus':True,'class':'form-control', 'placeholder':"Enter code",}))
+
 	class Meta:
 		model=Profile
 		fields=['name','image','department','desgination','specialization','email','contact','address','active','dob','gender','dateOfJoin','city','state','startYear','endYear','university','college']
