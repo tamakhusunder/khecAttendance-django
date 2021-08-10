@@ -152,3 +152,13 @@ class TimeSettingForm(forms.Form):
 	exitTime = forms.TimeField(label='Entry Time')
 	toleranceTime = forms.IntegerField(label='Tolerance time in minutes')
 	reason = forms.CharField(max_length=225, widget=forms.Textarea)
+
+YEARS= [x for x in range(2010,2021)]
+
+class YearForm(forms.Form):
+    birth_date= forms.DateField(label='Select Date',
+    							required=False,
+    							widget=forms.SelectDateWidget(years=YEARS)
+    							)
+
+

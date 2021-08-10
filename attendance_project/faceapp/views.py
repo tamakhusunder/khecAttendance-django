@@ -18,7 +18,7 @@ from .models import Profile,AttendanceTb
 from django.db import connection
 from datetime import date,datetime
 
-from .forms import ProfileForm, UserForm, LeaveForm, HolidayForm, TimeSettingForm
+from .forms import ProfileForm, UserForm, YearForm, LeaveForm, HolidayForm, TimeSettingForm
 from .models import Profile, Holiday, Leave, TimeSetting 	#to save form data in dataset
 
 
@@ -28,21 +28,8 @@ import numpy as np
 #     return HttpResponse('Hello world 2')
 
 
-
-
-# def database_collection():
-# 	Profiles=Profile.objects
-# 	cursor = connection.cursor()
-# 	cursor.execute("SELECT COUNT(*) FROM faceapp_Profile")
-#     sql_totstaff = fetchone()
-#     print(connection.queries)
-# 	print('sunder')
-# 	print(sql_totstaff)
-# 	print('sunder')
-# 	return Profiles,sql_totstaff
-
 #####################################################################
-#function to enter sql
+#common function with argument to enter sql
 def database_collection(dateArg):
 	dateIntable = dateArg
 	activeTotal = User.objects.filter(is_staff=True, is_superuser=False).all().count()
@@ -74,7 +61,11 @@ def index(request):
 
 #addition in admin page author:Amar Nagaju
 def amarTable(request):
-	return render(request,'faceapp/sunder.html')
+	form = YearForm()
+	context = {
+				'form' : form
+			}
+	return render(request,'faceapp/table.html',context)
 
 # admin dashboard
 @login_required(login_url='/login/')
