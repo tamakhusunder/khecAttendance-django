@@ -60,10 +60,10 @@ class AttendanceTb(models.Model):
 	date = models.DateField()
 	time = models.TimeField()
 	late_time = models.IntegerField(null=True)
-	status = models.CharField(max_length=255,blank=True)
-	# attendanceCreated = models.DateField(auto_now_add=True,auto_now=True,blank=True)
-	createdDate = models.DateTimeField(auto_now_add=True,blank=True,null=True)
-	updatedDate = models.DateTimeField(auto_now=True)
+	# status = models.CharField(max_length=255,blank=True)
+	# # attendanceCreated = models.DateField(auto_now_add=True,auto_now=True,blank=True)
+	# createdDate = models.DateTimeField(auto_now_add=True,blank=True,null=True,default=None)
+	# updatedDate = models.DateTimeField(auto_now=True,default=None)
 
 	def __str__(self):
 		return f"AttendanceTb('{self.user}', '{self.date}', '{self.time}', '{self.late_time}')"
@@ -96,9 +96,9 @@ class Holiday(models.Model):
 		return f"Holiday('{self.weekend}', '{self.date}')"
 
 class TimeSetting(models.Model):
-	entryTime = models.CharField(max_length=255)
-	exitTime = models.CharField(max_length=255)
-	toleranceTime = models.CharField(max_length=255)
+	entryTime = models.TimeField()
+	exitTime = models.TimeField()
+	tolerance = models.IntegerField(null=True)
 	createdDate = models.DateTimeField(auto_now_add=True,blank=True,null=True)
 	updatedDate = models.DateTimeField(auto_now=True)
 
