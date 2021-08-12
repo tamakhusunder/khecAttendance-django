@@ -7,20 +7,21 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import transaction
-
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import SetPasswordForm
 
-
-
-from .models import Profile,AttendanceTb
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 
 from django.db import connection
 from datetime import date,datetime
+from fpdf import FPDF
 
-from .forms import ProfileForm, UserForm, YearForm, LeaveForm, HolidayForm, TimeSettingForm
-from .models import Profile, Holiday, Leave, TimeSetting 	#to save form data in dataset
-
+from .forms import YearForm, ProfileForm, UserForm, LeaveForm, HolidayForm, TimeSettingForm
+from .models import Profile, Holiday, Leave, TimeSetting,AttendanceTb 	#to save form data in dataset
+from django.views.decorators.csrf import csrf_protect
 
 import numpy as np
 # Create your views here.
@@ -51,8 +52,50 @@ def database_collection(dateArg):
 		presentIdList.append(i.user_id)
 	presentSql = User.objects.filter(is_staff=True, is_superuser=False, id__in = presentIdList)
 	absentSql = User.objects.filter(is_staff=True, is_superuser=False).exclude(id__in=presentIdList)
-	return activeTotal, attendSql, presentSql, presentNum, absentSql,absentNum,presentSql,dateIntable
+	#present list in given date
+	# for p in presentSql:
+	# 	for at in attendSql:
+	# 		if p.id == at.user_id:
+	# 			print(p.profile.name,"-->",p.username,"->",p.profile.desgination,"->Present","->",at.time)
+	# for a in absentSql:
+	# 	print(a.profile.name,"-->",a.username,"->",a.profile.desgination,"->Absent","->","--")
+
+	return activeTotal, attendSql, presentSql, presentNum, absentSql,absentNum, dateIntable
 	
+
+#convert to pdf
+def attendancePdf(request):
+	#filter date
+	dateArg=str(date.today())
+	if request.method=="POST":
+		if 'printPage' in request.POST:
+			dateArg=(request.POST["attendanceDate"])
+			dateArg=str(dateArg)
+			if len(dateArg)==0:			#check empty date
+				dateArg=str(date.today())
+	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,dateIntable=database_collection(dateArg)
+	
+	# pdf function
+	template_path = 'pdf/attendancePdf.html'
+	context = {'activeTotal' : activeTotal,
+				'attendSql' : attendSql,
+				'presentSql' : presentSql,
+				'presentNum' : presentNum,
+				'absentSql' : absentSql,
+				'absentNum' : absentNum,
+				'presentSql' : presentSql,
+				'dateIntable' : dateIntable
+				}
+	response = HttpResponse(content_type='application/pdf')
+	response['Content-Disposition'] = 'filename="Attendance_sheet.pdf"'
+	template = get_template(template_path)
+	html = template.render(context)
+	pisa_status = pisa.CreatePDF(html, dest=response)
+	if pisa_status.err:
+		return HttpResponse('We had some errors <pre>' + html + '</pre>')
+	return response
+
+
 
 ########################################################	
 # first startup page function
@@ -62,10 +105,15 @@ def index(request):
 #addition in admin page author:Amar Nagaju
 def amarTable(request):
 	form = YearForm()
+	if request.method == 'POST':
+		form = YearForm(request.POST)
+		if form.is_valid():
+			birth_date = form.cleaned_data['birth_date']
+			print(birth_date,">>>")
 	context = {
 				'form' : form
 			}
-	return render(request,'faceapp/table.html',context)
+	return render(request,'faceapp/attendance_month.html',context)
 
 # admin dashboard
 @login_required(login_url='/login/')
@@ -76,7 +124,7 @@ def home(request):
 	sqlInactiveNum = User.objects.filter(is_staff=False,is_superuser=False).all().count()
 	print(sqlTotalNum)
 	todayDate=str(date.today())
-	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,presentSql,dateIntable=database_collection(todayDate)
+	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,dateIntable=database_collection(todayDate)
 	# sqlActiveNum= sqlTotal-sqlInactiveNum
 	context = {
 				'userAdmin' : userAdmin,
@@ -100,15 +148,21 @@ def home(request):
 	# 	return HttpResponseRedirect('/login/')
 
 
-
 def attendanceTable(request):
 	#filter date
 	dateArg=str(date.today())
 	if request.method=="POST":
-		dateArg=(request.POST["attendanceDate"])
-		if len(dateArg)==0:			#check empty date
-			dateArg=str(date.today())
-	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,presentSql,dateIntable=database_collection(dateArg)
+		if 'searchDate' in request.POST:
+			print('searchDate')
+			dateArg=(request.POST["attendanceDate"])
+			if len(dateArg)==0:			#check empty date
+				dateArg=str(date.today())
+		# if 'printPage' in request.POST:
+		# 	dateArg=(request.POST["attendanceDate"])
+		# 	dateArg=str(dateArg)
+		# 	if len(dateArg)==0:			#check empty date
+		# 		dateArg=str(date.today())
+	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,dateIntable=database_collection(dateArg)
 	context = {
 				'activeTotal' : activeTotal,
 				'attendSql' : attendSql,
@@ -122,7 +176,6 @@ def attendanceTable(request):
 	print(context)
 	return render(request,'faceapp/attendance_table.html',context)
 
-
 # view list of staff in grid format
 #inactive portion little wrong
 @login_required(login_url='/login/')
@@ -130,7 +183,18 @@ def inActiveList(request):
 	sqlInactive=User.objects.filter(is_staff=False,is_superuser=False).all()
 	print(sqlInactive)
 	context ={
-				'sqlInactive':sqlInactive
+				'sqlInactive':sqlInactive,
+				'status': 'inactive'
+			}
+	return render(request,'faceapp/inActiveList.html',context)
+
+@login_required(login_url='/login/')
+def activeList(request):
+	sqlActive=User.objects.filter(is_staff=True,is_superuser=False).all()
+	print(sqlActive)
+	context ={
+				'sqlInactive':sqlActive,
+				'status': 'active'
 			}
 	return render(request,'faceapp/inActiveList.html',context)
 
@@ -143,14 +207,28 @@ def staffList(request):
 	return render(request,'faceapp/staffList.html',context)
 
 # view staff detail in indiviual page
+#change password also attached in this function
 @login_required(login_url='/login/')
 def staffDetail(request,userID):
 	userSql = User.objects.get(pk=userID)
-	print(userSql.username)
+	#change password form
+	form = SetPasswordForm(user=userSql)
+	if request.method == 'POST':
+		form = SetPasswordForm(user=userSql, data=request.POST)
+		if form.is_valid():
+			form.save()
+			update_session_auth_hash(request, form.user)  # Important!
+			messages.success(request, 'Password was successfully changed!')
+		else:
+			messages.error(request, 'Please correct the error below.')
 	context ={
-				'userSql':userSql
+				'userSql':userSql,
+				'form': form
 			}
 	return render(request,'faceapp/staffDetail.html',context)
+
+
+
 
 # def holiday(request):
 # 	form=HolidayForm()
@@ -342,6 +420,7 @@ def editStaff(request,userID):
 			}	
 	return render(request,'faceapp/editStaff.html', context)
 
+
 # function to delete staff
 @login_required(login_url='/login/')
 def deletestaff(request,userID):
@@ -377,7 +456,7 @@ def loginUser(request):
 				user = authenticate(username=uname,password=upassword)
 				if user is not None:
 					login(request,user)
-					messages.success(request,'Welcome admin !!')
+					# messages.success(request,'Welcome admin !!')
 					return HttpResponseRedirect('/dashboard/')
 		else:
 			form=LoginForm()
@@ -430,68 +509,83 @@ def userProfile(request):
 
 #End of addition by amar
 
-def demo(request):
-	return render(request,'faceapp/demo.html')
+############# old code ###############################
 
+# def datesearch(request):
+# 	Profiles=Profile.objects.all()
+# 	sql_totstaff = Profile.objects.all().count()
+# 	dateintable=str(date.today())
+# 	if request.method=="POST":
+# 		dateintable=str(request.POST["attendanceDate"])
+# 		print(dateintable,'<<<<<<<<-----------')
 
+# 	sql_present = AttendanceTb.objects.filter(status='p',date=dateintable).count()
+# 	sql_absent=sql_totstaff-sql_present
 
-def register(request):
-	if request.user.is_superuser:
-		return render(request,'faceapp/register.html',{})
-	else:
-		return HttpResponseRedirect('/login/')
-
-
-
-
-
-
-
-
-
-def datesearch(request):
-	Profiles=Profile.objects.all()
-	sql_totstaff = Profile.objects.all().count()
-	dateintable=str(date.today())
-	if request.method=="POST":
-		dateintable=str(request.POST["attendanceDate"])
-		print(dateintable,'<<<<<<<<-----------')
-
-	sql_present = AttendanceTb.objects.filter(status='p',date=dateintable).count()
-	sql_absent=sql_totstaff-sql_present
-
-	cursor=connection.cursor()
-	sql_presentDetail='''SELECT faceapp_Profile.image,faceapp_Profile.name,faceapp_Profile.code,faceapp_Profile.desgination,faceapp_AttendanceTb.status,faceapp_AttendanceTb.time FROM faceapp_Profile,faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}"'''.format(dateintable)
-	cursor.execute(sql_presentDetail)
-	presentDetail=cursor.fetchall()
-	sql_absentdetail='''SELECT * FROM faceapp_Profile WHERE NOT EXISTS(SELECT * FROM faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}")'''.format(dateintable)
-	cursor.execute(sql_absentdetail)
-	absentDetail=cursor.fetchall()
+# 	cursor=connection.cursor()
+# 	sql_presentDetail='''SELECT faceapp_Profile.image,faceapp_Profile.name,faceapp_Profile.code,faceapp_Profile.desgination,faceapp_AttendanceTb.status,faceapp_AttendanceTb.time FROM faceapp_Profile,faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}"'''.format(dateintable)
+# 	cursor.execute(sql_presentDetail)
+# 	presentDetail=cursor.fetchall()
+# 	sql_absentdetail='''SELECT * FROM faceapp_Profile WHERE NOT EXISTS(SELECT * FROM faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}")'''.format(dateintable)
+# 	cursor.execute(sql_absentdetail)
+# 	absentDetail=cursor.fetchall()
 			
-	return render(request,'faceapp/home.html',{'Profiles':Profiles,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
+# 	return render(request,'faceapp/home.html',{'Profiles':Profiles,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
 
-def datesearch2(request):
-	Profiles=Profile.objects.all()
-	sql_totstaff = Profile.objects.all().count()
-	dateintable=str(date.today())
-	if request.method=="POST":
-		dateintable=str(request.POST["attendanceDate"])
-		print(dateintable,'<<<<<<<<-----------')
+# def datesearch2(request):
+# 	Profiles=Profile.objects.all()
+# 	sql_totstaff = Profile.objects.all().count()
+# 	dateintable=str(date.today())
+# 	if request.method=="POST":
+# 		dateintable=str(request.POST["attendanceDate"])
+# 		print(dateintable,'<<<<<<<<-----------')
 
-	sql_present = AttendanceTb.objects.filter(status='p',date=dateintable).count()
-	sql_absent=sql_totstaff-sql_present
+# 	sql_present = AttendanceTb.objects.filter(status='p',date=dateintable).count()
+# 	sql_absent=sql_totstaff-sql_present
 
-	cursor=connection.cursor()
-	sql_presentDetail='''SELECT faceapp_Profile.image,faceapp_Profile.name,faceapp_Profile.code,faceapp_Profile.desgination,faceapp_AttendanceTb.status,faceapp_AttendanceTb.time FROM faceapp_Profile,faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}"'''.format(dateintable)
-	cursor.execute(sql_presentDetail)
-	presentDetail=cursor.fetchall()
-	sql_absentdetail='''SELECT * FROM faceapp_Profile WHERE NOT EXISTS(SELECT * FROM faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}")'''.format(dateintable)
-	cursor.execute(sql_absentdetail)
-	absentDetail=cursor.fetchall()
+# 	cursor=connection.cursor()
+# 	sql_presentDetail='''SELECT faceapp_Profile.image,faceapp_Profile.name,faceapp_Profile.code,faceapp_Profile.desgination,faceapp_AttendanceTb.status,faceapp_AttendanceTb.time FROM faceapp_Profile,faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}"'''.format(dateintable)
+# 	cursor.execute(sql_presentDetail)
+# 	presentDetail=cursor.fetchall()
+# 	sql_absentdetail='''SELECT * FROM faceapp_Profile WHERE NOT EXISTS(SELECT * FROM faceapp_AttendanceTb WHERE faceapp_Profile.code=faceapp_AttendanceTb.t_id AND faceapp_AttendanceTb.date="{}")'''.format(dateintable)
+# 	cursor.execute(sql_absentdetail)
+# 	absentDetail=cursor.fetchall()
 			
-	return render(request,'faceapp/attendance_table.html',{'Profiles':Profiles,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
+# 	return render(request,'faceapp/attendance_table.html',{'Profiles':Profiles,'sql_totstaff':sql_totstaff,'sql_present':sql_present,'sql_absent':sql_absent,'presentDetail':presentDetail,'absentDetail':absentDetail,'dateintable':dateintable})
 
 
+
+# #form to save in database of newstaff
+# def addstaffDB(request):
+# 	if request.method=='POST':
+# 		if request.POST['inputFirstName'] and request.POST['inputLastName'] and request.POST['inputCodeNo'] and request.POST['inputDesignation'] and request.POST['inputDepartment'] and request.POST['inputSpecialization'] and request.POST['inputEmailAddress'] and request.POST['inputContactNo'] and request.POST['inputAddress']:
+# 			print('----------------->saved')
+# 			# saverecord=Profile()
+# 			f_name=request.POST.get('inputFirstName')
+# 			l_name=request.POST['inputLastName']
+# 			name=f_name+' '+l_name
+# 			image='faceapp/images/staffs/'+request.POST['inputImg']
+# 			code=request.POST['inputCodeNo']
+# 			designation=request.POST['inputDesignation']
+# 			department=request.POST['inputDepartment']
+# 			specialization=request.POST['inputSpecialization']
+# 			email=request.POST['inputEmailAddress']
+# 			contact=request.POST['inputContactNo']
+# 			address=request.POST['inputAddress']
+# 			ins_record=Profile(name=name,image=image,code=code,department=department,desgination=designation,specialization=specialization,email=email,contact=contact,address=address)
+# 			ins_record.save()
+# 			print(name,image,code,designation,department,specialization,email,contact,address,'@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+# 			print("++++++++++++++++++record set in database")
+# 			# messages.success(request,'Record Saved Successfully...')
+# 			# return render(request,'faceapp/home.html')
+# 		return redirect('/addstaff/')
+# 		# return render(request,'faceapp/add_new_staff.html',{})
+# 	else:
+# 		print('------------>not saved')
+# 		# return redirect('/')
+# 		return render(request,'faceapp/add_new_staff.html',{})
+
+################## end of old code
 
 
 def face_exe(request):
@@ -501,40 +595,6 @@ def chart(request):
 	return render(request,'faceapp/charts.html',{})
 
 
-
-	
-	
-
-
-#form to save in database of newstaff
-def addstaffDB(request):
-	if request.method=='POST':
-		if request.POST['inputFirstName'] and request.POST['inputLastName'] and request.POST['inputCodeNo'] and request.POST['inputDesignation'] and request.POST['inputDepartment'] and request.POST['inputSpecialization'] and request.POST['inputEmailAddress'] and request.POST['inputContactNo'] and request.POST['inputAddress']:
-			print('----------------->saved')
-			# saverecord=Profile()
-			f_name=request.POST.get('inputFirstName')
-			l_name=request.POST['inputLastName']
-			name=f_name+' '+l_name
-			image='faceapp/images/staffs/'+request.POST['inputImg']
-			code=request.POST['inputCodeNo']
-			designation=request.POST['inputDesignation']
-			department=request.POST['inputDepartment']
-			specialization=request.POST['inputSpecialization']
-			email=request.POST['inputEmailAddress']
-			contact=request.POST['inputContactNo']
-			address=request.POST['inputAddress']
-			ins_record=Profile(name=name,image=image,code=code,department=department,desgination=designation,specialization=specialization,email=email,contact=contact,address=address)
-			ins_record.save()
-			print(name,image,code,designation,department,specialization,email,contact,address,'@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-			print("++++++++++++++++++record set in database")
-			# messages.success(request,'Record Saved Successfully...')
-			# return render(request,'faceapp/home.html')
-		return redirect('/addstaff/')
-		# return render(request,'faceapp/add_new_staff.html',{})
-	else:
-		print('------------>not saved')
-		# return redirect('/')
-		return render(request,'faceapp/add_new_staff.html',{})
 
 def contactList(request):
 	Profiles=Profile.objects.all()

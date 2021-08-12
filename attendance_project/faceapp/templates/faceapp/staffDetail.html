@@ -16,6 +16,20 @@
     <div class="content-page">
         <div class="content">
 
+        {% if messages %}
+        {% for msg in messages %}
+        <div class="row">
+            <div class="col-sm-8 offset-2">
+                <center>
+                    <p {% if msg.tags %} class="alert alert-{{msg.tags}}" {% endif %}>{{msg}}</p>
+                </center>
+
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
             <!-- Start Content-->
             <!--content area start-->
             <div id="content" class="pmd-content inner-page profile-page">
@@ -235,6 +249,21 @@
 
                                             <div class="card-footer pmd-card-border">
                                                 <a href="{% url 'editStaff' userSql.profile.user_id %}"  class="btn pmd-ripple-effect btn-primary pmd-btn-raised">Edit</a>
+                                            </div>
+
+                                            <div class="card-footer pmd-card-border">
+                                                <form method="post" action="">
+                                                {% csrf_token %}
+                                                {% for fm in form %}
+                                                    <div class="form-group">
+                                                        {{fm.label_tag}} {{fm}}
+                                                        {% for err in fm.errors %}
+                                                            <small class="text-danger ml-2">{{err}}</small>
+                                                        {% endfor%}
+                                                    </div>
+                                                {% endfor %}
+                                                  <button class="btn pmd-ripple-effect btn-primary pmd-btn-raised" type="submit">Change password</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

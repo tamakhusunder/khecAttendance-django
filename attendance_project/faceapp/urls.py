@@ -5,8 +5,6 @@ urlpatterns = [
     path('', views.index, name='index'), 
 
     path('login/', views.loginUser, name='login'),
-    path('demo/', views.demo, name='demo'),
-    # path('', views.loginUser, name='login'),
     path('logout/', views.logoutUser, name='logout'),
 
 # <<<<<<<<<<<<<----admin url--->>>>>>>>>>>>
@@ -17,8 +15,10 @@ urlpatterns = [
 
     #view staffinActiveList
     path('inActiveList/', views.inActiveList, name='inActiveList'),
+    path('activeList/', views.activeList, name='activeList'),
     path('staffList/', views.staffList, name='staffList'),
     path('staffDetail/<int:userID>', views.staffDetail, name='staffDetail'),
+   
 
     #register staff
     path('addStaffNew/', views.addStaffNew, name='addStaffNew'),
@@ -29,18 +29,18 @@ urlpatterns = [
     path('deletestaff/<int:userID>',views.deletestaff,name='deletestaff'),
     path('editTable/',views.editTable,name='editTable'),
 
+    #xhtml2pdf --print pdf
+    path('attendancePdf/',views.attendancePdf,name='attendancePdf'),
+
 
     path('home/', views.home, name='home'), 
     path('attendance/',views.attendanceTable,name='attendance'),
-    path('register/',views.register, name='register'),
     path('dashboard/',views.dashboardStaff,name='dashboardStaff'),
 
-    
 
-
-    path('home/datesearch',views.datesearch,name='datesearch'),
-    path('attendance/datesearch2',views.datesearch2,name='datesearch2'),
-    path('addstaff/addstaffDB/',views.addstaffDB,name='addstaffDB'),
+    # path('home/datesearch',views.datesearch,name='datesearch'),
+    # path('attendance/datesearch2',views.datesearch2,name='datesearch2'),
+    # path('addstaff/addstaffDB/',views.addstaffDB,name='addstaffDB'),
 
     path('contactList/',views.contactList,name='contactList'),
     path('sendEmail/<int:code>/',views.sendEmail,name='sendEmail'),

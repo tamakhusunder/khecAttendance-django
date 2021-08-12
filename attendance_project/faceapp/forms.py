@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from django.db import models
 from .models import Profile,Holiday
 
 # To validate phone number in form
@@ -18,6 +19,23 @@ def validate_mobile(value):
 			_('%(value)s is not an valid number'),
             params={'value': value},
         )
+
+GENDER_CHOICES =(
+    ("Male", "Male"),
+    ("Female", "Female"),
+)
+
+STATE_CHOICES =(
+    ("Province No. 1", "Province No. 1"),
+    ("Province No. 2", "Province No. 2"),
+    ("Bagmati Province", "Bagmati Province"),
+    ("Gandaki Province", "Gandaki Province"),
+    ("Lumbini Province", "Lumbini Province"),
+    ("Sudurpashchim Province", "Sudurpashchim Province"),
+    ("Karnali Province", "Karnali Province"),
+)
+
+YEARS = [x for x in range(1921,2021)]
 
 ''' django login authentication form and we used here for adding bootstrap'''
 class LoginForm(AuthenticationForm):
@@ -48,8 +66,13 @@ class UserForm(UserCreationForm):
 			raise ValidationError("User Already Exist")
 		return username  
 
+
 class ProfileForm(forms.ModelForm):
-	contact = forms.IntegerField(validators=[validate_mobile], widget=forms.NumberInput(attrs={'autofocus':True,'class':'form-control', 'placeholder':"Enter code",}))
+	contact = forms.IntegerField(validators=[validate_mobile], widget=forms.NumberInput(attrs={'autofocus':True,'class':'form-control', 'placeholder':"Enter Mobile Number",}))
+	gender = forms.ChoiceField(choices = GENDER_CHOICES, widget=forms.Select(attrs={'autofocus':True,'class':'form-control',}))
+	dob = forms.DateField(widget=forms.SelectDateWidget(attrs={'autofocus':True,'class':'form-control',}))
+	dateOfJoin = forms.DateField(widget=forms.SelectDateWidget(attrs={'autofocus':True,'class':'form-control',}))
+	state = forms.ChoiceField(choices = STATE_CHOICES, widget=forms.Select(attrs={'autofocus':True,'class':'form-control',}))
 
 	class Meta:
 		model=Profile
@@ -154,11 +177,15 @@ class TimeSettingForm(forms.Form):
 	reason = forms.CharField(max_length=225, widget=forms.Textarea)
 
 YEARS= [x for x in range(2010,2021)]
+BIRTH_YEAR_CHOICES = ['1980', '1981', '1982']
 
+# form for year and month in search
 class YearForm(forms.Form):
     birth_date= forms.DateField(label='Select Date',
-    							required=False,
     							widget=forms.SelectDateWidget(years=YEARS)
     							)
+
+
+
 
 
