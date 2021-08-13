@@ -1,0 +1,140 @@
+{% extends "faceapp/base_layout.html" %}
+
+{%block title%}Khec Attendance | Register{% endblock %}
+
+{% block topbarTitle %}Dashboard > Register{% endblock %}
+
+{% block scripts %}
+<script>
+	$(document).ready(function () {
+		var value ="{{mon_label|safe}}";
+		console.log(typeof(value));
+		var arr1 = [];
+		var arr2 = [];
+		{% for data in mon_label %}
+			var value ="{{data|safe}}";
+			console.log(value);
+			arr1.push(value);
+		{% endfor %}
+		console.log(typeof(arr1));
+		console.log(arr1);
+		console.log('sunder');
+
+		var value ="{{a|safe}}";
+		console.log(typeof(value));
+		{% for datas in a %}
+			var value ="{{datas|safe}}";
+			console.log(value);
+			arr2.push(value);
+		{% endfor %}
+		arr2 = arr2.map((i) => Number(i));
+
+
+		console.log(typeof(arr2));
+		console.log(arr2);
+		// alert("{{a}}");
+		
+		
+		
+		var ctx = document.getElementById('myChart').getContext('2d');
+		var myChart = new Chart(ctx, {
+		    type: 'line',
+		    data: {
+		        labels: arr1,
+		        datasets: [{
+		            label: '# of Votes',
+		            data:arr2,
+		            backgroundColor: [
+		                'rgba(255, 99, 132, 0.2)',
+		                'rgba(54, 162, 235, 0.2)',
+		                'rgba(255, 206, 86, 0.2)',
+		                'rgba(75, 192, 192, 0.2)',
+		                'rgba(153, 102, 255, 0.2)'
+		            ],
+		            borderColor: [
+		                'rgba(255, 99, 132, 1)',
+		                'rgba(54, 162, 235, 1)',
+		                'rgba(255, 206, 86, 1)',
+		                'rgba(75, 192, 192, 1)',
+		                'rgba(153, 102, 255, 1)'
+		            ],
+		            borderWidth: 1
+		        }]
+		    },
+		    options: {
+		        scales: {
+		            y: {
+		                beginAtZero: true
+		            }
+		        }
+		    }
+		});
+	});
+
+</script>	
+
+<!-- <script>
+
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: {{ data }},
+          backgroundColor: [
+            '#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3'
+          ],
+          label: 'Population'
+        }],
+        labels: {{ labels }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+    };
+
+  </script> -->			  
+{% endblock scripts %}
+
+{% block content %}
+{% load static %}
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <div class="row">
+            	 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+				    {% for data in labels %}
+					{{data}}	
+			
+					{% endfor %}
+
+                <div class="col-xl-4">
+
+
+				  <div id="container" style="width: 75%;">
+				    <canvas id="myChart" width="50" height="50"></canvas>
+
+				    <!-- <div id="container" style="width: 75%;">
+    					<canvas id="pie-chart"></canvas> -->
+
+
+				    
+				  </div>
+
+				  
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+{% endblock %}

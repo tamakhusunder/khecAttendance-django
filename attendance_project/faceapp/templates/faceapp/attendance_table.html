@@ -22,7 +22,7 @@
                                     &emsp;&emsp;No. of Present :<b>{{presentNum}}</b>
                                     &emsp;&emsp;&emsp;&emsp;No. of Absent :<b> {{absentNum}}</b>
                                     &emsp;&emsp;&emsp;&emsp;Total staffs :<b> {{activeTotal}}</b>
-                                </p>fas fa-print
+                                </p>
                                 <div class="float-right">
                                     <form action="{% url 'attendancePdf' %}" method="POST">
                                             {% csrf_token %}

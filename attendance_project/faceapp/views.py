@@ -23,6 +23,8 @@ from .forms import YearForm, ProfileForm, UserForm, LeaveForm, HolidayForm, Time
 from .models import Profile, Holiday, Leave, TimeSetting,AttendanceTb 	#to save form data in dataset
 from django.views.decorators.csrf import csrf_protect
 
+import json
+
 import numpy as np
 # Create your views here.
 # def index(request):
@@ -94,6 +96,24 @@ def attendancePdf(request):
 	if pisa_status.err:
 		return HttpResponse('We had some errors <pre>' + html + '</pre>')
 	return response
+
+
+def pie_chart(request):
+    mon_label = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"]
+    a = [1,2,3,4,5,0,2,4,3,4]
+    # queryset=User.objects.filter(is_superuser=False)[:5]
+    print("hukaa")
+    # queryset = City.objects.order_by('-population')[:5]
+    # for data in queryset:
+        # labels .append(data.username)
+
+
+    context={
+    			'a':a,
+    			'mon_label':mon_label
+    		}
+
+    return render(request, 'piechart/pie_chart.html', context)
 
 
 

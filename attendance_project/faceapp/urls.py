@@ -31,6 +31,8 @@ urlpatterns = [
 
     #xhtml2pdf --print pdf
     path('attendancePdf/',views.attendancePdf,name='attendancePdf'),
+    # pie-chart
+    path('pie-chart/', views.pie_chart, name='pie-chart'),
 
 
     path('home/', views.home, name='home'), 
