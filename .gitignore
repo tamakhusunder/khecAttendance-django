@@ -131,3 +131,4 @@ dmypy.json
 # khec
 attendance_project/faceapp/migrations
 attendance_project/faceapp/__pycache__
+attendance_project/static/faceapp/train_model/face_new_model3.h5

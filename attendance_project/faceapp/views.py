@@ -17,10 +17,9 @@ from xhtml2pdf import pisa
 
 from django.db import connection
 from datetime import date,datetime
-from fpdf import FPDF
 
-from .forms import SendEmail,YearForm, ProfileForm, UserForm, LeaveForm, HolidayForm, TimeSettingForm
-from .models import Profile, Holiday, Leave, TimeSetting,AttendanceTb 	#to save form data in dataset
+from .forms import *
+from .models import * 	#to save form data in dataset
 from django.views.decorators.csrf import csrf_protect
 
 import json
@@ -250,26 +249,43 @@ def staffDetail(request,userID):
 
 
 
+@login_required(login_url='/login/')
+def timeSetting(request):	
+	form = TimeSettingForm()
+	if request.method == 'POST':
+		form = TimeSettingForm(request.POST)
+		if form.is_valid():
+			entryTime = form.cleaned_data['entryTime']
+			exitTime = form.cleaned_data['exitTime']
+			tolerance = form.cleaned_data['tolerance']
+			print(type(exitTime))
+			print(tolerance)
+			print(TimeSetting.objects.all().count(),"....")
+			if TimeSetting.objects.all().count() == 0:
+				print("doesnot")
+				add=TimeSetting(
+					entryTime=entryTime,
+					exitTime=exitTime,
+					tolerance=tolerance
+					)
+				print(add)
+				add.save()
+				messages.success(request,'Time has been set')
+			else:
+				TimeSetting.objects.filter(id=1).update(id=1,entryTime=entryTime,exitTime=exitTime,tolerance=tolerance)
+				print("exists")
+				# timeSql.entryTime=entryTime
+				# timeSql.exitTime=exitTime
+				# timeSql.tolerance=tolerance
+				# timeSql.save()
+				messages.success(request,'Time has been updated')
+		form=TimeSettingForm()
+	context = {
+				"form": form,
+			}	
+	return render(request,'faceapp/timeSetting.html', context)
 
-# def holiday(request):
-# 	form=HolidayForm()
-# 	if request.method == 'POST':
-# 		form = ProfileForm(request.POST)
-# 		if form.is_valid():
-# 			weekend = form.cleaned_data['weekend']
-# 			date = form.cleaned_data['date']
-# 			add=Holiday(
-# 				weekend = weekend,
-# 				date = date
-# 				)
-# 			print(add)
-# 			add.save()
-# 			messages.success(request,'Holiday has been added')
-# 			# return HttpResponseRedirect(reverse(''))
-# 	context = {
-# 				"form": form,
-# 			}	
-# 	return render(request,'faceapp/holiday.html', context)
+
 @login_required(login_url='/login/')
 def holiday(request):
 	print("sunder")
@@ -461,6 +477,9 @@ def editTable(request):
 		print(u.profile.name)
 	return render(request, 'faceapp/editTables.html', {'userSql':userSql})
 
+
+def contactUs(request):
+	return render(request, 'contact/contactUs.html')
 #<<<<<<<----------------- End Employee --------------->>>>>>>> 
 
 
@@ -675,7 +694,7 @@ def captureface(request):
 	import dlib
 	import numpy as np
 
-	from facesite.settings import BASE_DIR
+	from attendancesite.settings import BASE_DIR
 	
 	# POST input_name of user input collected
 	val_name=str(request.POST["ipname"])
@@ -728,7 +747,7 @@ def captureface(request):
 		cap.release()
 		cv2.destroyAllWindows()      
 
-	return redirect('/')
+	return redirect('face_exe')
 
 
 # <<<<<<<<<<<<<<3.Recognize the face>>>>>>>>>>>>>>>>>
@@ -747,7 +766,7 @@ def recognization(request):
 	import dlib
 
 
-	from facesite.settings import BASE_DIR
+	from attendancesite.settings import BASE_DIR
 
 	# file_name = os.path.dirname(__file__) +'\\datasets\\test_catvnoncat.h5'
 	# test_dataset = h5py.File(file_name, "r")
@@ -850,32 +869,6 @@ def recognization(request):
 	return redirect('/')   
 
 
-
-
-
-
-
-
-
-###########work to be done 
-def offline(request):
-	from tkinter import Tk
-	from tkinter import filedialog
-	import os
-	#dialog box for opening the video file
-	my_filetypes = [('mp4  files', '*.mp4'), ('png files', '.png'),('jpg files', '.jpg'), ('all files', '.*')]
-	file_path = filedialog.askopenfilename(parent=window,
-                                    initialdir=os.getcwd(),
-                                    title="Please select a file:",
-                                    filetypes=my_filetypes)
-	#    capture_value='C:/Users/Hukka/Desktop/test videos/videorec.mp4'
-	if len(file_path) >0:	 #check for empty string and to remove error 
-		file_path=file_path.replace('/','\\')
-		myVars = {'capture_value':file_path}
-		exec(open('webcam_recognizer_unknown.py').read(), myVars)
-
-	
-	return('/')
 
 
 #######

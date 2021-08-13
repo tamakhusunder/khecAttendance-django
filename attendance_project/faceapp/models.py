@@ -60,7 +60,7 @@ class AttendanceTb(models.Model):
 	date = models.DateField()
 	time = models.TimeField()
 	late_time = models.IntegerField(null=True)
-	# status = models.CharField(max_length=255,blank=True)
+	status = models.CharField(max_length=255,blank=True)
 	# # attendanceCreated = models.DateField(auto_now_add=True,auto_now=True,blank=True)
 	# createdDate = models.DateTimeField(auto_now_add=True,blank=True,null=True,default=None)
 	# updatedDate = models.DateTimeField(auto_now=True,default=None)
@@ -76,8 +76,8 @@ class Leave(models.Model):
 	endDate = models.DateField(auto_now=True)
 	reason = models.CharField(max_length=255)
 	halfday = models.BooleanField()
-	createdDate = models.DateTimeField(auto_now_add=True,blank=True,null=True)
-	updatedDate = models.DateTimeField(auto_now=True)
+	# createdDate = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+	# updatedDate = models.DateTimeField(auto_now=True)
 
 
 	def __str__(self):
@@ -88,8 +88,8 @@ class Holiday(models.Model):
 	image = models.ImageField(upload_to='faceapp/images/staffs', blank=True)
 	weekend = models.CharField(max_length=255)
 	date = models.DateField()
-	createdDate = models.DateTimeField(auto_now_add=True,blank=True,null=True)
-	updatedDate = models.DateTimeField(auto_now=True)
+	# createdDate = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+	# updatedDate = models.DateTimeField(auto_now=True)
 
 
 	def __str__(self):
@@ -98,9 +98,9 @@ class Holiday(models.Model):
 class TimeSetting(models.Model):
 	entryTime = models.TimeField()
 	exitTime = models.TimeField()
-	tolerance = models.IntegerField(null=True)
-	createdDate = models.DateTimeField(auto_now_add=True,blank=True,null=True)
-	updatedDate = models.DateTimeField(auto_now=True)
+	tolerance = models.IntegerField(default=0,null=True)
+	# createdDate = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+	# updatedDate = models.DateTimeField(auto_now=True)
 
 
 	def __str__(self):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile,AttendanceTb,Holiday
+from .models import *
 
 # Register your models here.
 
@@ -8,5 +8,7 @@ from .models import Profile,AttendanceTb,Holiday
 # 	list_display=('code','fullName','shortName','email','contact','address','active','createdDate','updatedDate')
 
 admin.site.register(Profile)
+admin.site.register(TimeSetting)
 admin.site.register(AttendanceTb)
 admin.site.register(Holiday)
+admin.site.register(Leave)

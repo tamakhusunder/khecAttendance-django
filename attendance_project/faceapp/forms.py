@@ -138,6 +138,12 @@ class ProfileForm(forms.ModelForm):
                                            	'name': 'inputCollege'})
 	}
 
+class TimeSettingForm(forms.Form):
+	entryTime = forms.TimeField(label='Entry Time',widget=forms.TimeInput(attrs={'type': 'time','class':'form-control',}))
+	exitTime = forms.TimeField(label='Exit Time',widget=forms.TimeInput(attrs={'type': 'time','class':'form-control',}))
+	tolerance = forms.IntegerField(label='Tolerance time in minutes',widget=forms.NumberInput(attrs={'autofocus':True,'class':'form-control', 'placeholder':"Enter in minutes",}))
+
+
 class HolidayForm(forms.ModelForm):
 	class Meta:
 		model=Holiday
@@ -170,11 +176,7 @@ class LeaveForm(forms.Form):
 # 	date = forms.DateField(label='Start Date', error_messages={'required':'Enter Date'})
 
 
-class TimeSettingForm(forms.Form):
-	entryTime = forms.TimeField(label='Entry Time')
-	exitTime = forms.TimeField(label='Entry Time')
-	toleranceTime = forms.IntegerField(label='Tolerance time in minutes')
-	reason = forms.CharField(max_length=225, widget=forms.Textarea)
+
 
 YEARS= [x for x in range(2010,2021)]
 BIRTH_YEAR_CHOICES = ['1980', '1981', '1982']

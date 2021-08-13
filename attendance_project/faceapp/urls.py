@@ -10,6 +10,7 @@ urlpatterns = [
 # <<<<<<<<<<<<<----admin url--->>>>>>>>>>>>
     # admin page addition author:Amar Nagaju
     path('table/', views.amarTable, name='table'),
+    path('timeSetting/', views.timeSetting, name='timeSetting'),
     path('holiday/', views.holiday, name='holiday'),
     path('leave/', views.leave, name='leave'),
 
@@ -46,6 +47,7 @@ urlpatterns = [
 
     path('contactList/',views.contactList,name='contactList'),
     path('sendEmail/<int:code>/',views.sendEmail,name='sendEmail'),
+    path('contactUs/',views.contactUs,name='contactUs'),
 
 # <<<<<<<<<<<<<----customer url--->>>>>>>>>>>>
     #user page addition author:Amar Nagaju
@@ -59,6 +61,5 @@ urlpatterns = [
     path('chart/',views.chart,name='chart'),
     path(r'face-application/facecapture', views.captureface, name='capturefaces'),
     path('recognization/', views.recognization, name='recognizations'),
-    path('offline/',views.offline,name='offline'),
 
 ]

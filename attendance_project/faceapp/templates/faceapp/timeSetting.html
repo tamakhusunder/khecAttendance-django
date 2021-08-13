@@ -1,0 +1,85 @@
+{% extends "faceapp/base_layout.html" %}
+{% block title %}Khec Attendance | Time Setting{% endblock%}
+
+{% block topbarTitle %}<a href="{% url 'home' %}">Dashboard</a> > Time Setting{% endblock %}
+
+
+{% block content %}
+{% load static %}
+<!-- Begin page -->
+<div id="wrapper">
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here  -->
+    <!-- ============================================================== -->
+
+    <div class="content-page">
+        <div class="content">
+
+       	{% if messages %}
+        	{% for msg in messages|slice:":1" %}
+		        <div class="row">
+		            <div class="col-sm-8 offset-2">
+		                <center>
+		                    <p {% if msg.tags %} class="alert alert-{{msg.tags}}" {% endif %}>{{msg}}</p>
+		                </center>
+
+		            </div>
+		        </div>
+		    {% endfor %}
+		{% endif %}
+
+            <form class="" method="POST" novalidate>
+                {% csrf_token %}
+                            <div class="card-body">
+                                <!-- Upload Picture -->
+                                
+                                <!-- Basic Information -->
+                                <div class="details-tab">
+                                    <h3 class="card-title">Time setting </h3>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <div class="form-group pmd-textfield pmd-textfield-label">
+                                                <label for="fn" class="col-form-label control-label">Start Time of College</label>
+                                                <!-- <input id="appt-time" type="time" name="startTime" value="13:30"> -->
+                                                {{ form.entryTime }}
+                                                {% for err in form.entryTime.errors %}
+                                                    <small class="text-danger ml-2">{{err}}</small>
+                                                {% endfor%}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <div class="form-group pmd-textfield pmd-textfield-label">
+                                                <label for="ln" class="col-form-label control-label">End Time of College</label>
+                                                {{ form.exitTime }}
+                                                {% for err in form.exitTime.errors %}
+                                                    <small class="text-danger ml-2">{{err}}</small>
+                                                {% endfor%}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <div class="form-group pmd-textfield pmd-textfield-label">
+                                                <label for="ln" class="col-form-label control-label">Tolerance time in mintue</label>
+                                                {{ form.tolerance }}
+                                                {% for err in form.tolerance.errors %}
+                                                    <small class="text-danger ml-2">{{err}}</small>
+                                                {% endfor%}
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <input name="timeSubmit" type="submit" value="Submit">
+                                </div>
+                            </div>
+                        </form>
+
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

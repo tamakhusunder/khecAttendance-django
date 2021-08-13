@@ -124,7 +124,7 @@
                         <img src="{% static 'faceapp/images/admin/sunder.jpg' %}" alt="user-image"
                             class="rounded-circle">
                         <span class="pro-user-name ml-1">
-                            Sunder Tamakhu<i class="mdi mdi-chevron-down"></i>
+                            Admin<i class="mdi mdi-chevron-down"></i>
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
@@ -277,8 +277,15 @@
                         <li class="menu-title">Components</li>
 
                         <li>
+                            <a href="{% url 'timeSetting' %}">
+                                <i class=" dripicons-clock"></i>.</i>
+                                <span> Time Setting </span>
+                            </a>
+                        </li>
+
+                        <li>
                             <a href="{% url 'holiday' %}">
-                                <i class="fa fa-calendar-minus-o" aria-hidden="true"></i>
+                                <i class="fas fa-bell" aria-hidden="true"></i>
                                 <span> Holiday </span>
                             </a>
                         </li>
@@ -355,8 +362,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="text-md-right footer-links d-none d-sm-block">
-                            <a href="javascript:void(0);">About Us</a>
-                            <a href="javascript:void(0);">Contact Us</a>
+                            <!-- <a href="javascript:void(0);">About Us</a> -->
+                            <a href="{% url 'contactUs' %}">Contact Us</a>
                         </div>
                     </div>
                 </div>
