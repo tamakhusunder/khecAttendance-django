@@ -21,7 +21,7 @@
                     <div class="container-fluid">
 
                         <div class="row">
-                            {% for object in StaffInfos.all%}
+                            {% for object in userList %}
                             <div class="col-xl-4">
                                 <div class="text-center card-box">
                                     <div class="dropdown float-right">
@@ -34,23 +34,23 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <img src="{{object.image.url}}" class="rounded-circle avatar-xl img-thumbnail mb-2" alt="profile-image">
+                                        <img src="/media/{{object.profile.image}}" class="rounded-circle avatar-xl img-thumbnail mb-2" alt="profile-image">
 
                                         <p class="text-muted font-13 mb-3">
-                                            Hi I'm {{object.name}},has been the Khec's standard {{object.desgination}} of {{object.department}} department.
+                                            Hi I'm {{object.profile.name}},has been the Khec's standard {{object.profile.desgination}} of {{object.profile.department}} department.
                                         </p>
 
                                         <div class="text-left">
-                                            <p class="text-muted font-13"><strong>Full Name :</strong> <span class="ml-2">{{object.name}}</span></p>
+                                            <p class="text-muted font-13"><strong>Full Name :</strong> <span class="ml-2">{{object.profile.name}}</span></p>
 
-                                            <p class="text-muted font-13"><strong>Mobile :</strong><span class="ml-2">{{object.contact}}</span></p>
+                                            <p class="text-muted font-13"><strong>Mobile :</strong><span class="ml-2">{{object.profile.contact}}</span></p>
 
-                                            <p class="text-muted font-13"><strong>Email :</strong> <span class="ml-2">{{object.email}}</span></p>
+                                            <p class="text-muted font-13"><strong>Email :</strong> <span class="ml-2">{{object.profile.email}}</span></p>
 
-                                            <p class="text-muted font-13"><strong>Location :</strong> <span class="ml-2">{{object.address}}</span></p>
+                                            <p class="text-muted font-13"><strong>Location :</strong> <span class="ml-2">{{object.profile.address}}</span></p>
                                         </div>
 
-                                        <a href="{% url 'sendEmail' object.code %}" class="btn btn-primary btn-rounded waves-effect waves-light">Send Message</a> 
+                                        <a href="{% url 'sendEmail' object.id %}" class="btn btn-primary btn-rounded waves-effect waves-light">Send Message</a> 
 
                                     </div>
 
@@ -62,14 +62,7 @@
                         </div>
                         <!-- end row -->
 
-
-
-
-
-
-
-
-                        
+        
                     </div> <!-- container-fluid -->
 
                 </div> <!-- content -->

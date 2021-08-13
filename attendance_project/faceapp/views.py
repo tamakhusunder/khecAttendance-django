@@ -19,11 +19,12 @@ from django.db import connection
 from datetime import date,datetime
 from fpdf import FPDF
 
-from .forms import YearForm, ProfileForm, UserForm, LeaveForm, HolidayForm, TimeSettingForm
+from .forms import SendEmail,YearForm, ProfileForm, UserForm, LeaveForm, HolidayForm, TimeSettingForm
 from .models import Profile, Holiday, Leave, TimeSetting,AttendanceTb 	#to save form data in dataset
 from django.views.decorators.csrf import csrf_protect
 
 import json
+from django.core.mail import send_mail as sm
 
 import numpy as np
 # Create your views here.
@@ -617,12 +618,33 @@ def chart(request):
 
 
 def contactList(request):
-	Profiles=Profile.objects.all()
-	return render(request,'faceapp/contactList.html',{'Profiles':Profiles})
+	userList=User.objects.filter(is_staff=True, is_superuser=False).all()
+	print(userList)
+	return render(request,'faceapp/contactList.html',{'userList':userList})
 
 def sendEmail(request,code):
-	Profiles = Profile.objects.filter(code=code)
-	return render(request,'faceapp/sendEmail.html',{'Profiles':Profiles})
+	user = User.objects.get(pk=code)
+	useremail=user.profile.email
+	emailList=[]
+	emailList.append(useremail)
+	form = SendEmail()
+	if request.method == 'POST':
+		print("sunder")
+		form = SendEmail(request.POST)
+		if form.is_valid():
+			print("ttt")
+			subject = form.cleaned_data['subject']
+			message = form.cleaned_data['message']
+			print(subject,message)
+			res = sm(
+				subject = subject,
+				message = message,
+				from_email = 'comp2073@gmail.com',
+				recipient_list = emailList,
+				fail_silently=False,
+				)  
+			messages.success(request, 'Message is send Successfully')
+	return render(request,'faceapp/sendEmail.html',{'user':user,'form':form})
 
 
 '''####trying form--->model form

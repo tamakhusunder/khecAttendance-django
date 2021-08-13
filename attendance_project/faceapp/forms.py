@@ -186,6 +186,11 @@ class YearForm(forms.Form):
     							)
 
 
+class SendEmail(forms.Form):
+	subject = forms.CharField(label='Suject', max_length=150, widget=forms.TextInput(attrs={'autofocus':True,'class':'form-control', 'placeholder':"Enter subject",}))
+	message = forms.CharField(label='message', widget=forms.Textarea(attrs={'class':'form-control',}))
+	
+
 
 
 
