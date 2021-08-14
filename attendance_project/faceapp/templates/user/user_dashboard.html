@@ -52,7 +52,7 @@
 
                 <!-- User info -->
                 <!-- Actions -->
-                <div class="w-100 mt-4 actions d-flex justify-content-between">
+                <!-- <div class="w-100 mt-4 actions d-flex justify-content-between">
                     <a href="#" class="action-item action-item-lg text-white pl-0">
                         <i class="far fa-user"></i>
                     </a>
@@ -62,7 +62,7 @@
                     <a href="#" class="action-item action-item-lg text-white pr-0">
                         <i class="fa fa-receipt"></i>
                     </a>
-                </div>
+                </div> -->
             </div>
             <!-- Application nav -->
             <div class="nav-application clearfix">
@@ -75,31 +75,33 @@
                     <span class="btn-inner--icon d-block"><i class="fa fa-user-ninja fa-2x"></i></span>
                     <span class="btn-inner--icon d-block pt-2">Profile</span>
                 </a>
-                <a href="#" class="btn btn-square text-sm">
-                    <span class="btn-inner--icon d-block"><i class="fa fa-tasks fa-2x"></i></span>
-                    <span class="btn-inner--icon d-block pt-2">Holiday</span>
-                </a>
-                <a href="{% url 'userDash' %}"
-                    class="btn btn-square text-sm {% block nav-dash %}{% endblock nav-dash %}">
-                    <span class="btn-inner--icon d-block"><i class="fa fa-columns fa-2x"></i></span>
-                    <span class="btn-inner--icon d-block pt-2">Leave</span>
-                </a>
-                <a href="#" class="btn btn-square text-sm">
-                    <span class="btn-inner--icon d-block"><i class="fa fa-users-cog fa-2x"></i></span>
-                    <span class="btn-inner--icon d-block pt-2">Inbox</span>
-                </a>
-                <a href="#" class="btn btn-square text-sm">
-                    <span class="btn-inner--icon d-block"><i class="fa fa-user-ninja fa-2x"></i></span>
-                    <span class="btn-inner--icon d-block pt-2">To Do</span>
-                </a>
-                <a href="#" class="btn btn-square text-sm">
-                    <span class="btn-inner--icon d-block"><i class="fa fa-receipt fa-2x"></i></span>
-                    <span class="btn-inner--icon d-block pt-2">Invoices</span>
-                </a>
-                <a href="#" class="btn btn-square text-sm">
+                <a href="{% url 'user_setting' %}" class="btn btn-square text-sm {% block nav-setting %}{% endblock nav-setting %}">
                     <span class="btn-inner--icon d-block"><i class="fa fa-cogs fa-2x"></i></span>
                     <span class="btn-inner--icon d-block pt-2">Settings</span>
                 </a>
+                <a href="{% url 'logout' %}"
+                    class="btn btn-square text-sm {% block nav-dash %}{% endblock nav-dash %}">
+                    <span class="btn-inner--icon d-block"><i class="fa fa-columns fa-2x"></i></span>
+                    <span class="btn-inner--icon d-block pt-2">Logout</span>
+                </a>
+                <!-- <a href="#" class="btn btn-square text-sm">
+                    <span class="btn-inner--icon d-block"><i class="fa fa-tasks fa-2x"></i></span>
+                    <span class="btn-inner--icon d-block pt-2">Holiday</span>
+                </a> -->
+                
+                <!-- <a href="#" class="btn btn-square text-sm">
+                    <span class="btn-inner--icon d-block"><i class="fa fa-users-cog fa-2x"></i></span>
+                    <span class="btn-inner--icon d-block pt-2">Inbox</span>
+                </a> -->
+                <!-- <a href="#" class="btn btn-square text-sm">
+                    <span class="btn-inner--icon d-block"><i class="fa fa-user-ninja fa-2x"></i></span>
+                    <span class="btn-inner--icon d-block pt-2">To Do</span>
+                </a> -->
+                <!-- <a href="#" class="btn btn-square text-sm">
+                    <span class="btn-inner--icon d-block"><i class="fa fa-receipt fa-2x"></i></span>
+                    <span class="btn-inner--icon d-block pt-2">Invoices</span>
+                </a> -->
+                
             </div>
             <!-- Misc area -->
         </div>
@@ -135,13 +137,13 @@
 
                             </li>
 
-                            <li class="border-top opacity-2 my-2"></li>
+                            <!-- <li class="border-top opacity-2 my-2"></li> -->
                             <!-- Docs menu -->
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" href="#">
                                     Attendance
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
 
                         <!-- Right menu -->
@@ -166,7 +168,7 @@
                                         <i class="far fa-user"></i>
                                         <span>My profile</span>
                                     </a>
-                                    <a href="#!" class="dropdown-item">
+                                    <a href="{% url 'user_setting' %}" class="dropdown-item">
                                         <i class="fa fa-cog"></i>
                                         <span>Settings</span>
                                     </a>
@@ -200,8 +202,71 @@
 
                             <!-- Block Content Here-->
                             {% block content %}
-                            sunder tamakhue
+                                <!--content area start-->
+                                <div id="content" class="pmd-content inner-page profile-page">
+                                    <div class="cover-content">
+                                        <div class="page-content">
+                                            <div class="d-flex d-flex-row align-items-center mobile-view">
+                                                <div class="media-body">
+                                                    <h1 class="card-title media-body">Attendance Record</h1>
+                                                    <p class="pmd-list-subtitle"></p>
+                                                    <p>
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="page-content profile-view">
+                                        <div class="row col-12">
+                                            <div class="pmd-tabs">
+                                                <div class="pmd-tab-active-bar" style="width: 97.9531px; left: 0px;"></div>
+                                                <ul class="nav nav-tabs" role="tablist" style="width: 343.813px;">
+                                                    <li class="nav-item"><a class="nav-link active" href="#about" aria-controls="about" role="tab"
+                                                            data-toggle="tab">Sheet</a></li>
+                                                </ul>
+                                            </div>
+                                            <!-- Tab panes -->
+                                            <div class="tab-content">
+                                                <!-- About Tab -->
+                                                <div role="tabpanel" class="tab-pane active" id="about">
+
+                                                    <div class="card-body shadow p-3 mb-5 bg-white rounded">
+
+                                                        <!-- Basic Information -->
+                                                        <div class="details-tab">
+                                                            <div class="d-flex flex-row align-items-center mb-2">
+                                                                <h3 class="card-title media-body">Table</h3>
+
+                                                            </div>
+                                                            <div class="row view-basic-card">
+                                                                
+                                                            <div class="card-body">
+                                                                sunder tamakhue            
+                                                            </div>
+
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- content area end -->
+
+
+
+                            
                             {% endblock %}
+
 
                         </div>
 

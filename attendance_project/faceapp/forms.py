@@ -25,6 +25,16 @@ GENDER_CHOICES =(
     ("Female", "Female"),
 )
 
+WEEK_CHOICES =(
+    ("Sunday", "Sunday"),
+    ("Monday", "Female"),
+    ("Tuesday", "Tuesday"),
+    ("Wednesday", "Wednesday"),
+    ("Thursday", "Thursday"),
+    ("Friday", "Friday"),
+    ("Saturday", "Saturday"),
+)
+
 STATE_CHOICES =(
     ("Province No. 1", "Province No. 1"),
     ("Province No. 2", "Province No. 2"),
@@ -66,12 +76,12 @@ class UserForm(UserCreationForm):
 			raise ValidationError("User Already Exist")
 		return username  
 
-
+widget=forms.SelectDateWidget(years=YEARS)
 class ProfileForm(forms.ModelForm):
 	contact = forms.IntegerField(validators=[validate_mobile], widget=forms.NumberInput(attrs={'autofocus':True,'class':'form-control', 'placeholder':"Enter Mobile Number",}))
 	gender = forms.ChoiceField(choices = GENDER_CHOICES, widget=forms.Select(attrs={'autofocus':True,'class':'form-control',}))
-	dob = forms.DateField(widget=forms.SelectDateWidget(attrs={'autofocus':True,'class':'form-control',}))
-	dateOfJoin = forms.DateField(widget=forms.SelectDateWidget(attrs={'autofocus':True,'class':'form-control',}))
+	dob = forms.DateField(widget=forms.SelectDateWidget(years=YEARS,attrs={'autofocus':True,'class':'form-control',}))
+	dateOfJoin = forms.DateField(widget=forms.SelectDateWidget(years=YEARS,attrs={'autofocus':True,'class':'form-control',}))
 	state = forms.ChoiceField(choices = STATE_CHOICES, widget=forms.Select(attrs={'autofocus':True,'class':'form-control',}))
 
 	class Meta:
@@ -144,24 +154,12 @@ class TimeSettingForm(forms.Form):
 	tolerance = forms.IntegerField(label='Tolerance time in minutes',widget=forms.NumberInput(attrs={'autofocus':True,'class':'form-control', 'placeholder':"Enter in minutes",}))
 
 
-class HolidayForm(forms.ModelForm):
-	class Meta:
-		model=Holiday
-		fields=['weekend', 'date','image','active']
-		widgets={
-				'image':forms.FileInput(attrs={'class':'form-control',
-                                           	'name': 'inputImage'}),
-				'active':forms.CheckboxInput(attrs={'class':'form-control',
-                                           	'name': 'inputActive'}),
-				'weekend':forms.TextInput(attrs={'class':'form-control',
-											'placeholder':"Enter weekend",
-											'name': 'inputWeek',
-											'tabindex': "3",
-											'data-error': "password is required"}),
-				'date':forms.DateInput(attrs={'class':'form-control',
-											'placeholder':"Enter date",
-											'name': 'inputDate'})
-				}
+YEARS2 = [x for x in range(2021,2099)]
+
+class HolidayForm(forms.Form):
+	weekend = forms.ChoiceField(choices = WEEK_CHOICES, widget=forms.Select(attrs={'autofocus':True,'class':'form-control',}))
+	date = forms.DateField(widget=forms.SelectDateWidget(years=YEARS2,attrs={'autofocus':True,'class':'form-control',}))
+	
 
 
 class LeaveForm(forms.Form):
@@ -178,7 +176,7 @@ class LeaveForm(forms.Form):
 
 
 
-YEARS= [x for x in range(2010,2021)]
+# YEARS= [x for x in range(2010,2021)]
 BIRTH_YEAR_CHOICES = ['1980', '1981', '1982']
 
 # form for year and month in search

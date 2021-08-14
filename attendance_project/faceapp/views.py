@@ -19,7 +19,8 @@ from django.db import connection
 from datetime import date,datetime
 
 from .forms import *
-from .models import * 	#to save form data in dataset
+#to save form data in dataset
+from .models import * 
 from django.views.decorators.csrf import csrf_protect
 
 import json
@@ -42,8 +43,21 @@ def database_collection(dateArg):
 	# 	if len(dateIntable)==0:			#check empty date
 	# 		dateIntable=str(date.today())
 	#attedance list
+
+	time1='06::00::00'
+	time1=datetime.strptime(time1, '%H::%M::%S').time()
+	print(time1)
+	# t = '08:00:00'
+	# t = datetime.strptime(t, '%H:%M:%S')
+	# a.YourTimeField = datetime.datetime.strptime('12:12:12', '%H:%M:%S').time()
+	print(type(time1))
+	time2='12::00::00'
+	time2=datetime.strptime(time2, '%H::%M::%S').time()
+	print(time2)
+
 	attendSql = AttendanceTb.objects.filter(date=dateIntable).all()
-	presentNum = AttendanceTb.objects.filter(date=dateIntable).all().count()
+	# Sample.objects.filter(date__range=[startdate, enddate])
+	presentNum = AttendanceTb.objects.filter(date=dateIntable,time__range=[time1,time2]).all().count()
 	absentNum = activeTotal-presentNum
 	print(attendSql,">>>>",presentNum)
 	print("==================")
@@ -294,12 +308,10 @@ def holiday(request):
 		print("2222")
 		form = HolidayForm(request.POST,request.FILES)
 		if form.is_valid():
-			image=form.cleaned_data['image']
-			active=form.cleaned_data['active']
 			weekend = form.cleaned_data['weekend']
 			date = form.cleaned_data['date']
-			print(weekend,date,"----->",image,active)
-			register = Holiday(image=image,active=active,weekend=weekend,date=date)
+			print(weekend,date,"----->")
+			register = Holiday(weekend=weekend,date=date)
 			register.save()
 			print("dinnnner")
 	return render(request,'faceapp/holiday.html', {'form':form})
@@ -524,7 +536,7 @@ def dashboardStaff(request):
 ###############  end of --login-- logout---dashboard######
 
 
-#<<<<<<----------User/Customer site----->>>>>>>>
+#############<<<<<----------User/Customer site----->>>>>>>>
 
 #addition in user page author:Amar Nagaju
 @login_required(login_url='/login/')
@@ -544,6 +556,31 @@ def userProfile(request):
 				'userSql':userSql
 			}
 	return render(request,'user/user_profile.html', context)
+
+@login_required(login_url='/login/')
+def user_setting(request):
+	currentUser = request.user.id
+	userSql = User.objects.get(pk=currentUser)
+	user = User.objects.get(pk=currentUser)
+	code = user.username
+	if request.method=='POST':
+		st_id=Profile.objects.get(user_id=currentUser)
+		form=ProfileForm(request.POST,request.FILES,instance=st_id)
+		if form.is_valid():
+			active = form.cleaned_data['active']    #to change in is_staff in usermodel
+			user.is_staff = active
+			form.save()
+			user.save()
+			messages.success(request,'Data Updated!!!')
+	else:
+		st_id=Profile.objects.get(user_id=currentUser)
+		form=ProfileForm(instance=st_id)
+	context = {
+				"form": form,
+				"codeNum": code,
+				'userSql':userSql
+			}	
+	return render(request,'user/user_settings.html', context)
 
 
 

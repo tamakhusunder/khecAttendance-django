@@ -53,6 +53,7 @@ urlpatterns = [
     #user page addition author:Amar Nagaju
     path('userDash/', views.userDash, name='userDash'),
     path('userProfile/', views.userProfile, name='userProfile'),
+    path('user_setting/', views.user_setting, name='user_setting'),
 
     
 

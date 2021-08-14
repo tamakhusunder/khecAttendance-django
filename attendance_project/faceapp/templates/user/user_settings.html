@@ -1,0 +1,100 @@
+{% extends "user/user_dashboard.html" %}
+
+{% block nav-home %}
+{% endblock nav-home %}
+
+{% block nav-setting %}
+active
+{% endblock nav-setting %}
+
+{% block content %}
+{% load static %}
+
+<!--content area start-->
+<div id="content" class="pmd-content inner-page profile-page">
+    <div class="cover-content">
+        <div class="page-content">
+            <div class="d-flex d-flex-row align-items-center mobile-view">
+                <div class="media-body">
+                    <h1 class="card-title media-body">Setting</h1>
+                    <p class="pmd-list-subtitle"></p>
+                    <p>
+                        {% if messages %}
+                        {% for msg in messages %}
+                            <div class="row">
+                                <div class="col-sm-8 offset-2">
+                                    <center>
+                                    <p {% if msg.tags %} class="alert alert-{{msg.tags}}" {% endif %}>{{msg}}<br></p>
+                                    </center>
+                                    
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-content profile-view">
+        <div class="row col-12">
+            
+
+            <div class="pmd-tabs">
+                <div class="pmd-tab-active-bar" style="width: 97.9531px; left: 0px;"></div>
+                <ul class="nav nav-tabs" role="tablist" style="width: 343.813px;">
+                    <li class="nav-item"><a class="nav-link active" href="#about" aria-controls="about" role="tab"
+                            data-toggle="tab">Edit info</a></li>
+                </ul>
+            </div>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- About Tab -->
+                <div role="tabpanel" class="tab-pane active" id="about">
+
+                    <div class="card-body shadow p-3 mb-5 bg-white rounded">
+
+                        <!-- Basic Information -->
+                        <div class="details-tab">
+                            <div class="d-flex flex-row align-items-center mb-2">
+                                <h3 class="card-title media-body">Edit 
+                                    Information</h3>
+
+                            </div>
+                            <div class="row view-basic-card">
+                                
+                                    <div class="card-body">
+                                                <form action="" method="POST" enctype="multipart/form-data" novalidate>
+                                                    {% csrf_token %}
+                                                    <center>User : {{codeNum}}</center><br>
+                                                    <!-- {{form.as_p}}   -->
+                                                    {% for fm in form %}
+                                                        {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small><br>
+                                                    {% endfor %}                                            
+                                                    <div class="form-group mt-4 mb-0">
+                                                        <button type="submit" class='btn btn-primary btn-block'>Update</button>
+                                                    </div>
+                                                </form>
+                                            
+                                        </div>
+
+
+                            </div>
+
+                        </div>
+
+                        
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- content area end -->
+
+{% endblock %}
