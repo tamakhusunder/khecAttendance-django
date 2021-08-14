@@ -9,7 +9,7 @@ urlpatterns = [
 
 # <<<<<<<<<<<<<----admin url--->>>>>>>>>>>>
     # admin page addition author:Amar Nagaju
-    path('table/', views.amarTable, name='table'),
+    # path('attendanceMonth/', views.attendanceMonth, name='attendanceMonth'),
     path('timeSetting/', views.timeSetting, name='timeSetting'),
     path('holiday/', views.holiday, name='holiday'),
     path('leave/', views.leave, name='leave'),

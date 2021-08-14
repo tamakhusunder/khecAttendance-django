@@ -180,8 +180,8 @@ class LeaveForm(forms.Form):
 BIRTH_YEAR_CHOICES = ['1980', '1981', '1982']
 
 # form for year and month in search
-class YearForm(forms.Form):
-    birth_date= forms.DateField(label='Select Date',
+class YearMonthForm(forms.Form):
+    yearMonth= forms.DateField(label='Select Date',
     							widget=forms.SelectDateWidget(years=YEARS)
     							)
 

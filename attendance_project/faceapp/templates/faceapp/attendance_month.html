@@ -35,9 +35,10 @@
                                     <div class="col-md-4"><b><u style="color:blue;"> {{dateIntable}}ss</u></b></div>
                                     <div class="col-md-4">
                                         <form action="" method="POST">
-                                                {% csrf_token %}
-                                                <input type="month" id="yearMonth" name="yearMonth">
-                                                <input type="submit" value="Apply">
+                                            {% csrf_token %}
+                                            <!-- {{form}} -->
+                                            <input type="month" id="yearMonth" name="yearMonth">
+                                            <input type="submit" name="monthBtn" value="Apply">
                                         </form>
                                     </div>
                                 </div>

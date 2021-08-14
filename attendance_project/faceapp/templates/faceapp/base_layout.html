@@ -224,7 +224,7 @@
                                         <span> View All </span>
                                     </a>
                                 </li>
-                                <li><a href="{% url 'table' %}">View By Month</a></li>
+                                <!-- <li><a href="#">View By Month</a></li> -->
                             </ul>
 
                         </li>
@@ -318,12 +318,19 @@
                         </li> -->
 
                         <li>
+                            <a href="{% url 'pie-chart' %}">
+                                <i class="mdi mdi-chart-donut-variant"></i>
+                                <span> Charts </span>
+                            </a>
+                        </li>
+
+                        <!-- <li>
                             <a href="javascript: void(0);">
                                 <i class="mdi mdi-chart-donut-variant"></i>
                                 <span> Charts </span>
                                 <span class="menu-arrow"></span>
                             </a>
-                        </li>
+                        </li> -->
 
 
                     </ul>

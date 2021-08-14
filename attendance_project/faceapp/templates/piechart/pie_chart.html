@@ -1,77 +1,132 @@
 {% extends "faceapp/base_layout.html" %}
 
-{%block title%}Khec Attendance | Register{% endblock %}
+{%block title%}Khec Attendance | Chart{% endblock %}
 
-{% block topbarTitle %}Dashboard > Register{% endblock %}
+{% block topbarTitle %}Dashboard > Chart{% endblock %}
 
 {% block scripts %}
 <script>
-	$(document).ready(function () {
-		var value ="{{mon_label|safe}}";
-		console.log(typeof(value));
-		var arr1 = [];
-		var arr2 = [];
-		{% for data in mon_label %}
-			var value ="{{data|safe}}";
-			console.log(value);
-			arr1.push(value);
-		{% endfor %}
-		console.log(typeof(arr1));
-		console.log(arr1);
-		console.log('sunder');
-
-		var value ="{{a|safe}}";
-		console.log(typeof(value));
-		{% for datas in a %}
-			var value ="{{datas|safe}}";
-			console.log(value);
-			arr2.push(value);
-		{% endfor %}
-		arr2 = arr2.map((i) => Number(i));
+    $(document).ready(function () {
+        var value ="{{a|safe}}";
+        var arr = [];
+        console.log(typeof(value));
+        {% for datas in a %}
+            var value ="{{datas|safe}}";
+            console.log(value);
+            arr.push(value);
+        {% endfor %}
+        arr = arr.map((i) => Number(i));
 
 
-		console.log(typeof(arr2));
-		console.log(arr2);
-		// alert("{{a}}");
-		
-		
-		
-		var ctx = document.getElementById('myChart').getContext('2d');
-		var myChart = new Chart(ctx, {
-		    type: 'line',
-		    data: {
-		        labels: arr1,
-		        datasets: [{
-		            label: '# of Votes',
-		            data:arr2,
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0.2)',
-		                'rgba(54, 162, 235, 0.2)',
-		                'rgba(255, 206, 86, 0.2)',
-		                'rgba(75, 192, 192, 0.2)',
-		                'rgba(153, 102, 255, 0.2)'
-		            ],
-		            borderColor: [
-		                'rgba(255, 99, 132, 1)',
-		                'rgba(54, 162, 235, 1)',
-		                'rgba(255, 206, 86, 1)',
-		                'rgba(75, 192, 192, 1)',
-		                'rgba(153, 102, 255, 1)'
-		            ],
-		            borderWidth: 1
-		        }]
-		    },
-		    options: {
-		        scales: {
-		            y: {
-		                beginAtZero: true
-		            }
-		        }
-		    }
-		});
-	});
+        console.log(typeof(arr));
+        console.log(arr);
 
-</script>	
+        var ctx = document.getElementById('myChart1').getContext('2d');
+        var myChart1 = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Total","Active","Inactive","Present","Absentee"],
+                datasets: [{
+                    label: ['Employee'],
+                    data: arr,
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        var ctx = document.getElementById('myChart2').getContext('2d');
+        var myChart2 = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Total","Active","Inactive","Present","Absentee"],
+                datasets: [{
+                    label: 'Employee',
+                    data: arr,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        var ctx = document.getElementById('myChart0').getContext('2d');
+        var myChart0 = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ["Total","Active","Inactive","Present","Absentee"],
+                datasets: [{
+                    label: '# of Votes',
+                    data: arr,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+});
+</script>
+
 
 <!-- <script>
 
@@ -102,39 +157,71 @@
 
 {% block content %}
 {% load static %}
-<div class="content-page">
-    <div class="content">
-
-        <!-- Start Content-->
-        <div class="container-fluid">
-
-            <div class="row">
-            	 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-				    {% for data in labels %}
-					{{data}}	
-			
-					{% endfor %}
-
-                <div class="col-xl-4">
 
 
-				  <div id="container" style="width: 75%;">
-				    <canvas id="myChart" width="50" height="50"></canvas>
+            <div class="content-page">
+                <div class="content">
 
-				    <!-- <div id="container" style="width: 75%;">
-    					<canvas id="pie-chart"></canvas> -->
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                    	<div class="card">
+                            <div class="card-body">
+                                <b>Attendance record</b>
+                                <p>
+                                    &emsp;&emsp;No. of Present :<b>{{presentNum}}</b>
+                                    &emsp;&emsp;&emsp;&emsp;No. of Absent :<b> {{absentNum}}</b>
+                                    &emsp;&emsp;&emsp;&emsp;Total staffs :<b> {{activeTotal}}</b>
+                                </p>
+                                <div class="col-md-4"><b><u id="dateId" style="color:blue;"> Date : {{dateIntable}}</u></b></div>
+                                   
+                                <div class="float-right">
+                                     <form action="" method="POST">
+                                            {% csrf_token %}
+                                            <input type="date" name="attendanceDate" value="Today">
+                                            <input type="submit" name="searchDate" value="Apply">
+                                      </form>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card-box">
+                                    <h4 class="header-title mt-0 mb-4">Pie-Chart</h4>
 
-				    
-				  </div>
+                                    	<div id="container" style="width: 75%;">
+				    						<canvas id="myChart0" width="50" height="50"></canvas>
+										</div>
+                                    
+                                </div>
+                            </div><!-- end col -->
 
-				  
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+                            <div class="col-lg-6">
+                                <div class="card-box">
+                                    <h4 class="header-title mt-0 mb-4">Bar Chart</h4>
 
+                                    	<div id="container" style="width: 75%;">
+				    						<canvas id="myChart1" width="50" height="50"></canvas>
+										</div>
+                                    
+                                </div>
+                            </div><!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card-box">
+                                    <h4 class="header-title mt-0 mb-4">Line Chart</h4>
+
+                                    	<div id="container" style="width: 75%;">
+				    						<canvas id="myChart2" width="50" height="50"></canvas>
+										</div>
+                                    
+                                </div>
+                            </div><!-- end col -->
+                        </div>
+                        <!-- end row -->
 
 
 {% endblock %}

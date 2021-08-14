@@ -47,9 +47,6 @@ def database_collection(dateArg):
 	time1='06::00::00'
 	time1=datetime.strptime(time1, '%H::%M::%S').time()
 	print(time1)
-	# t = '08:00:00'
-	# t = datetime.strptime(t, '%H:%M:%S')
-	# a.YourTimeField = datetime.datetime.strptime('12:12:12', '%H:%M:%S').time()
 	print(type(time1))
 	time2='12::00::00'
 	time2=datetime.strptime(time2, '%H::%M::%S').time()
@@ -57,7 +54,9 @@ def database_collection(dateArg):
 
 	attendSql = AttendanceTb.objects.filter(date=dateIntable).all()
 	# Sample.objects.filter(date__range=[startdate, enddate])
+
 	presentNum = AttendanceTb.objects.filter(date=dateIntable,time__range=[time1,time2]).all().count()
+
 	absentNum = activeTotal-presentNum
 	print(attendSql,">>>>",presentNum)
 	print("==================")
@@ -66,6 +65,7 @@ def database_collection(dateArg):
 	# if attendSql.exists():
 	for i in attendSql:
 		presentIdList.append(i.user_id)
+
 	presentSql = User.objects.filter(is_staff=True, is_superuser=False, id__in = presentIdList)
 	absentSql = User.objects.filter(is_staff=True, is_superuser=False).exclude(id__in=presentIdList)
 	#present list in given date
@@ -76,7 +76,7 @@ def database_collection(dateArg):
 	# for a in absentSql:
 	# 	print(a.profile.name,"-->",a.username,"->",a.profile.desgination,"->Absent","->","--")
 
-	return activeTotal, attendSql, presentSql, presentNum, absentSql,absentNum, dateIntable
+	return activeTotal, attendSql, presentSql, presentNum, absentSql,absentNum, dateIntable,time1,time2
 	
 
 #convert to pdf
@@ -89,7 +89,7 @@ def attendancePdf(request):
 			dateArg=str(dateArg)
 			if len(dateArg)==0:			#check empty date
 				dateArg=str(date.today())
-	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,dateIntable=database_collection(dateArg)
+	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,dateIntable,time1,time2=database_collection(dateArg)
 	
 	# pdf function
 	template_path = 'pdf/attendancePdf.html'
@@ -100,7 +100,9 @@ def attendancePdf(request):
 				'absentSql' : absentSql,
 				'absentNum' : absentNum,
 				'presentSql' : presentSql,
-				'dateIntable' : dateIntable
+				'dateIntable' : dateIntable,
+				'time1':time1,
+				'time2':time2
 				}
 	response = HttpResponse(content_type='application/pdf')
 	response['Content-Disposition'] = 'filename="Attendance_sheet.pdf"'
@@ -112,22 +114,34 @@ def attendancePdf(request):
 	return response
 
 
+    # mon_label = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"]
+    # a = [1,2,3,4,5,0,2,4,3,4]
 def pie_chart(request):
-    mon_label = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"]
-    a = [1,2,3,4,5,0,2,4,3,4]
-    # queryset=User.objects.filter(is_superuser=False)[:5]
-    print("hukaa")
-    # queryset = City.objects.order_by('-population')[:5]
-    # for data in queryset:
-        # labels .append(data.username)
-
-
-    context={
-    			'a':a,
-    			'mon_label':mon_label
-    		}
-
-    return render(request, 'piechart/pie_chart.html', context)
+	dateArg=str(date.today())
+	if request.method=="POST":
+		if 'searchDate' in request.POST:
+			print('searchDate')
+			dateArg=(request.POST["attendanceDate"])
+			if len(dateArg)==0:			#check empty date
+				dateArg=str(date.today())
+	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,dateIntable,time1,time2=database_collection(dateArg)
+	sqlTotalNum = User.objects.filter(is_superuser=False).all().count()
+	sqlInactiveNum = User.objects.filter(is_staff=False,is_superuser=False).all().count()
+	chartVal=[]
+	chartVal.append(activeTotal)
+	chartVal.append(sqlTotalNum-sqlInactiveNum)
+	chartVal.append(sqlInactiveNum)
+	chartVal.append(presentNum)
+	chartVal.append(absentNum)
+	print(chartVal)
+	context = {
+				'a' : chartVal,
+				'presentNum' : presentNum,
+				'absentNum' : absentNum,
+				'activeTotal' : activeTotal,
+				'dateIntable' : dateIntable
+				}
+	return render(request, 'piechart/pie_chart.html', context)
 
 
 
@@ -136,18 +150,8 @@ def pie_chart(request):
 def index(request):
 	return render(request,'faceapp/index.html')
 
-#addition in admin page author:Amar Nagaju
-def amarTable(request):
-	form = YearForm()
-	if request.method == 'POST':
-		form = YearForm(request.POST)
-		if form.is_valid():
-			birth_date = form.cleaned_data['birth_date']
-			print(birth_date,">>>")
-	context = {
-				'form' : form
-			}
-	return render(request,'faceapp/attendance_month.html',context)
+
+
 
 # admin dashboard
 @login_required(login_url='/login/')
@@ -158,8 +162,15 @@ def home(request):
 	sqlInactiveNum = User.objects.filter(is_staff=False,is_superuser=False).all().count()
 	print(sqlTotalNum)
 	todayDate=str(date.today())
-	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,dateIntable=database_collection(todayDate)
+	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,dateIntable,time1,time2=database_collection(todayDate)
 	# sqlActiveNum= sqlTotal-sqlInactiveNum
+	chartVal=[]
+	chartVal.append(activeTotal)
+	chartVal.append(sqlTotalNum-sqlInactiveNum)
+	chartVal.append(sqlInactiveNum)
+	chartVal.append(presentNum)
+	chartVal.append(absentNum)
+	print(chartVal)
 	context = {
 				'userAdmin' : userAdmin,
 				'sqlTotalNum' : sqlTotalNum,
@@ -167,7 +178,8 @@ def home(request):
 				'sqlInactiveNum' : sqlInactiveNum,
 				'sqlActiveNum' : sqlTotalNum-sqlInactiveNum,
 				'presentNum' : presentNum,
-				'absentNum' : absentNum
+				'absentNum' : absentNum,
+				'a' : chartVal
 				}
 	return render(request,'faceapp/home.html',context)
 	# if request.user.is_authenticated:
@@ -196,7 +208,7 @@ def attendanceTable(request):
 		# 	dateArg=str(dateArg)
 		# 	if len(dateArg)==0:			#check empty date
 		# 		dateArg=str(date.today())
-	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,dateIntable=database_collection(dateArg)
+	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,dateIntable,time1,time2=database_collection(dateArg)
 	context = {
 				'activeTotal' : activeTotal,
 				'attendSql' : attendSql,
@@ -205,10 +217,70 @@ def attendanceTable(request):
 				'absentSql' : absentSql,
 				'absentNum' : absentNum,
 				'presentSql' : presentSql,
-				'dateIntable' : dateIntable
+				'dateIntable' : dateIntable,
+				'time1':time1,
+				'time2':time2
 			}
 	print(context)
 	return render(request,'faceapp/attendance_table.html',context)
+
+# #addition in admin page author:Amar Nagaju
+# def attendanceMonth(request):
+# 	if request.method == 'POST':
+# 		if 'monthBtn' in request.POST:
+# 			yearMonth=(request.POST["yearMonth"])
+# 			print(type(yearMonth))
+
+# 		# dateIntable = dateArg
+# 		activeTotal = User.objects.filter(is_staff=True, is_superuser=False).all().count()
+# 		#filter date
+# 		# if request.method=="POST":
+# 		# 	dateIntable=(request.POST["attendanceDate"])
+# 		# 	if len(dateIntable)==0:			#check empty date
+# 		# 		dateIntable=str(date.today())
+# 		#attedance list
+# 		temp=yearMonth.split(('-'))
+# 		a=temp[0]
+# 		b=temp[1]
+# 		print(a,b)
+# 		yearVal=int(a)
+# 		monthVal=int(b)
+# 		time1='06::00::00'
+# 		time1=datetime.strptime(time1, '%H::%M::%S').time()
+# 		print(time1)
+# 		print(type(time1))
+# 		time2='12::00::00'
+# 		time2=datetime.strptime(time2, '%H::%M::%S').time()
+# 		print(time2)
+
+# 		attendSql = AttendanceTb.objects.filter(date__year=yearVal,date__month=monthVal,time__range=[time1,time2]).all()
+# 		presentNum = AttendanceTb.objects.filter(date__year=yearVal,date__month=monthVal,time__range=[time1,time2]).all().count()
+# 		absentNum = activeTotal-presentNum
+# 		print(attendSql,">>>>",presentNum)
+# 		print("==================")
+# 		#id collection
+# 		presentIdList = []
+# 		# if attendSql.exists():
+# 		for i in attendSql:
+# 			presentIdList.append(i.user_id)
+# 		print(presentIdList)
+
+# 		presentSql = User.objects.filter(is_staff=True, is_superuser=False, id__in = presentIdList)
+# 		absentSql = User.objects.filter(is_staff=True, is_superuser=False).exclude(id__in=presentIdList)
+# 		# present list in given date
+# 		for p in presentSql:
+# 			for at in attendSql:
+# 				if p.id == at.user_id:
+# 					print(p.profile.name,"-->",p.username,"->",p.profile.desgination,"->Present","->",at.time,"--->",at.date)
+# 		for a in absentSql:
+# 			print(a.profile.name,"-->",a.username,"->",a.profile.desgination,"->Absent","->","--")
+
+# 	context = {
+				
+# 			}
+# 	return render(request,'faceapp/attendance_month.html',context)
+
+
 
 # view list of staff in grid format
 #inactive portion little wrong
@@ -543,8 +615,25 @@ def dashboardStaff(request):
 def userDash(request):
 	currentUser = request.user.id
 	userSql = User.objects.get(pk=currentUser)
+	#copied form attendancetable
+	dateArg=str(date.today())
+	if request.method=="POST":
+		if 'searchDate' in request.POST:
+			print('searchDate')
+			dateArg=(request.POST["attendanceDate"])
+			if len(dateArg)==0:			#check empty date
+				dateArg=str(date.today())
+	activeTotal,attendSql,presentSql,presentNum,absentSql,absentNum,dateIntable,time1,time2=database_collection(dateArg)
 	context = {
-				'userSql':userSql
+				'userSql':userSql,
+				'attendSql' : attendSql,
+				'presentSql' : presentSql,
+				'absentSql' : absentSql,
+				'presentSql' : presentSql,
+				'dateIntable' : dateIntable,
+				'time1':time1,
+				'time2':time2
+			
 			}
 	return render(request,'user/user_dashboard.html', context )
 

@@ -7,22 +7,29 @@
 
 <script>
     $(document).ready(function () {
+        var value ="{{a|safe}}";
+        var arr = [];
+        console.log(typeof(value));
+        {% for datas in a %}
+            var value ="{{datas|safe}}";
+            console.log(value);
+            arr.push(value);
+        {% endfor %}
+        arr = arr.map((i) => Number(i));
+
+
+        console.log(typeof(arr));
+        console.log(arr);
+
         var ctx = document.getElementById('myChart1').getContext('2d');
         var myChart1 = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
+                labels: ["Total","Active","Inactive","Present","Absentee"],
                 datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    label: ['Employee'],
+                    data: arr,
                     backgroundColor: [
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(75, 192, 192, 0.2)',
@@ -34,14 +41,7 @@
                         'rgba(75, 192, 192, 1)',
                         'rgba(75, 192, 192, 1)',
                         'rgba(75, 192, 192, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(75, 192, 192, 1)',
+                        'rgba(75, 192, 192, 1)'
                     ],
                     borderWidth: 1
                 }]
@@ -58,10 +58,45 @@
         var myChart2 = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
+                labels: ["Total","Active","Inactive","Present","Absentee"],
+                datasets: [{
+                    label: 'Employee',
+                    data: arr,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        var ctx = document.getElementById('myChart0').getContext('2d');
+        var myChart0 = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ["Total","Active","Inactive","Present","Absentee"],
                 datasets: [{
                     label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: arr,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -300,26 +335,10 @@
                             <div class="dropdown-menu dropdown-menu-right">
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item">View Details</a>
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">Another action</a>
                             </div>
                         </div>
-
-                        <!-- 2nd row -->
-
                         <h4 class="header-title mt-0">Daily Status</h4>
-
-                        <div class="widget-chart text-center">
-                            <div id="morris-donut-example" dir="ltr" style="height: 245px;" class="morris-chart"></div>
-                            <ul class="list-inline chart-detail-list mb-0">
-                                <li class="list-inline-item">
-                                    <h5 style="color: #5b69bc;"><i class="fa fa-circle mr-1"></i>Present</h5>
-                                </li>
-                                <li class="list-inline-item">
-                                    <h5 style="color: #ff8acc;"><i class="fa fa-circle mr-1"></i>Absentee</h5>
-                                </li>
-                            </ul>
-                        </div>
+                        <canvas id="myChart0" width="50" height="50"></canvas>
                     </div>
                 </div><!-- end col -->
 
@@ -335,7 +354,7 @@
                                 <a href="javascript:void(0);" class="dropdown-item">View Details</a>
                             </div>
                         </div>
-                        <h4 class="header-title mt-0">Monthly Present</h4>
+                        <h4 class="header-title mt-0">Bar Chart</h4>
                         <canvas id="myChart1" width="50" height="50"></canvas>
                     </div>
                 </div><!-- end col -->
@@ -352,7 +371,7 @@
                                 <a href="javascript:void(0);" class="dropdown-item">View Details</a>
                             </div>
                         </div>
-                        <h4 class="header-title mt-0">Montly Absent</h4>
+                        <h4 class="header-title mt-0">Line Chart</h4>
                         <canvas id="myChart2" width="50" height="50"></canvas>
                     </div>
                 </div><!-- end col -->
